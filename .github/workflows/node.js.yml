@@ -13,7 +13,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '15.x'
-          registry-url: https://npm.fontawesome.com/
       - name: Cache
         uses: actions/cache@v1
         with:
@@ -26,6 +25,6 @@ jobs:
       - name: Install
         run: yarn install
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_FA_TOKEN}}
+          NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
       - name: Build project
         run: quasar build
