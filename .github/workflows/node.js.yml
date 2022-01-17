@@ -21,7 +21,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Setup dependencies
-        run: npm install -g yarn quasar
+        run: npm install -g yarn @quasar/cli 
       - name: Install
         run: yarn install
         env:
