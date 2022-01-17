@@ -28,3 +28,9 @@ jobs:
           NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
       - name: Build project
         run: quasar build
+
+      - name: Sync files to s3
+        run: aws s3 sync . s3://dobby-frontend
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
