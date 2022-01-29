@@ -3,16 +3,19 @@ on:
   push:
     branches:
       - master
+      - develop
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: '15.x'
+
       - name: Cache
         uses: actions/cache@v1
         with:
@@ -20,17 +23,26 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+      
+      - name: Create ENV file
+        run: |
+          echo "API_URL=http://api.defichain-dobby.test" > .env
+          echo "TELEGRAM_BOT_LINK=https://t.me/dobby_local_dev_bot"
+
+
       - name: Setup dependencies
-        run: npm install -g yarn @quasar/cli 
+        run: npm install -g yarn @quasar/cli
+
       - name: Install
         run: yarn install
         env:
           NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+
       - name: Build project
         run: quasar build
 
       - name: Sync files to s3
-        run: aws s3 sync --delete dist/spa/ s3://dobby-frontend && aws cloudfront create-invalidation --distribution-id=${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION }} --paths='/*'
+        run: aws s3 sync --delete dist/spa/ s3://dobbyprod && aws cloudfront create-invalidation --distribution-id=${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION }} --paths='/*'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
