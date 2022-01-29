@@ -24,11 +24,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       
-      - name: Create ENV file
-        run: |
-          echo "API_URL=http://api.defichain-dobby.test" > .env
-          echo "TELEGRAM_BOT_LINK=https://t.me/dobby_local_dev_bot"
-
 
       - name: Setup dependencies
         run: npm install -g yarn @quasar/cli
