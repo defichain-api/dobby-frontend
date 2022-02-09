@@ -5,20 +5,26 @@
     :label="label"
     :color="color"
     :unelevated="unelevated"
-    @click="testTelegram()"
-    icon="fab fa-telegram-plane"
+    @click="testChannel()"
+    :icon="icon"
   />
 </template>
 
 <script>
 export default {
-  name: 'TestTelegramChannel',
+  name: 'TestChannel',
   props: {
+    channel: {
+      required: true,
+    },
     label: {
-      default: 'test Telegram'
+      required: true,
     },
     color: {
-      default: 'telegram'
+      required: true,
+    },
+    icon: {
+      required: true,
     },
     rounded: {
       default: false
@@ -31,13 +37,13 @@ export default {
     },
   },
   methods: {
-    testTelegram: function () {
-      this.$api.post("/user/gateways/test", { "type":"telegram" })
+    testChannel: function () {
+      this.$api.post("/user/gateways/test", { "type": this.channel })
         .then((result) => {
           this.$q.notify({
-            group: 'telegram',
+            group: 'gatewayTest',
             type: 'positive',
-            message: 'Dobby should have said hello via Telegram :)',
+            message: 'Dobby should have said hello via ' + this.channel + ' :)',
           })
         })
     },
