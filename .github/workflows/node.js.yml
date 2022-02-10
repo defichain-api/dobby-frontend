@@ -28,6 +28,9 @@ jobs:
       - name: Setup dependencies
         run: npm install -g yarn @quasar/cli
 
+      - name: Copy .env file
+        run: (test -f env.${GITHUB_REF##*/} && cp -v env.${GITHUB_REF##*/} .env) || echo "File env.${GITHUB_REF##*/} does not exist"
+
       - name: Install
         run: yarn install
         env:
