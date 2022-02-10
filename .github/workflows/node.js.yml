@@ -24,6 +24,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       
+      - name: Set environment variables
+        run: |
+          if [[ ${GITHUB_REF##*/} == 'master' ]]; then
+            echo "S3BUCKET=dobbyprod" >> "$GITHUB_ENV"
+          else
+            echo "S3BUCKET=dobbystage" >> "$GITHUB_ENV"
+          fi
+
+          echo $S3BUCKET
 
       - name: Setup dependencies
         run: npm install -g yarn @quasar/cli
@@ -40,7 +49,7 @@ jobs:
         run: quasar build
 
       - name: Sync files to s3
-        run: aws s3 sync --delete dist/spa/ s3://dobbyprod && aws cloudfront create-invalidation --distribution-id=${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION }} --paths='/*'
+        run: aws s3 sync --delete dist/spa/ s3://${S3BUCKET} && aws cloudfront create-invalidation --distribution-id=${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION }} --paths='/*'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
