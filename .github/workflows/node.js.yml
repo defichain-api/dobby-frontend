@@ -51,6 +51,7 @@ jobs:
       - name: Generate release variables
         run: |
           echo "CURRENT_RELEASE=$(git rev-parse --short $GITHUB_SHA)" >> dist/spa/.env
+          echo "RELEASE_DATE=$(date +'%Y-%m-%d%n')" >> dist/spa/.env
 
       - name: Sync files to s3
         run: aws s3 sync --delete dist/spa/ s3://${S3BUCKET} && aws cloudfront create-invalidation --distribution-id=${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION }} --paths='/*'
