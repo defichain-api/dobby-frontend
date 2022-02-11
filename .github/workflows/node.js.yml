@@ -37,13 +37,6 @@ jobs:
       - name: Setup dependencies
         run: npm install -g yarn @quasar/cli
 
-      - name: Copy .env file
-        run: (test -f env.${GITHUB_REF##*/} && cp -v env.${GITHUB_REF##*/} .env) || echo "File env.${GITHUB_REF##*/} does not exist"
-      
-      - name: Generate release variables
-        run: |
-          echo "CURRENT_RELEASE=$(git rev-parse --short $GITHUB_SHA)" >> .env
-
       - name: Install
         run: yarn install
         env:
@@ -51,6 +44,13 @@ jobs:
 
       - name: Build project
         run: quasar build
+      
+      - name: Copy .env file
+        run: (test -f env.${GITHUB_REF##*/} && cp -v env.${GITHUB_REF##*/} dist/spa/.env) || echo "File env.${GITHUB_REF##*/} does not exist"
+      
+      - name: Generate release variables
+        run: |
+          echo "CURRENT_RELEASE=$(git rev-parse --short $GITHUB_SHA)" >> dist/spa/.env
 
       - name: Sync files to s3
         run: aws s3 sync --delete dist/spa/ s3://${S3BUCKET} && aws cloudfront create-invalidation --distribution-id=${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION }} --paths='/*'
