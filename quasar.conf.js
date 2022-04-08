@@ -59,7 +59,7 @@ module.exports = configure(function (ctx) {
         "TELEGRAM_BOT_LINK": 'https://t.me/defichain_dobby_bot', // https://t.me/defichain_dobby_bot?start=USER_ID
         "TELEGRAM_GROUP_LINK": 'https://t.me/defichain_dobby',
         "TWITTER_LINK": 'https://twitter.com/dobby_dfi',
-        "DONATION_ADDRESS": 'df1qw0522d3tc8t3p5656a0u69mfauwg99xkdst50w',
+        "DONATION_ADDRESS": 'df1qhmeuwav4me7dzallqcmkyqgppm5xzst7sup36d',
         ...(require('dotenv').config().parsed),
       },
 
