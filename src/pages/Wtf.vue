@@ -86,7 +86,7 @@
           <q-card-section class="bg-primary text-white text-caption" style="font-size: 0.8em;">
             <q-img src="/img/qr-donations.jpg" alt="" style="max-width: 400px;"/>
             <br />
-            df1qw0522d3tc8t3p5656a0u69mfauwg99xkdst50w
+            df1qhmeuwav4me7dzallqcmkyqgppm5xzst7sup36d
           </q-card-section>
           <q-card-section class="bg-accent">
             <q-btn unelevated rounded color="primary" class="text-white" @click="toClipboard(donationAddress)">Copy to Clipboard</q-btn>
