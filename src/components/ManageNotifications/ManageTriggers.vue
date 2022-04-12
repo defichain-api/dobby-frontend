@@ -140,7 +140,7 @@ export default {
      * Toggles the edit dialog for trigger ratio
      */
     showEditTrigger(triggerId) {
-      this.$refs['editTrigger-' + triggerId].show()
+      this.$refs['editTrigger-' + triggerId][0].show()
     },
 
     /**
