@@ -166,30 +166,38 @@
       <div class="col-3">
         <span class="text-accent">200 %</span>
         <br />
-        <span class="text-primary text-smaller">{{ (vault.loanValue * 2 - vault.collateralValue).toLocaleString(locale, numberFormats.currencyNoDecimals) }}</span>
+        <span v-if="!privacy" class="text-primary text-smaller">{{ (vault.loanValue * 2 - vault.collateralValue).toLocaleString(locale, numberFormats.currencyNoDecimals) }}</span>
+        <span v-else>🧦🧦🧦</span>
         <br />
-        <span class="text-caption text-smaller">({{ (vault.loanValue * 2).toLocaleString(locale, numberFormats.currencyNoDecimals) }})</span>
+        <span v-if="!privacy" class="text-caption text-smaller">({{ (vault.loanValue * 2).toLocaleString(locale, numberFormats.currencyNoDecimals) }})</span>
+        <span v-else>🧦🧦🧦🧦</span>
       </div>
       <div class="col-3">
         <span class="text-accent">250 %</span>
         <br />
-        <span class="text-primary text-smaller">{{ (vault.loanValue * 2.5 - vault.collateralValue).toLocaleString(locale, numberFormats.currencyNoDecimals) }}</span>
+        <span v-if="!privacy" class="text-primary text-smaller">{{ (vault.loanValue * 2.5 - vault.collateralValue).toLocaleString(locale, numberFormats.currencyNoDecimals) }}</span>
+        <span v-else>🧦🧦🧦</span>
         <br />
-        <span class="text-caption text-smaller">({{ (vault.loanValue * 2.5).toLocaleString(locale, numberFormats.currencyNoDecimals) }})</span>
+        <span v-if="!privacy" class="text-caption text-smaller">({{ (vault.loanValue * 2.5).toLocaleString(locale, numberFormats.currencyNoDecimals) }})</span>
+        <span v-else>🧦🧦🧦🧦</span>
       </div>
       <div class="col-3">
         <span class="text-accent">300 %</span>
         <br />
-        <span class="text-primary text-smaller">{{ (vault.loanValue * 3 - vault.collateralValue).toLocaleString(locale, numberFormats.currencyNoDecimals) }}</span>
+        <span v-if="!privacy" class="text-primary text-smaller">{{ (vault.loanValue * 3 - vault.collateralValue).toLocaleString(locale, numberFormats.currencyNoDecimals) }}</span>
+        <span v-else>🧦🧦🧦</span>
         <br />
-        <span class="text-caption text-smaller">({{ (vault.loanValue * 3).toLocaleString(locale, numberFormats.currencyNoDecimals) }})</span>
+        <span v-if="!privacy" class="text-caption text-smaller">({{ (vault.loanValue * 3).toLocaleString(locale, numberFormats.currencyNoDecimals) }})</span>
+        <span v-else>🧦🧦🧦🧦</span>
       </div>
       <div class="col-3">
         <span class="text-accent">350 %</span>
         <br />
-        <span class="text-primary text-smaller">{{ (vault.loanValue * 3.5 - vault.collateralValue).toLocaleString(locale, numberFormats.currencyNoDecimals) }}</span>
+        <span v-if="!privacy" class="text-primary text-smaller">{{ (vault.loanValue * 3.5 - vault.collateralValue).toLocaleString(locale, numberFormats.currencyNoDecimals) }}</span>
+        <span v-else>🧦🧦🧦</span>
         <br />
-        <span class="text-caption text-smaller">({{ (vault.loanValue * 3.5).toLocaleString(locale, numberFormats.currencyNoDecimals) }})</span>
+        <span v-if="!privacy" class="text-caption text-smaller">({{ (vault.loanValue * 3.5).toLocaleString(locale, numberFormats.currencyNoDecimals) }})</span>
+        <span v-else>🧦🧦🧦🧦</span>
       </div>
     </q-card-section>
   </q-card>

@@ -38,7 +38,7 @@
             <q-avatar size="35px" class="text-caption">
               <q-icon name="far fa-hat-wizard" style="font-size: 1.5em" />
             </q-avatar>
-            <q-tooltip>Account</q-tooltip>
+            <!--<q-tooltip>Account</q-tooltip>-->
             <q-menu
               transition-show="jump-left"
               transition-hide="jump-right"
@@ -58,7 +58,12 @@
                   <!--
                   <q-toggle v-model="autoReload" label="Auto Reload" />
                   -->
-                  <q-toggle v-model="privacy" label="Hide sensible data" />
+                  <q-toggle
+                    v-model="privacy"
+                    label="Hide sensible data"
+                    checked-icon="fas fa-socks"
+                    unchecked-icon="fas fa-eye"
+                  />
                   <!--
                   <div>All Settings</div>
                   -->
