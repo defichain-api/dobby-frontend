@@ -250,7 +250,7 @@ export default {
       return this.$root.$i18n.locale
     },
     privacy() {
-      return this.settingValue('privacy')
+      return this.settingValue('uiPrivacyEnabled')
     },
     triggers() {
       let vaultTriggers = this.vaultTriggers(this.vault.vaultId)

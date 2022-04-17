@@ -24,7 +24,7 @@ export default {
 			language: 'en',
 
 
-			privacy: false,
+			uiPrivacyEnabled: false,
 
 			triggerMultipleInfo: 1.5,
 			triggerMultipleWarning: 1.25,

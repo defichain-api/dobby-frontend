@@ -168,7 +168,7 @@ export default {
     const bar = ref(null)
     const uiTheme = ref($q.dark.isActive)
     const store = useStore()
-    const privacy = ref(store.getters['settings/value']('privacy'))
+    const privacy = ref(store.getters['settings/value']('uiPrivacyEnabled'))
     const version = process.env.VERSION
     const release = process.env.CURRENT_RELEASE
     const releaseDate = process.env.RELEASE_DATE
@@ -187,7 +187,7 @@ export default {
     })
 
     watch(privacy, (privacyActive) => {
-      store.dispatch('settings/set', { key: 'privacy', value: privacyActive })
+      store.dispatch('settings/set', { key: 'uiPrivacyEnabled', value: privacyActive })
     })
 
     return {

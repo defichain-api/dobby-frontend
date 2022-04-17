@@ -190,7 +190,7 @@ export default defineComponent({
       return this.$root.$i18n.locale
     },
     privacy() {
-      return this.settingValue('privacy')
+      return this.settingValue('uiPrivacyEnabled')
     },
     ...mapGetters({
       vaults: 'account/vaults',
