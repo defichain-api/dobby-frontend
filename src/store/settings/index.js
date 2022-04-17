@@ -1,4 +1,5 @@
 import { LocalStorage } from 'quasar'
+import { api } from 'boot/axios'
 
 export default {
 	namespaced: true,
@@ -62,15 +63,22 @@ export default {
 		},
 		set({ commit }, data) {
 			commit('set', data)
-		},
+    },
+    setToAccount({ commit }, data) {
+      commit('set', data)
+      api.put("/user/settings", {
+        [data.key]: data.value
+      })
+    }
 	},
 	mutations: {
 		set (state, data) {
 			state.settings = { ...state.settings, [data.key]: data.value }
 			// write setting to local storage
       LocalStorage.set(process.env.LOCAL_STORAGE_SETTINGS_KEY, state.settings)
-
-      // Todo: sync setting to API
+      if (process.env.DEV) {
+        console.log("[DEBUG] Saving setting to local storage: " + data.key + " = " + data.value)
+      }
 		},
 	},
 }

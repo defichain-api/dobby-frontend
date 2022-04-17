@@ -188,11 +188,11 @@ export default {
 
     watch(uiTheme, (uiTheme) => {
       $q.dark.set(uiTheme)
-      store.dispatch('settings/set', { key: 'uiTheme', value: uiTheme })
+      store.dispatch('settings/setToAccount', { key: 'uiTheme', value: uiTheme })
     })
 
     watch(privacy, (privacyActive) => {
-      store.dispatch('settings/set', { key: 'uiPrivacyEnabled', value: privacyActive })
+      store.dispatch('settings/setToAccount', { key: 'uiPrivacyEnabled', value: privacyActive })
     })
 
     return {

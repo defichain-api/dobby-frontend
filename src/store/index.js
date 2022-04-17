@@ -58,7 +58,7 @@ export default store(function (/* { ssrContext } */) {
       },
       requestDone(state, identifier) {
         state.requestCount--
-        if (process.env.DEV) { console.log("[DEBUG] API request done on " + identifier) }
+        if (process.env.DEV) { console.log("[DEBUG] Done API request on " + identifier) }
       },
       noApiResponse(state) {
         state.noApiResponse = true;

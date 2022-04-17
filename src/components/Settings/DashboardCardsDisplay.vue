@@ -53,7 +53,7 @@ export default defineComponent({
   },
   watch: {
     mode(mode) {
-      this.$store.dispatch('settings/set', { key: 'uiDashboardCardsAsCarousel', value: mode })
+      this.$store.dispatch('settings/setToAccount', { key: 'uiDashboardCardsAsCarousel', value: mode })
     }
   },
   computed: {

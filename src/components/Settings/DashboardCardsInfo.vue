@@ -69,7 +69,7 @@ export default defineComponent({
   },
   methods: {
     ...mapActions({
-      setSetting: 'settings/set',
+      setSetting: 'settings/setToAccount',
     }),
   },
   computed: {

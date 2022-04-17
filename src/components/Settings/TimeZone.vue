@@ -77,7 +77,7 @@ export default defineComponent({
         return
       }
 
-      this.$store.dispatch('settings/set', { key: 'timezone', value: timezone })
+      this.$store.dispatch('settings/setToAccount', { key: 'timezone', value: timezone })
     }
   },
   computed: {
