@@ -225,6 +225,7 @@ export default {
       ],
       links4: [
         { icon: 'fal fa-bells', text: 'Manage Notifications', to: 'manage-notifications' },
+        { icon: 'fal fa-bells', text: 'Manage Notifications 3.0', to: 'manage-notifications-new' },
         { icon: 'fal fa-archive', text: 'Manage Vaults', to: 'manage-vaults' },
         { icon: 'fal fa-sliders-h', text: 'Settings', to: 'settings' },
         { icon: 'fal fa-question-circle', text: 'WTF?!', to: 'wtf' },
