@@ -46,7 +46,7 @@ export default {
   },
   watch: {
     colorScheme(newValue, oldValue) {
-      this.$store.dispatch('settings/set', { key: 'darkMode', value: newValue })
+      this.$store.dispatch('settings/set', { key: 'uiTheme', value: newValue })
       this.$q.dark.set(newValue)
     }
   },

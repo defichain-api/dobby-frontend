@@ -48,7 +48,7 @@
                   <div class="text-h6 q-mb-md">Quick Settings</div>
                   <q-toggle
                     label="Color Scheme"
-                    v-model="darkMode"
+                    v-model="uiTheme"
                     toggle-indeterminate
                     indeterminate-value="auto"
                     indeterminate-icon="fas fa-adjust"
@@ -166,7 +166,7 @@ export default {
     const $q = useQuasar()
     const leftDrawerOpen = ref(false)
     const bar = ref(null)
-    const darkMode = ref($q.dark.isActive)
+    const uiTheme = ref($q.dark.isActive)
     const store = useStore()
     const privacy = ref(store.getters['settings/value']('privacy'))
     const version = process.env.VERSION
@@ -181,9 +181,9 @@ export default {
       store.dispatch('account/logout')
     }
 
-    watch(darkMode, (darkMode) => {
-      $q.dark.set(darkMode)
-      store.dispatch('settings/set', { key: 'darkMode', value: darkMode })
+    watch(uiTheme, (uiTheme) => {
+      $q.dark.set(uiTheme)
+      store.dispatch('settings/set', { key: 'uiTheme', value: uiTheme })
     })
 
     watch(privacy, (privacyActive) => {
@@ -193,7 +193,7 @@ export default {
     return {
       leftDrawerOpen,
       bar,
-      darkMode,
+      uiTheme,
       privacy,
       version,
       release,

@@ -2,7 +2,7 @@
   <div class="q-pa-md row items-start q-gutter-md">
     <div class="text-h6 col-12">App</div>
       <UserId key="userId" />
-      <DarkMode key="darkMode" />
+      <DarkMode key="uiTheme" />
   </div>
   <div class="q-pa-md row items-start q-gutter-md">
     <div class="text-h6 col-12">Dashboard</div>

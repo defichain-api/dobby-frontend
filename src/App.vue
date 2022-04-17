@@ -27,7 +27,7 @@ export default defineComponent({
     // PROCEED WITH OTHER STUFF =====================================================
 
     // set dark mode setting
-    this.$q.dark.set(this.getSettingValue('darkMode'))
+    this.$q.dark.set(this.getSettingValue('uiTheme'))
 
     this.setupAxiosInterceptors()
 
