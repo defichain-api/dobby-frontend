@@ -1,13 +1,17 @@
 <template>
   <div class="q-pa-md row items-start q-gutter-md">
+    <div class="text-h6 col-12">General</div>
+      <UserId />
+      <TimeZone />
+  </div>
+  <div class="q-pa-md row items-start q-gutter-md">
     <div class="text-h6 col-12">App</div>
-      <UserId key="userId" />
-      <DarkMode key="uiTheme" />
+      <DarkMode />
   </div>
   <div class="q-pa-md row items-start q-gutter-md">
     <div class="text-h6 col-12">Dashboard</div>
-      <DashboardCardsInfo key="dashboardCardsInfo" />
-      <DashboardCardsDisplay key="DashboardCardsDisplay" />
+      <DashboardCardsInfo />
+      <DashboardCardsDisplay />
   </div>
 </template>
 
@@ -17,6 +21,7 @@ import UserId from 'components/Settings/UserId.vue'
 import DarkMode from 'components/Settings/DarkMode.vue'
 import DashboardCardsInfo from 'components/Settings/DashboardCardsInfo.vue'
 import DashboardCardsDisplay from 'components/Settings/DashboardCardsDisplay.vue'
+import TimeZone from 'components/Settings/TimeZone.vue'
 
 export default defineComponent({
   name: 'Settings',
@@ -25,6 +30,7 @@ export default defineComponent({
     DarkMode,
     DashboardCardsInfo,
     DashboardCardsDisplay,
+    TimeZone,
   },
   created() {
     this.$store.dispatch('setHeadline', {text: 'Dobby Settings', icon: 'fal fa-sliders-h'})

@@ -7,31 +7,33 @@ export default {
 		{
 			"uiTheme": "dark", // dark, light, auto
 			"language": "de", // en, de
-			"summaryInterval": "daily_2x",
-			"depositAddress": "8Q95shiR4uJv****atA8VHiEEAwc4Syj1W", // used for phone credits
-			"depositInfoMail": "my@email.de", // info email address for credit deposit
-			"currentRatioEnabled": true, // default: false
 			"uiPrivacyEnabled": false,
 			"uiDashboardHealthSummaryEnabled": false,
 			"uiDashboardCollateralInfoEnabled": true,
 			"uiDashboardCollateralWaypointsEnabled": false,
+
+			"summaryInterval": "daily_2x",
+			"depositAddress": "8Q95shiR4uJv****atA8VHiEEAwc4Syj1W", // used for phone credits
+			"depositInfoMail": "my@email.de", // info email address for credit deposit
+			"currentRatioEnabled": true, // default: false
 			"timezone": "Europe/Berlin"
 		}
 		*/
 
 		settings: {
 			uiTheme: 'auto',
-			language: 'en',
+      language: 'en',
 
+      uiPrivacyEnabled: false,
+      uiDashboardHealthSummaryEnabled: true,
+			uiDashboardCollateralInfoEnabled: true,
+			uiDashboardCollateralWaypointsEnabled: true,
+      uiDashboardCardsAsCarousel: 'auto',
 
-			uiPrivacyEnabled: false,
+      timezone: "Europe/London",
 
 			triggerMultipleInfo: 1.5,
 			triggerMultipleWarning: 1.25,
-			'dashboardCardsInfo.healthSummary': true,
-			'dashboardCardsInfo.collateralInfo': true,
-			'dashboardCardsInfo.collateralWaypoints': true,
-			dashboardCardsAsCarousel: 'auto',
 		},
 		numberFormats: {
 			currency: { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 },
@@ -66,7 +68,9 @@ export default {
 		set (state, data) {
 			state.settings = { ...state.settings, [data.key]: data.value }
 			// write setting to local storage
-			LocalStorage.set(process.env.LOCAL_STORAGE_SETTINGS_KEY, state.settings)
+      LocalStorage.set(process.env.LOCAL_STORAGE_SETTINGS_KEY, state.settings)
+
+      // Todo: sync setting to API
 		},
 	},
 }

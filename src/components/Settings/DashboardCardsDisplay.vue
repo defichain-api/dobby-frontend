@@ -49,12 +49,11 @@ export default defineComponent({
     }
   },
   created() {
-    this.mode = this.settingsValue('dashboardCardsAsCarousel')
+    this.mode = this.settingsValue('uiDashboardCardsAsCarousel')
   },
   watch: {
     mode(mode) {
-      console.log(mode)
-      this.$store.dispatch('settings/set', { key: 'dashboardCardsAsCarousel', value: mode })
+      this.$store.dispatch('settings/set', { key: 'uiDashboardCardsAsCarousel', value: mode })
     }
   },
   computed: {

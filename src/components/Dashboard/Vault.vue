@@ -112,7 +112,7 @@
 
     <q-separator inset />
 
-    <q-card-section class="coll-progress q-py-sm" v-if="settingValue('dashboardCardsInfo.healthSummary') && vault.state != 'in_liquidation'">
+    <q-card-section class="coll-progress q-py-sm" v-if="settingValue('uiDashboardHealthSummaryEnabled') && vault.state != 'in_liquidation'">
       <div v-if="vault.loanValue > 0">
         <div class="row">
           <div class="col-12 text-caption q-mb-md">
@@ -139,9 +139,9 @@
       </div>
     </q-card-section>
 
-    <q-separator inset v-if="settingValue('dashboardCardsInfo.collateralInfo') && vault.state != 'in_liquidation'" />
+    <q-separator inset v-if="settingValue('uiDashboardCollateralInfoEnabled') && vault.state != 'in_liquidation'" />
 
-    <q-card-section class="coll-info row text-center" v-if="settingValue('dashboardCardsInfo.collateralInfo') && vault.state != 'in_liquidation'">
+    <q-card-section class="coll-info row text-center" v-if="settingValue('uiDashboardCollateralInfoEnabled') && vault.state != 'in_liquidation'">
       <div class="col-12 text-overline text-left">Collateral</div>
       <div class="col-4">
         <span class="text-h6 text-accent" v-if="vault.state != 'in_liquidation'"><span v-if="!privacy">{{ vault.collateralValue.toLocaleString(locale, numberFormats.currency) }}</span><span v-if="privacy">$🧦🧦🧦</span></span>
@@ -159,9 +159,9 @@
       </div>
     </q-card-section>
 
-    <q-separator inset v-if="settingValue('dashboardCardsInfo.collateralWaypoints') && vault.state != 'in_liquidation'" />
+    <q-separator inset v-if="settingValue('uiDashboardCollateralWaypointsEnabled') && vault.state != 'in_liquidation'" />
 
-    <q-card-section class="coll-info row text-center" v-if="settingValue('dashboardCardsInfo.collateralWaypoints') && vault.state != 'in_liquidation'">
+    <q-card-section class="coll-info row text-center" v-if="settingValue('uiDashboardCollateralWaypointsEnabled') && vault.state != 'in_liquidation'">
       <div class="col-12 text-overline text-left">Add/Remove Collateral</div>
       <div class="col-3">
         <span class="text-accent">200 %</span>

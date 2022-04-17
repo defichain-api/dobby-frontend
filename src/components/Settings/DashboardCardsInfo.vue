@@ -52,19 +52,19 @@ export default defineComponent({
     }
   },
   created() {
-    this.healthSummary = this.settingValue('dashboardCardsInfo.healthSummary')
-    this.collateralInfo = this.settingValue('dashboardCardsInfo.collateralInfo')
-    this.collateralWaypoints = this.settingValue('dashboardCardsInfo.collateralWaypoints')
+    this.healthSummary = this.settingValue('uiDashboardHealthSummaryEnabled')
+    this.collateralInfo = this.settingValue('uiDashboardCollateralInfoEnabled')
+    this.collateralWaypoints = this.settingValue('uiDashboardCollateralWaypointsEnabled')
   },
   watch: {
     healthSummary(setting) {
-      this.setSetting({ key: 'dashboardCardsInfo.healthSummary', value: setting })
+      this.setSetting({ key: 'uiDashboardHealthSummaryEnabled', value: setting })
     },
     collateralInfo(setting) {
-      this.setSetting({ key: 'dashboardCardsInfo.collateralInfo', value: setting })
+      this.setSetting({ key: 'uiDashboardCollateralInfoEnabled', value: setting })
     },
     collateralWaypoints(setting) {
-      this.setSetting({ key: 'dashboardCardsInfo.collateralWaypoints', value: setting })
+      this.setSetting({ key: 'uiDashboardCollateralWaypointsEnabled', value: setting })
     },
   },
   methods: {
