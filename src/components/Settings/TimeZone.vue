@@ -1,24 +1,28 @@
 <template>
-  <q-card flat>
+  <q-card flat style="max-width: 350px;">
 
     <q-card-section>
-    <div class="text-primary text-h6">{{ $t('Your Time Zone') }}</div>
+      <div class="text-primary text-h6">
+        {{ $t('Your Time Zone') }}
+      </div>
+      <div class="q-mt-sm">
+        Choose your time zone to let Dobby know when you've got night and day.
+      </div>
     </q-card-section>
     <q-card-section class="q-pt-none text-center row">
       <q-select
         outlined
-        v-model="timezone"
-        :options="filteredTimeZones"
+        v-model="currentSetting"
+        :options="filteredOptions"
         use-input
         hide-selected
         fill-input
         input-debounce="0"
         emit-value
-        @filter="filterTimeZones"
+        @filter="filterAvailableOptions"
         class="full-width"
       />
     </q-card-section>
-
   </q-card>
 </template>
 
@@ -30,54 +34,55 @@ export default defineComponent({
   name: 'TimeZoneSetting',
   data() {
     return {
-      timezone: null,
-      availableTimeZones: [],
-      filteredTimeZones: [],
+      settingName: 'timezone',
+      currentSetting: null,
+      availableOptions: [],
+      filteredOptions: [],
       firstSet: true,
     }
   },
   created() {
     this.getAvailableTimeZones().finally(() => {
-      this.timezone = this.settingValue('timezone')
+      this.currentSetting = this.settingValue(this.settingName)
     })
   },
   methods: {
-    filterTimeZones(val, update) {
+    filterAvailableOptions(val, update) {
       if (val == '') {
-        update(() => {this.filteredTimeZones = this.availableTimeZones})
+        update(() => {this.filteredOptions = this.availableOptions})
         return
       }
       update(() => {
         const needle = val.toLowerCase()
-        this.filteredTimeZones = this.availableTimeZones.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+        this.filteredOptions = this.availableOptions.filter(v => v.label.toLowerCase().indexOf(needle) > -1 || v.value.toLowerCase().indexOf(needle) > -1)
       })
     },
     getAvailableTimeZones() {
       return this.$api
         .get("/list/timezones")
         .then((result) => {
-          let timeZoneList = []
+          let optionsList = []
           Object.entries(result.data.timezones).forEach((value) => {
-            timeZoneList.push({
+            optionsList.push({
               label: value[1],
               value: value[0],
             })
 
           })
-          this.availableTimeZones = timeZoneList
+          this.availableOptions = optionsList
         })
     },
   },
   watch: {
-    timezone(timezone) {
+    currentSetting(newSetting) {
 
-      // Don't dispatch when first occurence setting a value because this is the initial setting
+      // Don't dispatch when setting a value first because this is the initial setting
       if (this.firstSet) {
         this.firstSet = false
         return
       }
 
-      this.$store.dispatch('settings/setToAccount', { key: 'timezone', value: timezone })
+      this.$store.dispatch('settings/setToAccount', { key: this.settingName, value: newSetting })
     }
   },
   computed: {
