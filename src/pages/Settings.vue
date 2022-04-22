@@ -3,6 +3,7 @@
     <div class="text-h6 col-12">General</div>
       <UserId />
       <TimeZone />
+      <SummaryInterval />
   </div>
   <div class="q-pa-md row items-start q-gutter-md">
     <div class="text-h6 col-12">App</div>
@@ -22,6 +23,7 @@ import DarkMode from 'components/Settings/DarkMode.vue'
 import DashboardCardsInfo from 'components/Settings/DashboardCardsInfo.vue'
 import DashboardCardsDisplay from 'components/Settings/DashboardCardsDisplay.vue'
 import TimeZone from 'components/Settings/TimeZone.vue'
+import SummaryInterval from 'components/Settings/SummaryInterval.vue'
 
 export default defineComponent({
   name: 'Settings',
@@ -31,6 +33,7 @@ export default defineComponent({
     DashboardCardsInfo,
     DashboardCardsDisplay,
     TimeZone,
+    SummaryInterval,
   },
   created() {
     this.$store.dispatch('setHeadline', {text: 'Dobby Settings', icon: 'fal fa-sliders-h'})
