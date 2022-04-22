@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       statistics: {},
+      statisticsRaw: [],
     }
   },
   created() {
@@ -39,8 +40,14 @@ export default {
       this.$axios.get('https://api.defichain-dobby.com/statistics')
         .then((result) => {
           this.statistics = result.data.data
+          for (let i = 2; i <= result.data.meta.last_page; i++) {
+            this.$axios.get('https://api.defichain-dobby.com/statistics?page=' + i)
+              .then(result => {
+                this.statistics = this.statistics.concat(result.data.data)
+              })
+          }
         })
-    }
+    },
   },
 }
 </script>
@@ -48,19 +55,4 @@ export default {
 <style lang="sass" scoped>
 .q-card
     width: 100%
-/*
-  .q-card
-    min-width: 340px
-    max-width: 23%
-    min-height: 250px
-
-  body.screen--xs, body.screen--sm
-    .q-card
-      width: 100%
-      max-width: inherit
-
-  body.screen--md
-    .q-card
-      width: 47vw
-      max-width: inherit
 </style>
