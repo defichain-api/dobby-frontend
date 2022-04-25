@@ -26,11 +26,14 @@
     </q-card-section>
     <q-separator inset />
     <q-card-section>
-      <area-chart :data="history" :colors="[getColor('accent')]" :download="true" style="height: 200px;"/>
+      <area-chart :data="history" :points="false" :colors="[getColor('accent')]" :download="true" style="height: 200px;"/>
     </q-card-section>
     <q-card-section>
-      <line-chart :data="historyAvg" :colors="[getColor('accent'), getColor('primary')]" :download="true" style="height: 200px;"/>
+      <area-chart :data="historyAvg" :points="false" :colors="[getColor('accent')]" :download="true" style="height: 200px;"/>
     </q-card-section>
+    <!-- <q-card-section>
+      <line-chart :data="historyAvg" :colors="[getColor('accent'), getColor('primary')]" :download="true" style="height: 200px;"/>
+    </q-card-section> -->
   </q-card>
 </template>
 
@@ -75,14 +78,15 @@ export default {
       let collection = []
 
       // Sum
+      /*
       let tmp = {name: 'AVG', data: {}}
       this.statistics.forEach(function(day) {
         tmp['data'][day.date] = day.avg_ratio
       })
       collection.push(tmp)
-
+      */
       // Per User
-      tmp = {name: 'Median', data: {}}
+      let tmp = {name: 'Median', data: {}}
       this.statistics.forEach(function(day) {
         tmp['data'][day.date] = day.median_ratio
       })

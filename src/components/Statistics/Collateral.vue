@@ -26,10 +26,10 @@
     </q-card-section>
     <q-separator inset />
     <q-card-section>
-      <area-chart :data="history" :colors="[getColor('accent')]" :download="true" style="height: 200px;"/>
+      <area-chart :data="history" :points="false" :colors="[getColor('accent')]" :download="true" style="height: 200px;"/>
     </q-card-section>
     <q-card-section>
-      <line-chart :data="historyAvg" :colors="[getColor('accent'), getColor('primary')]" :download="true" style="height: 200px;"/>
+      <line-chart :data="historyAvg" :points="false" :colors="[getColor('accent'), getColor('primary')]" :download="true" style="height: 200px;"/>
     </q-card-section>
   </q-card>
 </template>
