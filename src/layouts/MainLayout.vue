@@ -38,7 +38,6 @@
             <q-avatar size="35px" class="text-caption">
               <q-icon name="far fa-hat-wizard" style="font-size: 1.5em" />
             </q-avatar>
-            <!--<q-tooltip>Account</q-tooltip>-->
             <q-menu
               transition-show="jump-left"
               transition-hide="jump-right"
@@ -55,18 +54,13 @@
                     checked-icon="fas fa-moon"
                     unchecked-icon="fas fa-sun"
                   />
-                  <!--
-                  <q-toggle v-model="autoReload" label="Auto Reload" />
-                  -->
                   <q-toggle
                     v-model="privacy"
                     label="Hide sensible data"
                     checked-icon="fas fa-socks"
                     unchecked-icon="fas fa-eye"
                   />
-                  <!--
-                  <div>All Settings</div>
-                  -->
+                  <q-btn class="q-mt-sm" to="settings" dense rounded outline icon="fa-light fa-sliders" :label="$t('All Settings')" v-close-popup />
                 </div>
 
                 <q-separator vertical inset class="q-mx-lg" />
@@ -75,9 +69,6 @@
                   <q-avatar size="72px">
                     <q-icon name="far fa-hat-wizard" />
                   </q-avatar>
-
-                  <!-- <div class="text-subtitle1 q-mt-md q-mb-xs">F4B...3CB</div> -->
-
                   <q-btn
                     color="primary"
                     label="Logout"
