@@ -12,12 +12,12 @@ export default {
 			"uiDashboardHealthSummaryEnabled": false,
 			"uiDashboardCollateralInfoEnabled": true,
 			"uiDashboardCollateralWaypointsEnabled": false,
-
 			"summaryInterval": "daily_2x",
+			"timezone": "Europe/Berlin"
+
 			"depositAddress": "8Q95shiR4uJv****atA8VHiEEAwc4Syj1W", // used for phone credits
 			"depositInfoMail": "my@email.de", // info email address for credit deposit
 			"currentRatioEnabled": true, // default: false
-			"timezone": "Europe/Berlin"
 		}
 		*/
 
@@ -65,11 +65,15 @@ export default {
 			commit('set', data)
     },
     setToAccount({ commit }, data) {
-      commit('set', data)
-      api.put("/user/settings", {
-        [data.key]: data.value
+      return new Promise((resolve, reject) => {
+        commit('set', data)
+        api.put("/user/settings", {
+          [data.key]: data.value
+        })
+          .then(() => resolve())
+          .catch(() => reject(new Error('something went wrong while saving')))
       })
-    }
+    },
 	},
 	mutations: {
 		set (state, data) {
