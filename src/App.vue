@@ -27,7 +27,7 @@ export default defineComponent({
     // PROCEED WITH OTHER STUFF =====================================================
 
     // set dark mode setting
-    this.$q.dark.set(this.getSettingValue('darkMode'))
+    this.$q.dark.set(this.getSettingValue('uiTheme'))
 
     this.setupAxiosInterceptors()
 
@@ -54,14 +54,14 @@ export default defineComponent({
   methods: {
     setupAxiosInterceptors() {
       this.$api.interceptors.request.use((request) =>{
-        this.$store.commit('requestStart', request.url)
+        this.$store.commit('requestStart', request.method.toUpperCase() + " " + request.url)
         return request
       }, (error) => {
         this.dataRefreshError()
         return Promise.reject(error)
       })
       this.$api.interceptors.response.use((response) => {
-        this.$store.commit('requestDone', response.config.url)
+        this.$store.commit('requestDone', response.config.method.toUpperCase() + " " + response.config.url)
         this.$store.commit('apiResponded')
         return response
       }, (error) => {

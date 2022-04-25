@@ -192,7 +192,7 @@ export default {
 
     // returns true if privacy mode is enabled
     privacy: function() {
-      return this.settingValue('privacy')
+      return this.settingValue('uiPrivacyEnabled')
     },
 
     /**

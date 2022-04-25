@@ -38,7 +38,6 @@
             <q-avatar size="35px" class="text-caption">
               <q-icon name="far fa-hat-wizard" style="font-size: 1.5em" />
             </q-avatar>
-            <q-tooltip>Account</q-tooltip>
             <q-menu
               transition-show="jump-left"
               transition-hide="jump-right"
@@ -48,20 +47,20 @@
                   <div class="text-h6 q-mb-md">Quick Settings</div>
                   <q-toggle
                     label="Color Scheme"
-                    v-model="darkMode"
+                    v-model="uiTheme"
                     toggle-indeterminate
                     indeterminate-value="auto"
                     indeterminate-icon="fas fa-adjust"
                     checked-icon="fas fa-moon"
                     unchecked-icon="fas fa-sun"
                   />
-                  <!--
-                  <q-toggle v-model="autoReload" label="Auto Reload" />
-                  -->
-                  <q-toggle v-model="privacy" label="Hide sensible data" />
-                  <!--
-                  <div>All Settings</div>
-                  -->
+                  <q-toggle
+                    v-model="privacy"
+                    label="Hide sensible data"
+                    checked-icon="fas fa-socks"
+                    unchecked-icon="fas fa-eye"
+                  />
+                  <q-btn class="q-mt-sm" to="settings" dense rounded outline icon="fa-light fa-sliders" :label="$t('All Settings')" v-close-popup />
                 </div>
 
                 <q-separator vertical inset class="q-mx-lg" />
@@ -70,9 +69,6 @@
                   <q-avatar size="72px">
                     <q-icon name="far fa-hat-wizard" />
                   </q-avatar>
-
-                  <!-- <div class="text-subtitle1 q-mt-md q-mb-xs">F4B...3CB</div> -->
-
                   <q-btn
                     color="primary"
                     label="Logout"
@@ -166,9 +162,9 @@ export default {
     const $q = useQuasar()
     const leftDrawerOpen = ref(false)
     const bar = ref(null)
-    const darkMode = ref($q.dark.isActive)
+    const uiTheme = ref($q.dark.isActive)
     const store = useStore()
-    const privacy = ref(store.getters['settings/value']('privacy'))
+    const privacy = ref(store.getters['settings/value']('uiPrivacyEnabled'))
     const version = process.env.VERSION
     const release = process.env.CURRENT_RELEASE
     const releaseDate = process.env.RELEASE_DATE
@@ -181,19 +177,19 @@ export default {
       store.dispatch('account/logout')
     }
 
-    watch(darkMode, (darkMode) => {
-      $q.dark.set(darkMode)
-      store.dispatch('settings/set', { key: 'darkMode', value: darkMode })
+    watch(uiTheme, (uiTheme) => {
+      $q.dark.set(uiTheme)
+      store.dispatch('settings/setToAccount', { key: 'uiTheme', value: uiTheme })
     })
 
     watch(privacy, (privacyActive) => {
-      store.dispatch('settings/set', { key: 'privacy', value: privacyActive })
+      store.dispatch('settings/setToAccount', { key: 'uiPrivacyEnabled', value: privacyActive })
     })
 
     return {
       leftDrawerOpen,
       bar,
-      darkMode,
+      uiTheme,
       privacy,
       version,
       release,

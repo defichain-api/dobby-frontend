@@ -38,7 +38,7 @@ export default defineComponent({
   name: 'DarkModeSetting',
   watch: {
     mode(mode) {
-      this.$store.dispatch('settings/set', { key: 'darkMode', value: mode })
+      this.$store.dispatch('settings/setToAccount', { key: 'uiTheme', value: mode })
       this.$q.dark.set(mode)
     }
   },

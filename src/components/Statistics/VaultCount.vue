@@ -8,11 +8,7 @@
     </q-card-section>
     <q-separator inset />
     <q-card-section>
-      <area-chart :data="history" :colors="[getColor('accent')]" :download="true" style="height: 200px;"/>
-    </q-card-section>
-    <q-separator />
-    <q-card-section>
-      <area-chart :data="history" :colors="[getColor('accent')]" :download="true" style="height: 200px;"/>
+      <area-chart :data="history" :points="false" :colors="[getColor('accent')]" :download="true" style="height: 200px;"/>
     </q-card-section>
   </q-card>
 </template>
