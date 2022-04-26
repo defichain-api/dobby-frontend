@@ -8,6 +8,7 @@
   <div class="q-pa-md row items-start q-gutter-md">
     <div class="text-h6 col-12">App</div>
       <DarkMode />
+      <Privacy />
   </div>
   <div class="q-pa-md row items-start q-gutter-md">
     <div class="text-h6 col-12">Dashboard</div>
@@ -24,6 +25,7 @@ import DashboardCardsInfo from 'components/Settings/DashboardCardsInfo.vue'
 import DashboardCardsDisplay from 'components/Settings/DashboardCardsDisplay.vue'
 import TimeZone from 'components/Settings/TimeZone.vue'
 import SummaryInterval from 'components/Settings/SummaryInterval.vue'
+import Privacy from 'components/Settings/Privacy.vue'
 
 export default defineComponent({
   name: 'Settings',
@@ -34,6 +36,7 @@ export default defineComponent({
     DashboardCardsDisplay,
     TimeZone,
     SummaryInterval,
+    Privacy,
   },
   created() {
     this.$store.dispatch('setHeadline', {text: 'Dobby Settings', icon: 'fal fa-sliders-h'})
