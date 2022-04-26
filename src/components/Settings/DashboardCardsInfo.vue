@@ -40,41 +40,31 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default defineComponent({
   name: 'DashboardCardsInfo',
   data() {
     return {
-        healthSummary: true,
-        collateralInfo: true,
-        collateralWaypoints: true,
+      healthSummary: this.$store.getters['settings/value']('uiDashboardHealthSummaryEnabled'),
+      collateralInfo: this.$store.getters['settings/value']('uiDashboardCollateralInfoEnabled'),
+      collateralWaypoints: this.$store.getters['settings/value']('uiDashboardCollateralWaypointsEnabled'),
     }
-  },
-  created() {
-    this.healthSummary = this.settingValue('uiDashboardHealthSummaryEnabled')
-    this.collateralInfo = this.settingValue('uiDashboardCollateralInfoEnabled')
-    this.collateralWaypoints = this.settingValue('uiDashboardCollateralWaypointsEnabled')
   },
   watch: {
     healthSummary(setting) {
-      this.setSetting({ key: 'uiDashboardHealthSummaryEnabled', value: setting })
+      if (!this.initializing) this.setSetting({ key: 'uiDashboardHealthSummaryEnabled', value: setting })
     },
     collateralInfo(setting) {
-      this.setSetting({ key: 'uiDashboardCollateralInfoEnabled', value: setting })
+      if (!this.initializing) this.setSetting({ key: 'uiDashboardCollateralInfoEnabled', value: setting })
     },
     collateralWaypoints(setting) {
-      this.setSetting({ key: 'uiDashboardCollateralWaypointsEnabled', value: setting })
+      if (!this.initializing) this.setSetting({ key: 'uiDashboardCollateralWaypointsEnabled', value: setting })
     },
   },
   methods: {
     ...mapActions({
       setSetting: 'settings/setToAccount',
-    }),
-  },
-  computed: {
-    ...mapGetters({
-      settingValue: 'settings/value',
     }),
   },
 })

@@ -40,7 +40,8 @@ export default {
 			currency: { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 },
 			currencyNoDecimals: { style: 'currency', currency: 'USD', maximumFractionDigits: 0 },
 			twoDecimals: { minimumFractionDigits:2, maximumFractionDigits: 2 },
-		},
+    },
+    savingSettingsToAccount: false,
 	},
 	getters: {
 		value: (state) => (key) => {
@@ -48,7 +49,10 @@ export default {
 		},
 		numberFormats: (state) => {
 			return state.numberFormats
-		}
+    },
+    savingSettingsToAccount: (state) => {
+      return state.savingSettingsToAccount
+    }
 	},
 	actions: {
 		initFromLocalStorage ({ commit }) {
@@ -60,11 +64,14 @@ export default {
 					commit('set', { key: value[0], value: value[1] })
 				})
 			}
-		},
+    },
+
 		set({ commit }, data) {
 			commit('set', data)
     },
+
     setToAccount({ commit }, data) {
+      commit('indicateSavingSettingsToAccount')
       return new Promise((resolve, reject) => {
         commit('set', data)
         api.put("/user/settings", {
@@ -72,6 +79,7 @@ export default {
         })
           .then(() => resolve())
           .catch(() => reject(new Error('something went wrong while saving')))
+          .finally(() => commit('doneSavingSettingsToAccount'))
       })
     },
 	},
@@ -83,6 +91,12 @@ export default {
       if (process.env.DEV) {
         console.log("[DEBUG] Saving setting to local storage: " + data.key + " = " + data.value)
       }
-		},
+    },
+    indicateSavingSettingsToAccount(state) {
+      state.savingSettingsToAccount = true
+    },
+    doneSavingSettingsToAccount(state) {
+      state.savingSettingsToAccount = false
+    }
 	},
 }

@@ -219,7 +219,7 @@ export default {
   },
   data() {
     return {
-      overCollateralizationFactor: 3,
+      overCollateralizationFactor: 2,
     }
   },
   mounted() {

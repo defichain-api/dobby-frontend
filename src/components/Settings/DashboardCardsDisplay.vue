@@ -39,27 +39,18 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'DashboardCardsDisplay',
   data() {
     return {
-      mode: null,
+      mode: this.$store.getters['settings/value']('uiDashboardCardsAsCarousel'),
     }
-  },
-  created() {
-    this.mode = this.settingsValue('uiDashboardCardsAsCarousel')
   },
   watch: {
     mode(mode) {
       this.$store.dispatch('settings/setToAccount', { key: 'uiDashboardCardsAsCarousel', value: mode })
     }
-  },
-  computed: {
-    ...mapGetters({
-      settingsValue: 'settings/value',
-    }),
   },
 })
 </script>

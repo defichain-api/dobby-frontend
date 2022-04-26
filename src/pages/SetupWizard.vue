@@ -312,7 +312,6 @@ export default defineComponent({
     let addresses = []
 
     addresses = this.$route.params?.vaults?.split(",") || []
-    //console.log(addresses)
 
     if (this.$route.params?.vaults && addresses.length > 0) {
       //this.showSetup = true

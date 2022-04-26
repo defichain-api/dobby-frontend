@@ -84,7 +84,6 @@ export default {
         setTimeout(() => {
           this.connectedWebhookGateway = true
           this.loading = false
-          console.log(result)
         }, 1500)
       })
       .catch((error) => {

@@ -96,7 +96,6 @@ export default defineComponent({
       this.$store
         .dispatch('settings/setToAccount', { key: this.settingName, value: newSetting })
         .then(() => {
-          console.log("done")
           this.saving = false
           this.savingDone = true
         })

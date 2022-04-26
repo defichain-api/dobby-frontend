@@ -30,8 +30,17 @@
         <q-spinner
           color="white"
           size="2.5em"
-          v-if="requestRunning"
+          v-if="showRequestRunning"
         />
+
+        <transition appear enter-active-class="animated flipInY" leave-active-class="animated flipOutY" :duration="2000">
+          <div class="col-auto" v-show="showSavingSettingsToAccount">
+            <span class="text-body">
+              saved
+              <q-icon class="q-ml-sm" name="fa-light fa-cloud-check" size="sm" color="positive" />
+            </span>
+          </div>
+        </transition>
 
         <div class="q-gutter-sm row items-center no-wrap">
           <q-btn round flat>
@@ -192,6 +201,11 @@ export default {
     const version = process.env.VERSION
     const release = process.env.CURRENT_RELEASE
     const releaseDate = process.env.RELEASE_DATE
+    const requestRunning = computed(() => store.getters["requestRunning"])
+    const showRequestRunning = ref(false)
+    const savingSettingsToAccount = computed(() => store.getters["settings/savingSettingsToAccount"])
+    const showSavingSettingsToAccount = ref(false)
+
 
     function toggleLeftDrawer () {
       leftDrawerOpen.value = !leftDrawerOpen.value
@@ -202,12 +216,37 @@ export default {
     }
 
     watch(uiTheme, (uiTheme) => {
+      let setting = uiTheme
+      if (uiTheme === true) {
+        setting = 'dark'
+      }
+      if (uiTheme === false) {
+        setting = 'light'
+      }
       $q.dark.set(uiTheme)
-      store.dispatch('settings/setToAccount', { key: 'uiTheme', value: uiTheme })
+      store.dispatch('settings/setToAccount', { key: 'uiTheme', value: setting })
     })
 
     watch(privacy, (privacyActive) => {
       store.dispatch('settings/setToAccount', { key: 'uiPrivacyEnabled', value: privacyActive })
+    })
+
+    watch(requestRunning, (newVal) => {
+      if (newVal === true) {
+        showRequestRunning.value = true
+      }
+      if (newVal === false) {
+        setTimeout(() => showRequestRunning.value = false, 500)
+      }
+    })
+
+    watch(savingSettingsToAccount, (newVal) => {
+      if (newVal === true) {
+        showSavingSettingsToAccount.value = true
+      }
+      if (newVal === false) {
+        setTimeout(() => showSavingSettingsToAccount.value = false, 2000)
+      }
     })
 
     return {
@@ -218,17 +257,19 @@ export default {
       version,
       release,
       releaseDate,
+      requestRunning,
+      showRequestRunning,
+      savingSettingsToAccount,
+      showSavingSettingsToAccount,
 
       toggleLeftDrawer,
       logout,
-
-      requestRunning: computed(() => store.getters["requestRunning"]),
 
       autoReload: true,
       links1: [
         { icon: 'fab fa-fort-awesome-alt', text: 'Dashboard', to: "dashboard" },
       ],
-     links2: [
+      links2: [
         { icon: 'fal fa-bells', text: 'Manage Notifications', to: 'manage-notifications' },
         //{ icon: 'fal fa-bells', text: 'Manage Notifications 3.0', to: 'manage-notifications-new' },
         { icon: 'fal fa-archive', text: 'Manage Vaults', to: 'manage-vaults' },

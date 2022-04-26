@@ -181,7 +181,6 @@ export default {
       openURL(process.env.TELEGRAM_GROUP_LINK)
     },
     toCfp() {
-      console.log("test")
       openURL("https://github.com/DeFiCh/dfips/issues/75")
     },
     openInNewTab(url) {

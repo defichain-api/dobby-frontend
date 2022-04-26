@@ -2,7 +2,19 @@
   <q-card flat>
 
     <q-card-section>
-    <div class="text-primary text-h6">{{ $t('Color Theme') }}</div>
+      <div class="row items-center no-wrap">
+          <div class="col">
+              <div class="text-primary text-h6">{{ $t('Color Theme') }}</div>
+          </div>
+          <transition appear enter-active-class="animated flipInY" leave-active-class="animated flipOutY" :duration="2000">
+            <div class="col-auto" v-show="savingDone">
+              <span class="text-body">
+                saved
+                <q-icon class="q-ml-sm" name="fa-light fa-cloud-check" size="sm" color="positive" />
+              </span>
+            </div>
+          </transition>
+      </div>
     </q-card-section>
 
     <q-card-section class="q-pt-none text-center row">
@@ -36,11 +48,37 @@ import { mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'DarkModeSetting',
+  data() {
+    return {
+      saving: false,
+      savingDone: false,
+    }
+  },
   watch: {
     mode(mode) {
-      this.$store.dispatch('settings/setToAccount', { key: 'uiTheme', value: mode })
+      let setting = mode
+      if (mode === true) {
+        setting = 'dark'
+      }
+      if (mode === false) {
+        setting = 'light'
+      }
+      this.saving = true
+      this.$store
+        .dispatch('settings/setToAccount', { key: 'uiTheme', value: setting })
+        .then(() => {
+          this.saving = false
+          this.savingDone = true
+        })
       this.$q.dark.set(mode)
-    }
+    },
+    savingDone(newVal) {
+      if (newVal == true) {
+        setTimeout(() => {
+          this.savingDone = false
+        }, 2000)
+      }
+    },
   },
   computed: {
     ...mapGetters({
