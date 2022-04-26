@@ -122,7 +122,22 @@
 
           <q-separator inset class="q-mt-ms q-mb-xs" />
 
-          <q-item v-for="link in links4" :key="link.text" :to="link.to" v-ripple clickable>
+          <q-item v-for="link in links2" :key="link.text" v-ripple clickable :to="link.to">
+            <q-item-section avatar>
+              <q-icon color="grey" :name="link.icon" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ link.text }}
+              </q-item-label>
+            </q-item-section>
+            <q-badge v-if="link.badge && link.badge > 0" color="accent" floating>
+              {{ link.badge }}
+            </q-badge>
+          </q-item>
+
+          <q-separator inset class="q-mt-ms q-mb-xs" />
+
+          <q-item v-for="link in links3" :key="link.text" :to="link.to" v-ripple clickable>
             <q-item-section avatar>
               <q-icon color="grey" :name="link.icon" />
             </q-item-section>
@@ -134,10 +149,19 @@
           <q-separator inset class="q-mt-md q-mb-lg" />
 
           <div class="q-px-md text-grey-9">
-            <div class="row items-center q-gutter-x-sm q-gutter-y-xs text-grey drawer-footer">
-                <div class="text-body1">Version: {{ version }}</div>
-                <div style="width: 200px;" class="ellipsis">Build: <span style="font-size: 0.6em">{{ release }}</span></div>
-                <div>Date: {{ releaseDate }}</div>
+            <div class="items-center q-gutter-x-sm q-gutter-y-xs text-grey drawer-footer">
+                <div class="row">
+                  <div class="col-3">Version:</div>
+                  <div class="col-auto">{{ version }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-3">Build:</div>
+                  <div class="col-auto">{{ release }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-3">Date:</div>
+                  <div class="col-auto">{{ releaseDate }}</div>
+                </div>
             </div>
           </div>
         </q-list>
@@ -203,25 +227,13 @@ export default {
       autoReload: true,
       links1: [
         { icon: 'fab fa-fort-awesome-alt', text: 'Dashboard', to: "dashboard" },
-        // { icon: 'fas fa-dumpster-fire', text: 'Needs Your Attention', badge: 2 },
-        //{ icon: 'fas fa-dumpster-fire', text: 'Needs Your Attention' },
       ],
-      /*
-      links2: [
-        { icon: 'fas fa-charging-station', text: 'TSLA / USD' },
-        { icon: 'fab fa-twitter-square', text: 'TWTR / USD' },
-        { icon: 'fab fa-google', text: 'GOOGL / USD' },
-        { icon: 'fas fa-gamepad', text: 'GME / USD' }
-      ],
-      */
      links2: [
-        { icon: 'fab fa-telegram', text: 'Telegram' , active: true },
-        { icon: 'fas fa-envelope', text: 'Email', active: true },
-        { icon: 'far fa-comment', text: 'Push', active: false },
-      ],
-      links4: [
         { icon: 'fal fa-bells', text: 'Manage Notifications', to: 'manage-notifications' },
+        //{ icon: 'fal fa-bells', text: 'Manage Notifications 3.0', to: 'manage-notifications-new' },
         { icon: 'fal fa-archive', text: 'Manage Vaults', to: 'manage-vaults' },
+      ],
+      links3: [
         { icon: 'fal fa-sliders-h', text: 'Settings', to: 'settings' },
         { icon: 'fal fa-question-circle', text: 'WTF?!', to: 'wtf' },
         { icon: 'fal fa-chart-bar', text: 'Statistics', to: 'statistics' },
