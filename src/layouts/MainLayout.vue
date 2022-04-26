@@ -197,7 +197,10 @@ export default {
     const bar = ref(null)
     const uiTheme = ref($q.dark.isActive)
     const store = useStore()
-    const privacy = ref(store.getters['settings/value']('uiPrivacyEnabled'))
+    const privacy = computed({
+      get: () => store.getters['settings/value']('uiPrivacyEnabled'),
+      set: (privacyActive) => store.dispatch('settings/setToAccount', { key: 'uiPrivacyEnabled', value: privacyActive })
+    })
     const version = process.env.VERSION
     const release = process.env.CURRENT_RELEASE
     const releaseDate = process.env.RELEASE_DATE
@@ -225,10 +228,6 @@ export default {
       }
       $q.dark.set(uiTheme)
       store.dispatch('settings/setToAccount', { key: 'uiTheme', value: setting })
-    })
-
-    watch(privacy, (privacyActive) => {
-      store.dispatch('settings/setToAccount', { key: 'uiPrivacyEnabled', value: privacyActive })
     })
 
     watch(requestRunning, (newVal) => {
@@ -277,8 +276,7 @@ export default {
       links3: [
         { icon: 'fal fa-sliders-h', text: 'Settings', to: 'settings' },
         { icon: 'fal fa-question-circle', text: 'WTF?!', to: 'wtf' },
-        { icon: 'fal fa-chart-bar', text: 'Statistics', to: 'statistics' },
-        //{ icon: 'fal fa-comments', text: 'Send feedback', to: 'feedback' }
+        { icon: 'fa-light fa-chart-mixed', text: 'Statistics', to: 'statistics' },
       ],
     }
   }
