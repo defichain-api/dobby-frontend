@@ -45,7 +45,6 @@ export default defineComponent({
   name: 'PrivacySetting',
   data() {
     return {
-      //mode: this.$store.getters['settings/value']('uiPrivacyEnabled'),
       saving: false,
       savingDone: false,
     }
@@ -55,7 +54,6 @@ export default defineComponent({
       get: function () {
         return this.$store.getters['settings/value']('uiPrivacyEnabled')
       },
-      // setter
       set: function (mode) {
         this.saving = true
         this.$store
