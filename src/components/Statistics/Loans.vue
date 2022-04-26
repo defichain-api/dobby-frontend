@@ -85,8 +85,10 @@ export default {
       })
       collection.push(tmp)
       */
+
       // Per User
       let tmp = {name: 'Median', data: {}}
+      // tmp = {name: 'Median', data: {}}
       this.statistics.forEach(function(day) {
         tmp['data'][day.date] = day.median_ratio
       })
