@@ -59,7 +59,7 @@
 										v-model="uiTheme"
 										toggle-indeterminate
 										indeterminate-value="auto"
-										indeterminate-icon="fas fa-adjust"
+										indeterminate-icon="fa-regular fa-circle-half-stroke"
 										checked-icon="fas fa-moon"
 										unchecked-icon="fas fa-sun"
 									/>

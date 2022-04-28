@@ -79,7 +79,10 @@ export default {
 			return new Promise((resolve, reject) => {
 				commit('set', data)
 				api.put("/user/settings", {[data.key]: data.value})
-					.then(() => resolve())
+					.then(() => {
+						if (process.env.DEV) { console.log("[DEBUG] Synced setting to account: " + data.key + " = " + data.value)}
+						resolve()
+					})
 					.catch(() => reject(new Error('something went wrong while saving')))
 					.finally(() => commit('doneSavingSettingsToAccount'))
 			})
@@ -88,11 +91,9 @@ export default {
 	mutations: {
 		set (state, data) {
 			state.settings = { ...state.settings, [data.key]: data.value }
-			// write setting to local storage
-			// LocalStorage.set(process.env.LOCAL_STORAGE_SETTINGS_KEY, state.settings)
-			// if (process.env.DEV) {
-			//	 console.log("[DEBUG] Saving setting to local storage: " + data.key + " = " + data.value)
-			// }
+			if (process.env.DEV) {
+				console.log("[DEBUG] Setting written to vuex: " + data.key + ' = ' + data.value)
+			}
 		},
 		indicateSavingSettingsToAccount(state) {
 			state.savingSettingsToAccount = true
