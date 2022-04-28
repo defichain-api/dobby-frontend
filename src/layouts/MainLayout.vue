@@ -27,20 +27,20 @@
 
 				<q-space />
 
-				<q-spinner
-					color="white"
-					size="2.5em"
-					v-if="showRequestRunning"
-				/>
+				<transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+					<q-spinner
+						color="white"
+						size="2.5em"
+						v-if="showRequestRunning"
+					/>
+				</transition>
 
-				<transition appear enter-active-class="animated flipInY" leave-active-class="animated flipOutY" :duration="2000">
-					<div class="col-auto" v-show="showSavingSettingsToAccount">
-						<span class="text-body">
-							saved
-							<q-icon class="q-ml-sm" name="fa-light fa-cloud-check" size="sm" color="positive" />
-						</span>
+				<transition appear enter-active-class="animated flipInY" leave-active-class="animated flipOutY">
+					<div v-show="showSavingSettingsToAccount">
+						<q-avatar color="white" text-color="positive" icon="fa-light fa-cloud-check" />
 					</div>
 				</transition>
+
 
 				<div class="q-gutter-sm row items-center no-wrap">
 					<q-btn round flat>
@@ -235,13 +235,13 @@ export default {
 				showRequestRunning.value = true
 			}
 			if (newVal === false) {
-				setTimeout(() => showRequestRunning.value = false, 500)
-			}
+				setTimeout(() => showRequestRunning.value = false, 1000)
+				}
 		})
 
 		watch(savingSettingsToAccount, (newVal) => {
 			if (newVal === true) {
-				showSavingSettingsToAccount.value = true
+				setTimeout(() => showSavingSettingsToAccount.value = true, 300)
 			}
 			if (newVal === false) {
 				setTimeout(() => showSavingSettingsToAccount.value = false, 2000)
