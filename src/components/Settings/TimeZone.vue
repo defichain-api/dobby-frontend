@@ -35,6 +35,9 @@ export default defineComponent({
 			filteredOptions: [],
 		}
 	},
+	created() {
+		this.getAvailableTimeZones()
+	},
 	methods: {
 		filterAvailableOptions(val, update) {
 			if (val == '') {
