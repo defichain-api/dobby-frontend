@@ -54,12 +54,17 @@ export default defineComponent({
 				.get("/list/timezones")
 				.then((result) => {
 					let optionsList = []
+
+					optionsList.push({
+						label: 'UTC',
+						value: 'UTC',
+					})
+
 					Object.entries(result.data.timezones).forEach((value) => {
 						optionsList.push({
 							label: value[1],
 							value: value[0],
 						})
-
 					})
 					this.availableOptions = optionsList
 				})
