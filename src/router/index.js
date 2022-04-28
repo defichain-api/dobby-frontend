@@ -13,36 +13,36 @@ import { LocalStorage } from 'quasar'
  */
 
 export default route(function (/* { store, ssrContext } */) {
-  const createHistory = process.env.SERVER
-    ? createMemoryHistory
-    : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory)
+	const createHistory = process.env.SERVER
+		? createMemoryHistory
+		: (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory)
 
-  const Router = createRouter({
-    scrollBehavior: () => ({ left: 0, top: 0 }),
-    routes,
+	const Router = createRouter({
+		scrollBehavior: () => ({ left: 0, top: 0 }),
+		routes,
 
-    // Leave this as is and make changes in quasar.conf.js instead!
-    // quasar.conf.js -> build -> vueRouterMode
-    // quasar.conf.js -> build -> publicPath
-    history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
-  })
+		// Leave this as is and make changes in quasar.conf.js instead!
+		// quasar.conf.js -> build -> vueRouterMode
+		// quasar.conf.js -> build -> publicPath
+		history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
+	})
 
-  Router.beforeEach((to, from, next) => {
+	Router.beforeEach((to, from, next) => {
 
-    if (to.meta.requiresAuth == false) {
-      next()
-      return
-    }
+		if (to.meta.requiresAuth == false) {
+			next()
+			return
+		}
 
-    // redirect to setup wizard when no account key is set
-    const localStorageAccountKey = process.env.LOCAL_STORAGE_ACCOUNT_ID_KEY
-    if (!LocalStorage.has(localStorageAccountKey) || LocalStorage.getItem(localStorageAccountKey).length == 0) {
-      next({ name: 'setup' })
-      return
-    } else {
-      next()
-    }
-  })
+		// redirect to setup wizard when no account key is set
+		const localStorageAccountKey = process.env.LOCAL_STORAGE_ACCOUNT_ID_KEY
+		if (!LocalStorage.has(localStorageAccountKey) || LocalStorage.getItem(localStorageAccountKey).length == 0) {
+			next({ name: 'setup' })
+			return
+		} else {
+			next()
+		}
+	})
 
-  return Router
+	return Router
 })

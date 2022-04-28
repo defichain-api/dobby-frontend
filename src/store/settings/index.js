@@ -23,15 +23,16 @@ export default {
 
 		settings: {
 			uiTheme: 'auto',
-      language: 'en',
+			language: 'en',
 
-      uiPrivacyEnabled: false,
-      uiDashboardHealthSummaryEnabled: true,
-			uiDashboardCollateralInfoEnabled: true,
-			uiDashboardCollateralWaypointsEnabled: true,
-      uiDashboardCardsAsCarousel: 'auto',
+			uiPrivacyEnabled: null,
+			uiDashboardHealthSummaryEnabled: null,
+			uiDashboardCollateralInfoEnabled: null,
+			uiDashboardCollateralWaypointsEnabled: null,
+			uiDashboardCardsAsCarouselEnabled: null,
 
-      timezone: "Europe/London",
+			timezone: null,
+			summaryInterval: null,
 
 			triggerMultipleInfo: 1.5,
 			triggerMultipleWarning: 1.25,
@@ -40,8 +41,9 @@ export default {
 			currency: { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 },
 			currencyNoDecimals: { style: 'currency', currency: 'USD', maximumFractionDigits: 0 },
 			twoDecimals: { minimumFractionDigits:2, maximumFractionDigits: 2 },
-    },
-    savingSettingsToAccount: false,
+			noDecimals: { maximumFractionDigits: 0 },
+		},
+		savingSettingsToAccount: false,
 	},
 	getters: {
 		value: (state) => (key) => {
@@ -49,13 +51,14 @@ export default {
 		},
 		numberFormats: (state) => {
 			return state.numberFormats
-    },
-    savingSettingsToAccount: (state) => {
-      return state.savingSettingsToAccount
-    }
+		},
+		savingSettingsToAccount: (state) => {
+			return state.savingSettingsToAccount
+		}
 	},
 	actions: {
-		initFromLocalStorage ({ commit }) {
+		/*
+		initFromLocalStorage({ commit }) {
 			let settings = LocalStorage.getItem(process.env.LOCAL_STORAGE_SETTINGS_KEY)
 
 			// iterate over all settings keys found in local storage and store them in vuex
@@ -64,39 +67,39 @@ export default {
 					commit('set', { key: value[0], value: value[1] })
 				})
 			}
-    },
+		},
+		*/
 
 		set({ commit }, data) {
 			commit('set', data)
-    },
+		},
 
-    setToAccount({ commit }, data) {
-      commit('indicateSavingSettingsToAccount')
-      return new Promise((resolve, reject) => {
-        commit('set', data)
-        api.put("/user/settings", {
-          [data.key]: data.value
-        })
-          .then(() => resolve())
-          .catch(() => reject(new Error('something went wrong while saving')))
-          .finally(() => commit('doneSavingSettingsToAccount'))
-      })
-    },
+		setToAccount({ commit }, data) {
+			commit('indicateSavingSettingsToAccount')
+			return new Promise((resolve, reject) => {
+				commit('set', data)
+				api.put("/user/settings", {[data.key]: data.value})
+					.then(() => {
+						if (process.env.DEV) { console.log("[DEBUG] Synced setting to account: " + data.key + " = " + data.value)}
+						resolve()
+					})
+					.catch(() => reject(new Error('something went wrong while saving')))
+					.finally(() => commit('doneSavingSettingsToAccount'))
+			})
+		},
 	},
 	mutations: {
 		set (state, data) {
 			state.settings = { ...state.settings, [data.key]: data.value }
-			// write setting to local storage
-      LocalStorage.set(process.env.LOCAL_STORAGE_SETTINGS_KEY, state.settings)
-      if (process.env.DEV) {
-        console.log("[DEBUG] Saving setting to local storage: " + data.key + " = " + data.value)
-      }
-    },
-    indicateSavingSettingsToAccount(state) {
-      state.savingSettingsToAccount = true
-    },
-    doneSavingSettingsToAccount(state) {
-      state.savingSettingsToAccount = false
-    }
+			if (process.env.DEV) {
+				console.log("[DEBUG] Setting written to vuex: " + data.key + ' = ' + data.value)
+			}
+		},
+		indicateSavingSettingsToAccount(state) {
+			state.savingSettingsToAccount = true
+		},
+		doneSavingSettingsToAccount(state) {
+			state.savingSettingsToAccount = false
+		}
 	},
 }
