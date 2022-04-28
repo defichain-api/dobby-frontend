@@ -2,19 +2,7 @@
 	<q-card flat style="max-width: 350px;">
 
 		<q-card-section>
-			<div class="row items-center no-wrap">
-					<div class="col">
-							<div class="text-primary text-h6">{{ $t('Your Time Zone') }}</div>
-					</div>
-					<transition appear enter-active-class="animated flipInY" leave-active-class="animated flipOutY" :duration="2000">
-						<div class="col-auto" v-show="savingDone">
-							<span class="text-body">
-								saved
-								<q-icon class="q-ml-sm" name="fa-light fa-cloud-check" size="sm" color="positive" />
-							</span>
-						</div>
-					</transition>
-			</div>
+			<div class="text-primary text-h6">{{ $t('Your Time Zone') }}</div>
 			<div class="text q-mt-sm">{{ $t('Choose your time zone to let Dobby know when you\'ve got night and day.') }}</div>
 		</q-card-section>
 
@@ -44,18 +32,9 @@ export default defineComponent({
 	data() {
 		return {
 			settingName: 'timezone',
-			currentSetting: null,
 			availableOptions: [],
 			filteredOptions: [],
-			firstSet: true,
-			saving: false,
-			savingDone: false,
 		}
-	},
-	created() {
-		this.getAvailableTimeZones().finally(() => {
-			this.currentSetting = this.settingValue(this.settingName)
-		})
 	},
 	methods: {
 		filterAvailableOptions(val, update) {
@@ -84,32 +63,15 @@ export default defineComponent({
 				})
 		},
 	},
-	watch: {
-		currentSetting(newSetting) {
-
-			// Don't dispatch when setting a value first because this is the initial setting
-			if (this.firstSet) {
-				this.firstSet = false
-				return
-			}
-
-			this.saving = true
-			this.$store
-				.dispatch('settings/setToAccount', { key: this.settingName, value: newSetting })
-				.then(() => {
-					this.saving = false
-					this.savingDone = true
-				})
-		},
-		savingDone(newVal) {
-			if (newVal == true) {
-				setTimeout(() => {
-					this.savingDone = false
-				}, 2000)
-			}
-		},
-	},
 	computed: {
+		currentSetting: {
+			get: function() {
+				return this.$store.getters['settings/value'](this.settingName)
+			},
+			set: function(newSetting) {
+				this.$store.dispatch('settings/setToAccount', { key: this.settingName, value: newSetting })
+			}
+		},
 		...mapGetters({
 			settingValue: 'settings/value',
 		}),
