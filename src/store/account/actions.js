@@ -5,6 +5,8 @@ import { api } from 'boot/axios'
  * Actions for Account
  */
 
+// ----------------------------------------------------------------------------------
+
 /**
  * Get data from dobbyAccount key in local storage and pass it to Vuex
  */
@@ -89,3 +91,6 @@ export function addVault({ commit }, vaultData) {
 export function clearVaultList({ commit }) {
 	commit('clearVaultList')
 }
+
+// ----------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------

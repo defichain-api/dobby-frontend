@@ -1,5 +1,5 @@
 <template>
-	<q-card flat style="max-width: 350px;">
+	<q-card flat>
 
 		<q-card-section>
 			<div class="text-primary text-h6">{{ $t('Your Time Zone') }}</div>
@@ -77,7 +77,3 @@ export default defineComponent({
 	},
 })
 </script>
-
-<style lang="sass">
-
-</style>

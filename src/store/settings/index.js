@@ -1,26 +1,11 @@
-import { LocalStorage } from 'quasar'
 import { api } from 'boot/axios'
 
 export default {
 	namespaced: true,
+
+	// ----------------------------------------------------------------------------------
+
 	state: {
-		/*
-		{
-			"uiTheme": "dark", // dark, light, auto
-			"language": "de", // en, de
-			"uiPrivacyEnabled": false,
-			"uiDashboardHealthSummaryEnabled": false,
-			"uiDashboardCollateralInfoEnabled": true,
-			"uiDashboardCollateralWaypointsEnabled": false,
-			"summaryInterval": "daily_2x",
-			"timezone": "Europe/Berlin"
-
-			"depositAddress": "8Q95shiR4uJv****atA8VHiEEAwc4Syj1W", // used for phone credits
-			"depositInfoMail": "my@email.de", // info email address for credit deposit
-			"currentRatioEnabled": true, // default: false
-		}
-		*/
-
 		settings: {
 			uiTheme: 'auto',
 			language: 'en',
@@ -45,6 +30,9 @@ export default {
 		},
 		savingSettingsToAccount: false,
 	},
+
+	// ----------------------------------------------------------------------------------
+
 	getters: {
 		value: (state) => (key) => {
 			return state.settings[key]
@@ -56,20 +44,10 @@ export default {
 			return state.savingSettingsToAccount
 		}
 	},
+
+	// ----------------------------------------------------------------------------------
+
 	actions: {
-		/*
-		initFromLocalStorage({ commit }) {
-			let settings = LocalStorage.getItem(process.env.LOCAL_STORAGE_SETTINGS_KEY)
-
-			// iterate over all settings keys found in local storage and store them in vuex
-			if (settings && Object.keys(settings).length > 0) {
-				Object.entries(settings).forEach((value) => {
-					commit('set', { key: value[0], value: value[1] })
-				})
-			}
-		},
-		*/
-
 		set({ commit }, data) {
 			commit('set', data)
 		},
@@ -88,6 +66,9 @@ export default {
 			})
 		},
 	},
+
+	// ----------------------------------------------------------------------------------
+
 	mutations: {
 		set (state, data) {
 			state.settings = { ...state.settings, [data.key]: data.value }
