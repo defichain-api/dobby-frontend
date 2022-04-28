@@ -108,7 +108,7 @@ export default defineComponent({
 				vaultCollRatios += `[${vault.name} ${Math.round(vault.nextCollateralRatio)}%] `
 			})
 			vaultCollRatios = vaultCollRatios.slice(0, -1)
-			document.title = `${vaultCollRatios} -  DeFiChain Dobby`
+			document.title = `${vaultCollRatios} -	DeFiChain Dobby`
 		}
 	},
 	computed: {

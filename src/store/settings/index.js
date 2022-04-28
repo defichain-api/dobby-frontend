@@ -91,7 +91,7 @@ export default {
 			// write setting to local storage
 			// LocalStorage.set(process.env.LOCAL_STORAGE_SETTINGS_KEY, state.settings)
 			// if (process.env.DEV) {
-			//   console.log("[DEBUG] Saving setting to local storage: " + data.key + " = " + data.value)
+			//	 console.log("[DEBUG] Saving setting to local storage: " + data.key + " = " + data.value)
 			// }
 		},
 		indicateSavingSettingsToAccount(state) {
