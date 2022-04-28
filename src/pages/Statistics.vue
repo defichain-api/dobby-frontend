@@ -31,7 +31,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('setHeadline', {text: 'Dobby likes numbers', icon: 'fal fa-chart-bar'})
+    this.$store.dispatch('setHeadline', {text: 'Dobby likes numbers', icon: 'fa-light fa-chart-mixed'})
     this.getStatistics()
   },
   methods: {
