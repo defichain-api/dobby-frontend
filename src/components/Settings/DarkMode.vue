@@ -31,8 +31,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import { mapGetters } from 'vuex'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'DarkModeSetting',
@@ -54,9 +53,6 @@ export default defineComponent({
 				this.$q.dark.set(mode)
 			}
 		},
-		...mapGetters({
-			settingValue: 'settings/value',
-		}),
 	},
 })
 </script>

@@ -24,8 +24,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import { mapGetters } from 'vuex'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'TimeZoneSetting',
@@ -72,9 +71,6 @@ export default defineComponent({
 				this.$store.dispatch('settings/setToAccount', { key: this.settingName, value: newSetting })
 			}
 		},
-		...mapGetters({
-			settingValue: 'settings/value',
-		}),
 	},
 })
 </script>
