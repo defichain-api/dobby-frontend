@@ -30,6 +30,7 @@
 		<q-separator inset />
 
 		<q-card-section class="text-grey-6">
+			{{mode}}
 			<i><b>List</b></i>: scroll down<br />
 			<i><b>Carousel</b></i>: swipe left/right<br />
 			<i><b>Device</b></i>: Carousel on smarphones, list on larger devices<br />
@@ -45,10 +46,10 @@ export default defineComponent({
 	computed: {
 		mode: {
 			get: function() {
-				return this.$store.getters['settings/value']('uiDashboardCardsAsCarousel')
+				return this.$store.getters['settings/value']('uiDashboardCardsAsCarouselEnabled')
 			},
 			set: function(mode) {
-				this.$store.dispatch('settings/setToAccount', { key: 'uiDashboardCardsAsCarousel', value: mode })
+				this.$store.dispatch('settings/setToAccount', { key: 'uiDashboardCardsAsCarouselEnabled', value: mode })
 			}
 		},
 	},
