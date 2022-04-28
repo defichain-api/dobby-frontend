@@ -2,7 +2,7 @@ import { LocalStorage } from 'quasar'
 import { api } from 'boot/axios'
 
 /**
- * Actions for Settings
+ * Actions for Account
  */
 
 /**
@@ -10,81 +10,82 @@ import { api } from 'boot/axios'
  */
 export function initFromLocalStorage({ commit }) {
 
-    // get local storage key name from .env file
-    const localStorageAccountKey = process.env.LOCAL_STORAGE_ACCOUNT_ID_KEY
+	// get local storage key name from .env file
+	const localStorageAccountKey = process.env.LOCAL_STORAGE_ACCOUNT_ID_KEY
 
-    if (!LocalStorage.has(localStorageAccountKey) || LocalStorage.getItem(localStorageAccountKey).length == 0) {
-        if (process.env.DEV) { console.log("[DEBUG] no dobby account key found in local storage, or key is empty") }
-        return
-    }
+	if (!LocalStorage.has(localStorageAccountKey) || LocalStorage.getItem(localStorageAccountKey).length == 0) {
+		if (process.env.DEV) { console.log("[DEBUG] no dobby account key found in local storage, or key is empty") }
+		return
+	}
 
-    commit('setUserId', LocalStorage.getItem(localStorageAccountKey))
+	commit('setUserId', LocalStorage.getItem(localStorageAccountKey))
 }
 
 // ----------------------------------------------------------------------------------
 
 export function setUserId({ commit }, userId) {
-    // store user id in vuex and local storage
-    commit('setUserId', userId)
+	// store user id in vuex and local storage
+	commit('setUserId', userId)
 
-    // Remove all vaults from the vault list
-    commit('clearVaultList')
+	// Remove all vaults from the vault list
+	commit('clearVaultList')
 
-    // set user id for api auth
-    api.defaults.headers.common['x-user-auth'] = userId
+	// set user id for api auth
+	api.defaults.headers.common['x-user-auth'] = userId
 }
 
 // ----------------------------------------------------------------------------------
 
 export function logout({ commit }) {
-    // reset user id in vuex and local storage
-    commit('setUserId', '')
+	// reset user id in vuex and local storage
+	commit('setUserId', '')
 
-    // reset api auth
-    delete api.defaults.headers.common['x-user-auth']
+	// reset api auth
+	delete api.defaults.headers.common['x-user-auth']
 
-    // reload page
-    location.reload()
+	// reload page
+	location.reload()
 }
 
 // ----------------------------------------------------------------------------------
 
 export function loadUserData({ commit, dispatch }) {
-    return api
-        .get('/user')
-        .then((response) => {
-            response?.data?.vaults?.forEach((vault) => {
-                if (process.env.DEV) { console.log("[DEBUG] adding vault to vuex store " + vault.vaultId) }
-                commit('addVault', vault)
-                // todo: add settings
-            })
-        })
-        /*
-        .catch((error) => {
-            // whoops, error :(
-        })
-        */
+	return api
+		.get('/user')
+		.then((response) => {
+			response?.data?.vaults?.forEach((vault) => {
+				if (process.env.DEV) { console.log("[DEBUG] Adding vault to vuex store " + vault.vaultId) }
+				commit('addVault', vault)
+			})
+			for (let [key, value] of Object.entries(response.data.settings)) {
+				if (key == 'uiTheme') {
+					if (value == 'dark') value = true
+					if (value == 'light') value = false
+				}
+				dispatch('settings/set', {key: key, value: value}, { root: true })
+			}
+		})
 }
 
 // ----------------------------------------------------------------------------------
 
 export function processLoanData({ state, commit }) {
-    state.vaults.forEach((vault) => {
-        /**
-         * grab loans from all vaults and store them to vuex to be able to list all
-         * loans, independend from vaults
-         */
-    })
+	state.vaults.forEach((vault) => {
+		/**
+		 * grab loans from all vaults and store them to vuex to be able to list all
+		 * loans, independend from vaults
+		 */
+	})
 }
 
 // ----------------------------------------------------------------------------------
 
 export function addVault({ commit }, vaultData) {
-    commit('addVault', vaultData)
+	commit('addVault', vaultData)
 }
 
 // ----------------------------------------------------------------------------------
 
 export function clearVaultList({ commit }) {
-    commit('clearVaultList')
+	commit('clearVaultList')
 }

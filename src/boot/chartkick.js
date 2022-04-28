@@ -4,10 +4,10 @@ import VueChartkick from 'vue-chartkick'
 import 'chartkick/chart.js'
 
 VueChartkick.options = {
-  thousands: ",",
-  decimal: ".",
+	thousands: ",",
+	decimal: ".",
 }
 
 export default boot(({ app }) => {
-  app.use(VueChartkick)
+	app.use(VueChartkick)
 })
