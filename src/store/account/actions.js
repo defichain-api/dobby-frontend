@@ -54,15 +54,13 @@ export function loadUserData({ commit, dispatch }) {
 		.get('/user')
 		.then((response) => {
 			response?.data?.vaults?.forEach((vault) => {
-				if (process.env.DEV) { console.log("[DEBUG] adding vault to vuex store " + vault.vaultId) }
+				if (process.env.DEV) { console.log("[DEBUG] Adding vault to vuex store " + vault.vaultId) }
 				commit('addVault', vault)
 			})
-			for (const [key, value] of Object.entries(response.data.settings)) {
-				if (data.key == 'uiTheme') {
-				switch (value) {
-					case 'dark': value = true
-					case 'light': value = false
-				}
+			for (let [key, value] of Object.entries(response.data.settings)) {
+				if (key == 'uiTheme') {
+					if (value == 'dark') value = true
+					if (value == 'light') value = false
 				}
 				dispatch('settings/set', {key: key, value: value}, { root: true })
 			}

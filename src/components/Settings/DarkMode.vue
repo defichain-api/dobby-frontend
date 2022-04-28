@@ -7,7 +7,7 @@
 
 		<q-card-section class="q-pt-none text-center row">
 			<div class="col-4 text-right q-mt-md" :class="{'text-grey-6': mode != false}">
-				Light
+				<q-icon name="fa-light fa-sun" /> Light
 			</div>
 			<q-toggle
 				class="col-3 text-center"
@@ -15,16 +15,16 @@
 				indeterminate-value="auto"
 				v-model="mode"
 				size="xl"
-				icon="fal fa-hat-wizard"
+				icon="fa-regular fa-circle-half-stroke"
 				checked-icon="fal fa-moon-stars"
 				unchecked-icon="fal fa-sun"
 				color="primary"
-				:keep-color="true"
+				keep-color
 			/>
 			<div class="col-5 text-left q-mt-md" :class="{'text-grey-6': mode != true}">
-				Dark
+				Dark <q-icon name="fa-light fa-moon" />
 			</div>
-			<div class="text-center full-width" :class="{'text-grey-6': mode != 'auto'}">{{ $t('Determined by device\'s system settings') }}</div>
+			<div class="text-center full-width" :class="{'text-grey-6': mode != 'auto'}">{{ $t('Determined by device\'s system settings') }} <q-icon name="fa-regular fa-circle-half-stroke" /></div>
 		</q-card-section>
 
 	</q-card>
@@ -42,7 +42,6 @@ export default defineComponent({
 				return this.$q.dark.mode
 			},
 			set: function(mode) {
-				console.log(mode)
 				let setting = mode
 				if (mode === true) {
 					setting = 'dark'
