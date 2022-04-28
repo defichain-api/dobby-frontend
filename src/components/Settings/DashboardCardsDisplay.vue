@@ -30,7 +30,6 @@
 		<q-separator inset />
 
 		<q-card-section class="text-grey-6">
-			{{mode}}
 			<i><b>List</b></i>: scroll down<br />
 			<i><b>Carousel</b></i>: swipe left/right<br />
 			<i><b>Device</b></i>: Carousel on smarphones, list on larger devices<br />
