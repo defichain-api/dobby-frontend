@@ -280,7 +280,6 @@ export default {
 			],
 		}
 	}
->>>>>>> develop
 }
 </script>
 
