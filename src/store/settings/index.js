@@ -14,7 +14,7 @@ export default {
 			uiDashboardHealthSummaryEnabled: null,
 			uiDashboardCollateralInfoEnabled: null,
 			uiDashboardCollateralWaypointsEnabled: null,
-			uiDashboardCardsAsCarouselEnabled: null,
+			uiDashboardCardsAsCarousel: null,
 
 			timezone: null,
 			summaryInterval: null,

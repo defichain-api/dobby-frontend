@@ -199,10 +199,10 @@ export default defineComponent({
 	},
 	computed: {
 		showVaultsAsCarousel() {
-			if (this.settingsValue('uiDashboardCardsAsCarouselEnabled') == 'auto') {
+			if (this.settingsValue('uiDashboardCardsAsCarousel') == 'auto') {
 				return this.$q.screen.lt.sm
 			}
-			return this.settingsValue('uiDashboardCardsAsCarouselEnabled')
+			return this.settingsValue('uiDashboardCardsAsCarousel')
 		},
 		isDemo() {
 			return this.demoAccountID == this.userId

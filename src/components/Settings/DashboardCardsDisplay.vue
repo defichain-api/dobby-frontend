@@ -45,10 +45,10 @@ export default defineComponent({
 	computed: {
 		mode: {
 			get: function() {
-				return this.$store.getters['settings/value']('uiDashboardCardsAsCarouselEnabled')
+				return this.$store.getters['settings/value']('uiDashboardCardsAsCarousel')
 			},
 			set: function(mode) {
-				this.$store.dispatch('settings/setToAccount', { key: 'uiDashboardCardsAsCarouselEnabled', value: mode })
+				this.$store.dispatch('settings/setToAccount', { key: 'uiDashboardCardsAsCarousel', value: mode })
 			}
 		},
 	},
