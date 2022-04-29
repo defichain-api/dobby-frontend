@@ -187,12 +187,14 @@
 import { ref, watch, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
 	name: 'MainLayout',
 
 	setup () {
 		const $q = useQuasar()
+		const router = useRouter()
 		const leftDrawerOpen = ref(false)
 		const bar = ref(null)
 		const uiTheme = ref($q.dark.isActive)
@@ -215,7 +217,25 @@ export default {
 		}
 
 		function logout () {
-			store.dispatch('account/logout')
+			$q.notify({
+				type: 'notice',
+				message: 'Please save your Dobby user key before logging out!',
+				timeout: 60000,
+				actions: [
+					{
+						label: 'logout',
+						color: 'white',
+						icon: 'fal fa-sign-in',
+						handler: () => store.dispatch('account/logout'),
+					},
+					{
+						label: 'go to setup to see user key',
+						color: 'white',
+						icon: 'fal fa-sliders-h',
+						handler: () => router.push({ name: "settings" }),
+					},
+				]
+			})
 		}
 
 		watch(uiTheme, (uiTheme) => {
