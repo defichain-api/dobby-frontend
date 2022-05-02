@@ -11,9 +11,9 @@ import { LocalStorage } from 'quasar'
  * @param {string} userId
  */
 export function setUserId(state, userId) {
-    state.userId = userId
+		state.userId = userId
 
-    LocalStorage.set(process.env.LOCAL_STORAGE_ACCOUNT_ID_KEY, userId)
+		LocalStorage.set(process.env.LOCAL_STORAGE_ACCOUNT_ID_KEY, userId)
 }
 
 // ----------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ export function setUserId(state, userId) {
  * @param {object} state
  */
 export function clearVaultList(state) {
-    state.vaults = []
+		state.vaults = []
 }
 
 // ----------------------------------------------------------------------------------
@@ -36,15 +36,15 @@ export function clearVaultList(state) {
  * @param {object} vaultData
  */
 export function addVault(state, vaultData) {
-    const index = state.vaults.findIndex((vault) => vault.vaultId == vaultData.vaultId)
+		const index = state.vaults.findIndex((vault) => vault.vaultId == vaultData.vaultId)
 
-    if (index > -1) {
-        state.vaults[index] = { ...state.vaults[index], ...vaultData }
-        if (process.env.DEV) { console.log("[DEBUG] ... successfully updated " + vaultData.vaultId) }
-    } else {
-        state.vaults = [...state.vaults, vaultData]
-        if (process.env.DEV) { console.log("[DEBUG] ... successfully added " + vaultData.vaultId) }
-    }
+		if (index > -1) {
+				state.vaults[index] = { ...state.vaults[index], ...vaultData }
+				if (process.env.DEV) { console.log("[DEBUG] ... successfully updated " + vaultData.vaultId) }
+		} else {
+				state.vaults = [...state.vaults, vaultData]
+				if (process.env.DEV) { console.log("[DEBUG] ... successfully added " + vaultData.vaultId) }
+		}
 }
 
 // ----------------------------------------------------------------------------------
@@ -55,27 +55,27 @@ export function addVault(state, vaultData) {
  * @param {object} loanData
  */
 export function addLoan(state, loanData) {
-    if (state.loans.length == 0) {
-        // vault list is empty
-        state.loans = [...state.loans, loanData]
-        if (process.env.DEV) { console.log("[DEBUG] ... successfully added " + loanData.vaultId) }
-    } else {
-        /*
-        // check if this vault already exists, update data if already existing
-        state.vaults.forEach((vault, index) => {
-            if (vault.vaultId == vaultData.vaultId) {
-                // Update existing vault
-                state.vaults[index] = { ...state.vaults[index], vaultData }
-                if (process.env.DEV) { console.log("[DEBUG] ... successfully updated " + vaultData.vaultId) }
-                return
-            }
-        })
+		if (state.loans.length == 0) {
+				// vault list is empty
+				state.loans = [...state.loans, loanData]
+				if (process.env.DEV) { console.log("[DEBUG] ... successfully added " + loanData.vaultId) }
+		} else {
+				/*
+				// check if this vault already exists, update data if already existing
+				state.vaults.forEach((vault, index) => {
+						if (vault.vaultId == vaultData.vaultId) {
+								// Update existing vault
+								state.vaults[index] = { ...state.vaults[index], vaultData }
+								if (process.env.DEV) { console.log("[DEBUG] ... successfully updated " + vaultData.vaultId) }
+								return
+						}
+				})
 
-        // Add new vault entry
-        state.vaults = [...state.vaults, vaultData]
-        if (process.env.DEV) { console.log("[DEBUG] ... successfully added " + vaultData.vaultId) }
-        */
-    }
+				// Add new vault entry
+				state.vaults = [...state.vaults, vaultData]
+				if (process.env.DEV) { console.log("[DEBUG] ... successfully added " + vaultData.vaultId) }
+				*/
+		}
 }
 
 // ----------------------------------------------------------------------------------
