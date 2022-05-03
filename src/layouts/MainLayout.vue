@@ -18,7 +18,7 @@
 					icon="fas fa-bars"
 				/>
 
-				<q-btn flat no-caps no-wrap class="q-ml-xs">
+				<q-btn to="dashboard" flat no-caps no-wrap class="q-ml-xs">
 					<q-icon :name="this.$store.getters.headline.icon" size="28px" />
 					<q-toolbar-title shrink class="text-weight-bold text-h6">
 						{{ this.$store.getters.headline.text }}
