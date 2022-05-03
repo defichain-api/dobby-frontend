@@ -98,7 +98,6 @@ module.exports = configure(function (ctx) {
 
 		// https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
 		framework: {
-			//iconSet: 'fontawesome-v5-pro',
 			iconSet: 'fontawesome-v6-pro',
 			config: {
 				//dark: "auto",
@@ -118,6 +117,11 @@ module.exports = configure(function (ctx) {
 						},
 					],
 				},
+				loadingBar: {
+					position: "top",
+					size: "3px",
+					color: "secondary",
+				},
 			},
 
 			iconSet: "material-icons", // Quasar icon set
@@ -131,7 +135,7 @@ module.exports = configure(function (ctx) {
 			// directives: [],
 
 			// Quasar plugins
-			plugins: ["BottomSheet", "LocalStorage", "Meta", "Notify", "Dialog", ],
+			plugins: ["BottomSheet", "LocalStorage", "Meta", "Notify", "Dialog", "LoadingBar"],
 		},
 
 		// animations: 'all', // --- includes all animations

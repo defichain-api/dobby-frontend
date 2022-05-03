@@ -13,6 +13,8 @@
 				class="col-3"
 				toggle-indeterminate
 				indeterminate-value="auto"
+				false-value="card"
+				true-value="carousel"
 				v-model="mode"
 				size="xl"
 				icon="fal fa-phone-laptop"

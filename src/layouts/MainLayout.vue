@@ -26,7 +26,7 @@
 				</q-btn>
 
 				<q-space />
-
+				<!--
 				<transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 					<q-spinner
 						color="white"
@@ -34,6 +34,7 @@
 						v-if="showRequestRunning"
 					/>
 				</transition>
+				-->
 
 				<transition appear enter-active-class="animated flipInY" leave-active-class="animated flipOutY">
 					<div v-show="showSavingSettingsToAccount">
