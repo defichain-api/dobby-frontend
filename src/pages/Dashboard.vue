@@ -182,7 +182,8 @@ export default defineComponent({
 			if (this.settingsValue('uiDashboardCardsAsCarousel') == 'auto') {
 				return this.$q.screen.lt.sm
 			}
-			return this.settingsValue('uiDashboardCardsAsCarousel')
+
+			return (this.settingsValue('uiDashboardCardsAsCarousel') == 'carousel') ? true : false
 		},
 		isDemo() {
 			return this.demoAccountID == this.userId
