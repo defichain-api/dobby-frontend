@@ -83,8 +83,17 @@ export default defineComponent({
 							}}
 						]
 					})
-				} else {
-					this.dataRefreshError()
+				}
+				else if (error.response.status === 422) {
+					this.$q.notify({
+						group: 'userError',
+						type: 'negative',
+						timeout: 10000,
+						message: 'Whoops Dobby was unable to write to his API! Response Error: HTTP ' + error.response.status + ': ' + JSON.stringify(error.response.data.errors)
+					})
+				}
+				else {
+					this.dataRefreshError(error.response.statusText)
 				}
 				return Promise.reject(error)
 			})

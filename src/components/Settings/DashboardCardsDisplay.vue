@@ -13,6 +13,8 @@
 				class="col-3"
 				toggle-indeterminate
 				indeterminate-value="auto"
+				false-value="card"
+				true-value="carousel"
 				v-model="mode"
 				size="xl"
 				icon="fal fa-phone-laptop"
@@ -42,15 +44,15 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
 	name: 'DashboardCardsDisplay',
-	data() {
-		return {
-			mode: this.$store.getters['settings/value']('uiDashboardCardsAsCarousel'),
-		}
-	},
-	watch: {
-		mode(mode) {
-			this.$store.dispatch('settings/setToAccount', { key: 'uiDashboardCardsAsCarousel', value: mode })
-		}
+	computed: {
+		mode: {
+			get: function() {
+				return this.$store.getters['settings/value']('uiDashboardCardsAsCarousel')
+			},
+			set: function(mode) {
+				this.$store.dispatch('settings/setToAccount', { key: 'uiDashboardCardsAsCarousel', value: mode })
+			}
+		},
 	},
 })
 </script>

@@ -56,11 +56,18 @@ export default defineComponent({
 
 	body.screen--sm
 		.q-card
-			width: 47.5%
+			width: 47%
 			min-width: inherit
 
 	body.screen--md
 		.q-card
 			width: 31%
-			min-width: 300px
+
+	body.screen--lg
+		.q-card
+			width: 23%
+
+	body.screen--xl
+		.q-card
+			width: 23%
 </style>

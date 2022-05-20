@@ -18,7 +18,7 @@
 					icon="fas fa-bars"
 				/>
 
-				<q-btn flat no-caps no-wrap class="q-ml-xs">
+				<q-btn to="dashboard" flat no-caps no-wrap class="q-ml-xs">
 					<q-icon :name="this.$store.getters.headline.icon" size="28px" />
 					<q-toolbar-title shrink class="text-weight-bold text-h6">
 						{{ this.$store.getters.headline.text }}
@@ -26,21 +26,22 @@
 				</q-btn>
 
 				<q-space />
+				<!--
+				<transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+					<q-spinner
+						color="white"
+						size="2.5em"
+						v-if="showRequestRunning"
+					/>
+				</transition>
+				-->
 
-				<q-spinner
-					color="white"
-					size="2.5em"
-					v-if="showRequestRunning"
-				/>
-
-				<transition appear enter-active-class="animated flipInY" leave-active-class="animated flipOutY" :duration="2000">
-					<div class="col-auto" v-show="showSavingSettingsToAccount">
-						<span class="text-body">
-							saved
-							<q-icon class="q-ml-sm" name="fa-light fa-cloud-check" size="sm" color="positive" />
-						</span>
+				<transition appear enter-active-class="animated flipInY" leave-active-class="animated flipOutY">
+					<div v-show="showSavingSettingsToAccount">
+						<q-avatar color="white" text-color="positive" icon="fa-light fa-cloud-check" />
 					</div>
 				</transition>
+
 
 				<div class="q-gutter-sm row items-center no-wrap">
 					<q-btn round flat>
@@ -187,12 +188,14 @@
 import { ref, watch, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
 	name: 'MainLayout',
 
 	setup () {
 		const $q = useQuasar()
+		const router = useRouter()
 		const leftDrawerOpen = ref(false)
 		const bar = ref(null)
 		const uiTheme = ref($q.dark.isActive)
@@ -215,7 +218,25 @@ export default {
 		}
 
 		function logout () {
-			store.dispatch('account/logout')
+			$q.notify({
+				type: 'notice',
+				message: 'Please save your Dobby user key before logging out!',
+				timeout: 60000,
+				actions: [
+					{
+						label: 'logout',
+						color: 'white',
+						icon: 'fal fa-sign-in',
+						handler: () => store.dispatch('account/logout'),
+					},
+					{
+						label: 'go to setup to see user key',
+						color: 'white',
+						icon: 'fal fa-sliders-h',
+						handler: () => router.push({ name: "settings" }),
+					},
+				]
+			})
 		}
 
 		watch(uiTheme, (uiTheme) => {
@@ -235,13 +256,13 @@ export default {
 				showRequestRunning.value = true
 			}
 			if (newVal === false) {
-				setTimeout(() => showRequestRunning.value = false, 500)
-			}
+				setTimeout(() => showRequestRunning.value = false, 1000)
+				}
 		})
 
 		watch(savingSettingsToAccount, (newVal) => {
 			if (newVal === true) {
-				showSavingSettingsToAccount.value = true
+				setTimeout(() => showSavingSettingsToAccount.value = true, 300)
 			}
 			if (newVal === false) {
 				setTimeout(() => showSavingSettingsToAccount.value = false, 2000)

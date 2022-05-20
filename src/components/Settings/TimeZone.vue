@@ -1,5 +1,5 @@
 <template>
-	<q-card flat style="max-width: 350px;">
+	<q-card flat>
 
 		<q-card-section>
 			<div class="text-primary text-h6">{{ $t('Your Time Zone') }}</div>
@@ -35,6 +35,9 @@ export default defineComponent({
 			filteredOptions: [],
 		}
 	},
+	created() {
+		this.getAvailableTimeZones()
+	},
 	methods: {
 		filterAvailableOptions(val, update) {
 			if (val == '') {
@@ -51,12 +54,12 @@ export default defineComponent({
 				.get("/list/timezones")
 				.then((result) => {
 					let optionsList = []
+
 					Object.entries(result.data.timezones).forEach((value) => {
 						optionsList.push({
 							label: value[1],
 							value: value[0],
 						})
-
 					})
 					this.availableOptions = optionsList
 				})
@@ -74,7 +77,3 @@ export default defineComponent({
 	},
 })
 </script>
-
-<style lang="sass">
-
-</style>

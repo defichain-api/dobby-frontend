@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^6.1.1",
-    "@quasar/extras": "^1.13.5",
+    "@quasar/extras": "^1.13.6",
     "axios": "^0.21.1",
     "chart.js": "^3.6.2",
     "core-js": "^3.6.5",
