@@ -18,8 +18,12 @@
 					Get notified via Webhook <q-icon :name="webhookIcon" color="primary" />
 				</div>
 				<p class="text-body1">
-					Dobby is able to push notifications to any URL you provide. This message contains a JSON object and all neccessary data.
+					Dobby is able to push notifications to any URL you provide. These messages contain a JSON object and all neccessary data.
 					If you have no clue what this means, you won't need a webhook notification and can ignore this notification channel.
+				</p>
+
+				<p>
+					See the official Dobby Repo for a documentation of what Dobby will send you to your webhook URL: <a href="https://github.com/defichain-api/dobby">https://github.com/defichain-api/dobby</a>
 				</p>
 
 				<p v-if="hasGatewayType('webhook')">
