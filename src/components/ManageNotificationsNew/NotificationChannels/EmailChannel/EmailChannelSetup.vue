@@ -19,11 +19,11 @@
 				</div>
 				<p class="text-body1">
 					Dobby remembers the old days when email was the hot thing in the brand-new Internet.
-					If you've been born after the year 2000 you might not have such an emotional connection to this ancient stuff.
-					But hey, it's better than carrier pigeons.
+					If you've been born after the year 2000, you might not have such an emotional connection to this ancient stuff.
+					But hey, it's better than carrier pigeons. (But way less cooler than owls!)
 				</p>
 				<p>
-					Anyway, you can get notified via Email. Set it up here and you're good to go.
+					Anyway, you can get notified via email. Set it up here and you're good to go.
 				</p>
 
 				<p v-if="hasGatewayType('mail')">
@@ -79,7 +79,7 @@ import { mapGetters, mapActions } from 'vuex'
 import { openURL } from 'quasar'
 
 export default {
-	name: 'ConnectEmailChannel',
+	name: 'EmailChannelSetup',
 	data() {
 		return {
 			sentTestMessage: false,
@@ -115,13 +115,11 @@ export default {
 
 			this.loading = true
 
-			if ('gatewayId' in this.gatewayType('mail')) {
+			if (typeof this.gatewayType('mail') == 'object' && 'gatewayId' in this.gatewayType('mail')) {
 				if (process.env.DEV) { console.log("[DEBUG] there's already an active email gateway: ID#" + this.gatewayType('mail').gatewayId + " | removing gateway") }
 				this.$api.delete('user/gateways', { data: { 'gateway_id': this.gatewayType('mail').gatewayId } })
 			}
 
-			// buzzjoe@gmail.com
-			// michael@derfuchs.net
 
 			// make API call to set new email notification gateway
 			this.$api
@@ -145,6 +143,7 @@ export default {
 						timeout: 60000,
 					})
 				})
+
 		},
 
 		testEmailChannel() {
