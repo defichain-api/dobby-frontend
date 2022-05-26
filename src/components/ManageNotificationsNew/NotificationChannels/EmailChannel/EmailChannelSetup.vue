@@ -152,7 +152,7 @@ export default {
 					this.$q.notify({
 						group: 'gatewayTest',
 						type: 'positive',
-						message: 'Dobby should have said hello at ' + this.emailAddress + ' :)',
+						message: 'Dobby should have said hello at ' + this.gatewayType('mail').value + ' :)',
 					})
 				})
 		},
