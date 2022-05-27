@@ -232,7 +232,7 @@ export default {
 					{
 						label: 'go to setup to see user key',
 						color: 'white',
-						icon: 'fal fa-sliders-h',
+						icon: 'fa-light fa-sliders',
 						handler: () => router.push({ name: "settings" }),
 					},
 				]
@@ -287,16 +287,17 @@ export default {
 
 			autoReload: true,
 			links1: [
-				{ icon: 'fab fa-fort-awesome-alt', text: 'Dashboard', to: "dashboard" },
+				{ icon: 'fa-brands fa-fort-awesome', text: 'Dashboard', to: "dashboard" },
 			],
 			links2: [
-				{ icon: 'fal fa-bells', text: 'Manage Notifications', to: 'manage-notifications' },
-				//{ icon: 'fal fa-bells', text: 'Manage Notifications 3.0', to: 'manage-notifications-new' },
-				{ icon: 'fal fa-archive', text: 'Manage Vaults', to: 'manage-vaults' },
+				{ icon: 'fa-light fa-bells', text: 'Manage Notifications', to: 'manage-notifications' },
+				{ icon: 'fa-light fa-bells', text: 'Manage Notifications 3.0', to: 'manage-notifications-new' },
+				{ icon: 'fa-light fa-vault', text: 'Manage Vaults', to: 'manage-vaults' },
+				{ icon: 'fa-light fa-phone-rotary', text: 'Manage Phone Calls', to: 'manage-phone-calls' },
 			],
 			links3: [
-				{ icon: 'fal fa-sliders-h', text: 'Settings', to: 'settings' },
-				{ icon: 'fal fa-question-circle', text: 'WTF?!', to: 'wtf' },
+				{ icon: 'fa-light fa-sliders', text: 'Settings', to: 'settings' },
+				{ icon: 'fa-light fa-comments-question-check', text: 'WTF?!', to: 'wtf' },
 				{ icon: 'fa-light fa-chart-mixed', text: 'Statistics', to: 'statistics' },
 			],
 		}

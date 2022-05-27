@@ -141,7 +141,7 @@
 					<q-separator />
 
 					<q-card-actions>
-						<q-btn rounded outline color="primary" icon="fal fa-bells" label="add notifications" class="full-width" @click="addNotifications(vault)"></q-btn>
+						<q-btn rounded outline color="primary" icon="fa-light fa-bells" label="add notifications" class="full-width" @click="addNotifications(vault)"></q-btn>
 					</q-card-actions>
 				</q-card>
 			</transition-group>

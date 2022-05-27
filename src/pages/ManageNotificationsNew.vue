@@ -20,7 +20,7 @@ export default {
 		}
 	},
   created() {
-    this.$store.dispatch('setHeadline', { text: 'Dobby likes to talk', icon: 'fal fa-bells'})
+    this.$store.dispatch('setHeadline', { text: 'Dobby likes to talk', icon: 'fa-light fa-bells'})
     this.$store.dispatch('notifications/fetch')
   },
   computed: {

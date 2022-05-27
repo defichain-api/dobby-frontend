@@ -171,7 +171,7 @@ export default {
 		}
 	},
 	created() {
-		this.$store.dispatch('setHeadline', {text: 'About Dobby', icon: 'fal fa-question-circle'})
+		this.$store.dispatch('setHeadline', {text: 'About Dobby', icon: 'fa-light fa-comments-question-check'})
 	},
 	methods: {
 		toTwitter() {
