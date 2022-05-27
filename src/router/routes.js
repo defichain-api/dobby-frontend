@@ -63,6 +63,18 @@ const routes = [
 			meta: { requiresAuth: true },
 		}],
 	},
+		{
+			path: "/manage-phone-calls",
+			component: () => import("layouts/MainLayout.vue"),
+			children: [{
+				name: "manage-phone-calls",
+				path: "",
+				component: () => import("pages/ManagePhoneCalls.vue"),
+				meta: {
+					requiresAuth: true
+				},
+			}],
+		},
 	{
 		path: "/settings",
 		component: () => import("layouts/MainLayout.vue"),
