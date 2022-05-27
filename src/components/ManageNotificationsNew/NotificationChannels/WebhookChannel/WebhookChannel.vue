@@ -32,15 +32,28 @@
 					:color="($q.dark.channelActive) ? 'primary' : 'accent'"
 					rounded
 					outline
+					icon="fa-light fa-cloud-rainbow"
 					class="full-width"
 				/>
 				<q-btn
 					:label="$t('Change Address')"
 					rounded
 					outline
+					icon="fa-light fa-pen-to-square"
 					class="full-width"
 					:color="($q.dark.channelActive) ? 'primary' : 'accent'"
 					@click="showWebhookChannelSetup = true"
+				/>
+				<RemoveChannel
+					:label="$t('Remove Channel')"
+					:channelId="gatewayType('webhook').gatewayId"
+					color="warning"
+					flat
+					rounded
+					outline
+					icon="fa-light fa-circle-trash"
+					class="full-width q-mt-md"
+					size="sm"
 				/>
 			</ChannelOptionsMenu>
 		</q-item-section>
@@ -54,6 +67,7 @@ import { mapGetters } from 'vuex'
 import WebhookChannelSetup from 'components/ManageNotificationsNew/NotificationChannels/WebhookChannel/WebhookChannelSetup.vue'
 import ChannelOptionsMenu from 'components/ManageNotificationsNew/NotificationChannels/ChannelOptionsMenu.vue'
 import TestChannel from 'components/ManageNotificationsNew/NotificationChannels/TestChannel.vue'
+import RemoveChannel from 'components/ManageNotificationsNew/NotificationChannels/RemoveChannel.vue'
 
 export default {
 	name: 'WebhookChannel',
@@ -61,6 +75,7 @@ export default {
 		WebhookChannelSetup,
 		ChannelOptionsMenu,
 		TestChannel,
+		RemoveChannel,
   },
 	data() {
 		return {
@@ -72,6 +87,7 @@ export default {
 			return this.hasGatewayType('webhook')
 		},
 		...mapGetters({
+			gatewayType: 'notifications/gatewayType',
 			hasGatewayType: 'notifications/hasGatewayType',
 		}),
 	}

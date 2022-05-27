@@ -146,7 +146,7 @@
 									color="accent"
 									class="full-width q-mt-md"
 									label="ok, got it"
-									@click="isVisible = false"
+									v-close-popup
 								/>
 							</div>
 						</q-card-section>

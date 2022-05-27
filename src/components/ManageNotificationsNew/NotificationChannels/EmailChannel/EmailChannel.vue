@@ -29,6 +29,7 @@
 				<TestChannel
 					:label="$t('Send Test Message')"
 					channel="mail"
+					icon="fa-light fa-mailbox"
 					:color="($q.dark.channelActive) ? 'primary' : 'accent'"
 					rounded
 					outline
@@ -38,9 +39,21 @@
 					:label="$t('Change Address')"
 					rounded
 					outline
+					icon="fa-light fa-pen-to-square"
 					class="full-width"
 					:color="($q.dark.channelActive) ? 'primary' : 'accent'"
 					@click="showEmailChannelSetup = true"
+				/>
+				<RemoveChannel
+					:label="$t('Remove Channel')"
+					:channelId="gatewayType('mail').gatewayId"
+					color="warning"
+					flat
+					rounded
+					outline
+					icon="fa-light fa-circle-trash"
+					class="full-width q-mt-md"
+					size="sm"
 				/>
 			</ChannelOptionsMenu>
 		</q-item-section>
@@ -54,6 +67,7 @@ import { mapGetters } from 'vuex'
 import EmailChannelSetup from 'components/ManageNotificationsNew/NotificationChannels/EmailChannel/EmailChannelSetup.vue'
 import ChannelOptionsMenu from 'components/ManageNotificationsNew/NotificationChannels/ChannelOptionsMenu.vue'
 import TestChannel from 'components/ManageNotificationsNew/NotificationChannels/TestChannel.vue'
+import RemoveChannel from 'components/ManageNotificationsNew/NotificationChannels/RemoveChannel.vue'
 
 export default {
 	name: 'EmailChannel',
@@ -61,6 +75,7 @@ export default {
 		EmailChannelSetup,
 		ChannelOptionsMenu,
 		TestChannel,
+		RemoveChannel,
   },
 	data() {
 		return {
@@ -72,6 +87,7 @@ export default {
 			return this.hasGatewayType('mail')
 		},
 		...mapGetters({
+			gatewayType: 'notifications/gatewayType',
 			hasGatewayType: 'notifications/hasGatewayType',
 		}),
 	}
