@@ -36,6 +36,17 @@
 					outline
 					class="full-width"
 				/>
+				<RemoveChannel
+					:label="$t('Remove Channel')"
+					:channelId="gatewayType('telegram').gatewayId"
+					color="warning"
+					flat
+					rounded
+					outline
+					icon="fa-light fa-circle-trash"
+					class="full-width q-mt-md"
+					size="sm"
+				/>
 			</ChannelOptionsMenu>
 		</q-item-section>
 	</q-item>
@@ -48,6 +59,7 @@ import { mapGetters } from 'vuex'
 import TelegramChannelSetup from 'components/ManageNotificationsNew/NotificationChannels/TelegramChannel/TelegramChannelSetup.vue'
 import ChannelOptionsMenu from 'components/ManageNotificationsNew/NotificationChannels/ChannelOptionsMenu.vue'
 import TestChannel from 'components/ManageNotificationsNew/NotificationChannels/TestChannel.vue'
+import RemoveChannel from 'components/ManageNotificationsNew/NotificationChannels/RemoveChannel.vue'
 
 export default {
 	name: 'TelegramChannel',
@@ -55,6 +67,7 @@ export default {
 		TelegramChannelSetup,
 		ChannelOptionsMenu,
 		TestChannel,
+		RemoveChannel,
   },
 	data() {
 		return {
@@ -66,6 +79,7 @@ export default {
 			return this.hasGatewayType('telegram')
 		},
 		...mapGetters({
+			gatewayType: 'notifications/gatewayType',
 			hasGatewayType: 'notifications/hasGatewayType',
 		}),
 	}
