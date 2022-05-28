@@ -6,6 +6,16 @@ export default {
 	state: {
 		gateways: [],
 		triggers: [],
+		phone: {
+			//balanceDfi: 0,
+			phoneNumber: null,
+			canReceiveCall: null,
+			testCall: {
+				freeCallAvailable: null,
+				canReceiveTestCall: null,
+			},
+		},
+		paymentTransactions: null,
 	},
 
 	getters: {
@@ -79,6 +89,42 @@ export default {
 				return vaultTriggers
 			}
 		},
+
+		phoneData: (state) => {
+			return state.phone
+		},
+
+		hasPhoneNumber: (state) => {
+			return state.phone.phoneNumber != 'not set'
+		},
+
+		phoneNumber: (state) => {
+			return state.phone.phoneNumber
+		},
+
+		phoneBalance: (state) => {
+			return state.phone.balanceDfi
+		},
+
+		phoneCanReceiveCall: (state) => {
+			return state.phone.canReceiveCall
+		},
+
+		phoneFreeCallAvailable: (state) => {
+			return state.phone.testCall.freeCallAvailable
+		},
+
+		phoneCanReceiveTestCall: (state) => {
+			return state.phone.testCall.canReceiveTestCall
+		},
+
+		phoneDeposits: (state) => {
+			return (state.paymentTransactions == null) ? [] : state.paymentTransactions.deposits
+		},
+
+		phonePayments: (state) => {
+			return (state.paymentTransactions == null) ? [] : state.paymentTransactions.payments
+		},
 	},
 
 	actions: {
@@ -88,6 +134,8 @@ export default {
 		fetch({ dispatch }) {
 			dispatch('fetchGateways')
 			dispatch('fetchTriggers')
+			dispatch('fetchPhoneData')
+			dispatch('fetchPaymentTransactions')
 		},
 
 		/**
@@ -107,6 +155,30 @@ export default {
 			return api.get("/user/notification")
 				.then((result) => {
 					commit('setTriggers', result.data.data)
+				})
+		},
+
+		/**
+		 * Call Dobby API für a list of user's phone status
+		 */
+		fetchPhoneData({
+			commit
+		}) {
+			return api.get("/user/payment/state")
+				.then((result) => {
+					commit('setPhoneData', result.data)
+				})
+		},
+
+		/**
+		 * Call Dobby API für a list of user's phone status
+		 */
+		fetchPaymentTransactions({
+			commit
+		}) {
+			return api.get("/user/payment/transactions")
+				.then((result) => {
+					commit('setPaymentTransactions', result.data)
 				})
 		},
 
@@ -177,6 +249,20 @@ export default {
 		 */
 		setTriggers(state, triggers) {
 			state.triggers = triggers
+		},
+
+		/**
+		 * Call Dobby API für a list of user's notifictaion triggers
+		 */
+		setPhoneData(state, data) {
+			state.phone = data
+		},
+
+		/**
+		 * Call Dobby API für a list of user's notifictaion triggers
+		 */
+		setPaymentTransactions(state, data) {
+			state.paymentTransactions = data
 		},
 
 	},

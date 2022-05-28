@@ -118,7 +118,7 @@ export default {
 					setTimeout(() => {
 						this.loading = false
 						this.done = true
-						this.testEmailChannel()
+						this.testWebhookChannel()
 						this.webhookUrl = null
 						this.webhookUrlRepeat = null
 						if (process.env.DEV) { console.log("[DEBUG] created new webhook gateway: " + this.webhookUrl) }
@@ -135,7 +135,7 @@ export default {
 				})
 		},
 
-		testEmailChannel() {
+		testWebhookChannel() {
 			this.$api.post("/user/gateways/test", { 'type': 'webhook' })
 				.then((result) => {
 					this.$q.notify({

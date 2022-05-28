@@ -47,7 +47,7 @@ module.exports = configure(function (ctx) {
 
 			// Enable .env file for configuration
 			env: {
-				"VERSION": '5',
+				"VERSION": '6',
 				"CURRENT_RELEASE": '1337',
 				"RELEASE_DATE": '4/20/69',
 
@@ -60,6 +60,9 @@ module.exports = configure(function (ctx) {
 				"TELEGRAM_GROUP_LINK": 'https://t.me/defichain_dobby',
 				"TWITTER_LINK": 'https://twitter.com/dobby_dfi',
 				"DONATION_ADDRESS": 'df1qhmeuwav4me7dzallqcmkyqgppm5xzst7sup36d',
+
+				"FUNDS_DEPOSIT_ADDRESS": "df1qkdlejzz8qv8w76lp5w39k96dfnszekwawjpp9s",
+
 				...(require('dotenv').config().parsed),
 			},
 

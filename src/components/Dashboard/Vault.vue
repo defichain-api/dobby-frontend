@@ -331,16 +331,6 @@ export default {
 	}
 }
 </script>
-<!--
-
-	.vault
-		min-width: 290px
-		max-width: 32vw
-
-	.screen--xs .vault
-		width: 100%
-		max-width: inherit
--->
 <style lang="sass" scoped>
 	ul
 		padding-left: 10px

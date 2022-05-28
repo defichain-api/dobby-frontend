@@ -9,6 +9,7 @@
 		<NoNotificationGateways v-if="!requestRunning && !isDemo" />
 
 		<div class="q-pa-md row q-gutter-md">
+
 			<!-- Show hint when no user is set -->
 			<q-card flat v-if="vaults.size == 0 && !isDemo && !requestRunning">
 				<q-img src="/img/banner.jpg">
@@ -67,6 +68,38 @@
 					This will be undone when everything is fine again.
 				</q-card-section>
 			</q-card>
+
+			<!-- Show hint when calling is unavailable -->
+			<q-card flat v-if="hasGatewayType('phone') && !canReceiveCall" class="bg-negative text-white">
+
+				<q-card-section class="row no-wrap">
+					<div class="column flex flex-center">
+						<q-icon
+							size="55px"
+							class="q-pr-none"
+							name="fa-light fa-bomb"
+							color="white"
+						/>
+					</div>
+					<q-separator vertical class="q-mx-md " color="white" />
+					<div class="column flex flex-center">
+						Dobby cannot call you. Please take a look!
+					</div>
+			</q-card-section>
+
+				<q-card-actions class="text-center">
+					<q-btn
+						to="manage-phone-calls"
+						outline
+						rounded
+						color="white"
+						label="go to manage phone calls"
+						icon="fa-light fa-phone-rotary"
+						class="full-width"
+					/>
+				</q-card-actions>
+			</q-card>
+
 
 			<NextPriceTicker />
 
@@ -176,6 +209,9 @@ export default defineComponent({
 				done()
 			}, 1000)
 		},
+		...mapGetters({
+			hasGatewayType: 'notifications/hasGatewayType',
+		}),
 	},
 	computed: {
 		showVaultsAsCarousel() {
@@ -215,6 +251,7 @@ export default defineComponent({
 			settingsValue: 'settings/value',
 			requestRunning: 'requestRunning',
 			nextTick: 'chain/nextTick',
+			canReceiveCall: 'notifications/phoneCanReceiveCall',
 		}),
 	}
 })

@@ -1,6 +1,12 @@
 <template>
-	<div class="q-pa-md row items-start q-gutter-md">
-		Manage Phone Calls
+	<div v-if="!hasPhoneGateway" class="q-pa-md q-gutter-md">
+		<PhoneSetup  />
+	</div>
+	<div v-else class="q-pa-md q-gutter-md">
+		<!-- <PhoneSetup  />-->
+		<PhoneStatus  />
+		<PhoneBalances v-if="hasPhoneGateway" />
+		<PhoneTransactions v-if="hasPhoneGateway" />
 	</div>
 </template>
 
@@ -8,29 +14,35 @@
 import { defineComponent } from 'vue'
 import { mapGetters } from 'vuex'
 
+import PhoneStatus from "components/ManagePhoneCalls/PhoneStatus.vue"
+import PhoneSetup from "components/ManagePhoneCalls/PhoneSetup.vue"
+import PhoneBalances from "components/ManagePhoneCalls/PhoneBalances.vue"
+import PhoneTransactions from "components/ManagePhoneCalls/PhoneTransactions.vue"
+
 export default defineComponent({
 	name: 'ManagePhoneCalls',
+	components: {
+		PhoneStatus,
+		PhoneSetup,
+		PhoneBalances,
+		PhoneTransactions,
+	},
 	data () {
 		return {
 
 		}
 	},
+	created() {
+		this.$store.dispatch('setHeadline', { text: 'Dobby can call you', icon: 'fa-light fa-phone-rotary'})
+		this.$store.dispatch('notifications/fetch')
+	},
 	computed: {
-		locale: function() {
-			return this.$root.$i18n.locale
-		},
-		privacy() {
-			return this.settingValue('uiPrivacyEnabled')
+		hasPhoneGateway: function () {
+			return this.hasGatewayType('phone')
 		},
 		...mapGetters({
-			vaults: 'account/vaults',
-			userId: 'account/userId',
-			settingValue: 'settings/value',
-		}),
+			hasGatewayType: 'notifications/hasGatewayType',
+		})
 	},
 })
 </script>
-
-<style lang="sass">
-
-</style>

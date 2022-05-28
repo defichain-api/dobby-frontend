@@ -1,7 +1,7 @@
 <template>
 	<q-item>
 		<q-item-section avatar top>
-			<q-icon name="fa-light fa-phone" color="primary" />
+			<q-icon name="fa-light fa-phone-rotary" color="primary" />
 		</q-item-section>
 		<q-item-section>
 			<q-item-label>
@@ -27,7 +27,7 @@
 					<div class="row no-wrap q-pa-md">
 						<div class="column flex flex-center q-pa-md">
 							<q-avatar size="50px">
-								<q-icon name="fa-light fa-phone" color="primary" />
+								<q-icon name="fa-light fa-phone-rotary" color="primary" />
 							</q-avatar>
 						</div>
 						<q-separator vertical inset class="q-mx-lg" />
