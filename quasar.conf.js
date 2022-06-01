@@ -63,6 +63,8 @@ module.exports = configure(function (ctx) {
 
 				"FUNDS_DEPOSIT_ADDRESS": "df1qkdlejzz8qv8w76lp5w39k96dfnszekwawjpp9s",
 
+				"CALL_PRICE": 0.5, // DFI
+
 				...(require('dotenv').config().parsed),
 			},
 
