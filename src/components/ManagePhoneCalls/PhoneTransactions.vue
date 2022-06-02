@@ -54,7 +54,7 @@
 						</q-item-label>
 						<q-item-label caption v-if="!privacy">From: {{ deposit.senderAddress }}</q-item-label>
 						<q-item-label caption v-else>From: 🧦🧦🧦</q-item-label>
-						<q-item-label caption>TX: <a :href="'https://defiscan.live/transactions/' + deposit.txid" class="text-primary">view on DeFiScan</a></q-item-label>
+						<q-item-label caption>TX: <a @click="openUrl('https://defiscan.live/transactions/' + deposit.txid)" class="text-primary">view on DeFiScan</a></q-item-label>
 					</q-item-section>
 					<q-item-section side class="q-pl-none">
 						<q-icon name="fa-light fa-coins" color="positive" />
@@ -68,12 +68,18 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { openURL } from 'quasar'
 import moment from 'moment'
 
 export default {
 	name: 'PhoneTransactions',
 	created() {
 		this.moment = moment
+	},
+	methods: {
+		openUrl(url) {
+			openURL(url)
+		},
 	},
 	computed: {
 		locale: function() {
