@@ -94,7 +94,7 @@
         <q-item-section>
           <q-item-label>Dobby Call is not free</q-item-label>
           <q-item-label caption>
-            I understand that Dobby Call is a premium feature which will cost <b>{{ callPrice }} DFI/call</b>. I also understand that calls will not be done until I fund my Dobby account with some pre-paid DFI.
+            I understand that Dobby Call is a premium feature which will cost <b>{{ callPrice }} DFI/call</b>. I also understand that calls will not be done until I fund my Dobby account with some pre-paid DFI. Refunds are not possible.
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -126,7 +126,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { openURL } from 'quasar'
 
 export default {
 	name: 'PhoneChannelSetup',
