@@ -55,7 +55,7 @@ module.exports = configure(function (ctx) {
 				"LOCAL_STORAGE_ACCOUNT_ID_KEY": 'dobbyAccount',
 				"LOCAL_STORAGE_SETTINGS_KEY": 'dobbySettings',
 				"DEMO_ACCOUNT_ID": 'demo-demo-demo-demo-demodemodemo',
-				"PREFILL_SETUP": false,
+				"PREFILL_SETUP": false, //
 				"TELEGRAM_BOT_LINK": 'https://t.me/defichain_dobby_bot', // https://t.me/defichain_dobby_bot?start=USER_ID
 				"TELEGRAM_GROUP_LINK": 'https://t.me/defichain_dobby',
 				"TWITTER_LINK": 'https://twitter.com/dobby_dfi',
@@ -64,6 +64,7 @@ module.exports = configure(function (ctx) {
 				"FUNDS_DEPOSIT_ADDRESS": "df1qkdlejzz8qv8w76lp5w39k96dfnszekwawjpp9s",
 
 				"CALL_PRICE": 0.5, // DFI
+				"BALANCE_WARNING_CALLS": 4, // When balance will only support this or less calls
 
 				...(require('dotenv').config().parsed),
 			},
