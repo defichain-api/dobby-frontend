@@ -3,8 +3,7 @@
 		<PhoneSetup  />
 	</div>
 	<div v-else class="q-pa-md q-gutter-md">
-		<!-- <PhoneSetup  />-->
-		<PhoneStatus  />
+		<PhoneStatus />
 		<PhoneBalances v-if="hasPhoneGateway" />
 		<PhoneTransactions v-if="hasPhoneGateway" />
 	</div>

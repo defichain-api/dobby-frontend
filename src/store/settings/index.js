@@ -21,6 +21,9 @@ export default {
 
 			triggerMultipleInfo: 1.5,
 			triggerMultipleWarning: 1.25,
+
+			depositAddress: null,
+			depositInfoMail: null,
 		},
 		numberFormats: {
 			currency: { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 },

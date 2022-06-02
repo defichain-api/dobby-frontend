@@ -1,14 +1,39 @@
 <template>
 	<q-card flat>
-		<q-card-section>
-			<div class="text-h6">Your balance</div>
+		<!--
+		<q-card-section class="text-body1">
+			Your balance
 		</q-card-section>
-		<q-card-section class="text-center" :class="{ 'bg-warning':  balanceWarning && !balanceTooLow, 'bg-negative text-white': balanceTooLow }">
-			<div class="text-h2" v-if="typeof balance == 'number'">
-				{{ balance.toLocaleString(locale, numberFormats.twoDecimals) }}
+		-->
+		<q-card-section class="text-center row q-pt-xl" :class="{ 'bg-warning text-white':  balanceWarning && !balanceTooLow, 'bg-negative text-white': balanceTooLow }">
+			<div class="col-6">
+				<div>your balance is</div>
+				<div class="text-h2" v-if="typeof balance == 'number'">
+					<span v-if="!privacy">{{ balance.toLocaleString(locale, numberFormats.twoDecimals) }}</span>
+					<span v-else>🧦🧦🧦</span>
+				</div>
+				<div>
+					DFI
+				</div>
 			</div>
-			<div>
-				DFI
+			<div class="col-6">
+				<div>
+					that's <span v-if="balanceWarning && !balanceTooLow">just</span>
+				</div>
+				<div class="text-h2 text-accent" v-if="typeof balance == 'number'">
+					<span v-if="!privacy">
+						{{ Math.floor(balance / callPrice) }}
+					</span>
+					<span v-else>🧦🧦🧦</span>
+				</div>
+				<div>
+					<span v-if="Math.floor(balance / callPrice) == 1">
+						Call
+					</span>
+					<span v-else>
+						Calls
+					</span>
+				</div>
 			</div>
 		</q-card-section>
 		<q-card-section>
@@ -31,6 +56,9 @@ import { mapGetters } from 'vuex'
 export default {
 	name: 'ManagePhoneCalls',
 	computed: {
+		callPrice: function() {
+			return process.env.CALL_PRICE
+		},
 		balanceWarning: function() {
 			return this.balance < 2
 		},
@@ -51,7 +79,11 @@ export default {
 
 			return 'null'
 		},
+		privacy() {
+			return this.settingValue('uiPrivacyEnabled')
+		},
 		...mapGetters({
+			settingValue: 'settings/value',
 			numberFormats: 'settings/numberFormats',
 			balance: 'notifications/phoneBalance',
 		}),

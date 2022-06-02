@@ -23,7 +23,7 @@
 						<q-item-label caption>
 							{{ moment(payment.booked_at).format('MMMM Do YYYY, h:mm:ss a') }}
 						</q-item-label>
-						<q-item-label>{{ payment.reason }}</q-item-label>
+						<q-item-label v-if="!privacy">{{ payment.reason }}</q-item-label>
 					</q-item-section>
 					<q-item-section side>
 						<q-icon name="fa-light fa-file-invoice-dollar" color="negative" />
@@ -39,7 +39,9 @@
 					<q-item-section avatar>
 						<q-item-label caption class="text-center">
 							<div class="text-h6">
-								+{{ deposit.amountDfi.toLocaleString(locale, numberFormats.twoDecimals) }}
+								+
+								<span v-if="!privacy">{{ deposit.amountDfi.toLocaleString(locale, numberFormats.twoDecimals) }}</span>
+								<span v-else>🧦</span>
 							</div>
 							<div>
 								DFI
@@ -50,7 +52,8 @@
 						<q-item-label caption>
 							{{ moment(deposit.received_at).format('MMMM Do YYYY, h:mm:ss a') }}
 						</q-item-label>
-						<q-item-label caption>From: {{ deposit.senderAddress }}</q-item-label>
+						<q-item-label caption v-if="!privacy">From: {{ deposit.senderAddress }}</q-item-label>
+						<q-item-label caption v-else>From: 🧦🧦🧦</q-item-label>
 						<q-item-label caption>TX: <a :href="'https://defiscan.live/transactions/' + deposit.txid" class="text-primary">view on DeFiScan</a></q-item-label>
 					</q-item-section>
 					<q-item-section side class="q-pl-none">
@@ -76,7 +79,11 @@ export default {
 		locale: function() {
 			return this.$root.$i18n.locale
 		},
+		privacy() {
+			return this.settingValue('uiPrivacyEnabled')
+		},
 		...mapGetters({
+			settingValue: 'settings/value',
 			numberFormats: 'settings/numberFormats',
 			deposits: 'notifications/phoneDeposits',
 			payments: 'notifications/phonePayments',
