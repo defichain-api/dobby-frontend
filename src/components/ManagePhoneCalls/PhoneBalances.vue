@@ -5,7 +5,7 @@
 			Your balance
 		</q-card-section>
 		-->
-		<q-card-section class="text-center row q-pt-xl" :class="{ 'bg-warning text-white':  balanceWarning && !balanceTooLow, 'bg-negative text-white': balanceTooLow }">
+		<q-card-section class="text-center row q-pt-lg" :class="{ 'bg-warning text-white':  balanceWarning && !balanceTooLow, 'bg-negative text-white': balanceTooLow }">
 			<div class="col-6">
 				<div>your balance is</div>
 				<div class="text-h2" v-if="typeof balance == 'number'">
@@ -20,7 +20,7 @@
 				<div>
 					that's <span v-if="balanceWarning && !balanceTooLow">just</span>
 				</div>
-				<div class="text-h2 text-accent" v-if="typeof balance == 'number'">
+				<div class="text-h2" v-if="typeof balance == 'number'">
 					<span v-if="!privacy">
 						{{ Math.floor(balance / callPrice) }}
 					</span>
@@ -35,18 +35,31 @@
 					</span>
 				</div>
 			</div>
+			<div v-if="balanceWarning && !balanceTooLow" class="col-12 q-mt-md" >
+				You should consider transferring some DFI to keep Dobby able to call you.
+			</div>
+			<div v-if="balanceTooLow" class="col-12 q-mt-md" >
+				Please transfer some DFI to your Dobby account. Dobby will not call you when your collateral is too low!
+			</div>
 		</q-card-section>
 		<q-card-section>
 			<q-btn
+				label="Deposit DFI"
+				@click="showDepositInfo = !showDepositInfo"
 				unelevated
 				rounded
 				:outline="!balanceTooLow"
 				class="full-width"
 				icon="fa-light fa-coins"
-				label="Deposit DFI"
 				:color="depositButtonColor"
 			/>
 		</q-card-section>
+
+		<q-slide-transition>
+			<q-card-section v-show="showDepositInfo">
+				Das ist ein test
+			</q-card-section>
+		</q-slide-transition>
 	</q-card>
 </template>
 
@@ -55,15 +68,23 @@ import { mapGetters } from 'vuex'
 
 export default {
 	name: 'ManagePhoneCalls',
+	data() {
+		return {
+			showDepositInfo: false,
+		}
+	},
 	computed: {
 		callPrice: function() {
 			return process.env.CALL_PRICE
 		},
+		callsLeftWarning: function() {
+			return process.env.BALANCE_WARNING_CALLS
+		},
 		balanceWarning: function() {
-			return this.balance < 2
+			return Math.floor(this.balance / this.callPrice) <= this.callsLeftWarning
 		},
 		balanceTooLow: function() {
-			return this.balance < 0.5
+			return this.balance < this.callPrice
 		},
 		locale: function() {
 			return this.$root.$i18n.locale
