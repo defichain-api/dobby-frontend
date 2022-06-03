@@ -295,11 +295,6 @@ export default {
 			return this.$root.$i18n.locale
 		},
 
-		// returns all configured number formats
-		numberFormats: function () {
-			return this.settingValue('numberFormats')
-		},
-
 		// how much % away from minimal collateral should an "information" message be triggered?
 		triggerMultipleInfo: function() {
 			return this.settingValue('triggerMultipleInfo')
@@ -319,6 +314,7 @@ export default {
 			hasGateways: 'notifications/hasGateways',
 			gatewayType: 'notifications/gatewayType',
 			settingValue: 'settings/value',
+			numberFormats: 'settings/numberFormats',
 		})
 	}
 }
