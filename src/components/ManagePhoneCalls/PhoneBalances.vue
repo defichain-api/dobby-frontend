@@ -10,7 +10,7 @@
 				<div>your balance is</div>
 				<div class="text-h2" v-if="typeof balance == 'number'">
 					<span v-if="!privacy">{{ balance.toLocaleString(locale, numberFormats.twoDecimals) }}</span>
-					<span v-else>🧦🧦🧦</span>
+					<span v-else>🧦🧦</span>
 				</div>
 				<div>
 					DFI
@@ -24,7 +24,7 @@
 					<span v-if="!privacy">
 						{{ Math.floor(balance / callPrice) }}
 					</span>
-					<span v-else>🧦🧦🧦</span>
+					<span v-else>🧦🧦</span>
 				</div>
 				<div>
 					<span v-if="Math.floor(balance / callPrice) == 1">
@@ -56,28 +56,57 @@
 			<q-slide-transition>
 				<div v-show="showDepositInfo" class="q-mt-md">
 
-					<div v-if="!depositFromAddress">
-						<p>
-							Please send ONLY DFI and only send from this address:
-							{{ depositFromAddress }}
+					<div v-if="depositFromAddress" class="q-mt-md q-gutter-md">
+
+						<q-card flat class="text-center" :class="{'bg-warning': !confirmedDepositFromAddress, 'bg-accent': confirmedDepositFromAddress}">
+							<q-card-section>
+								<p v-show="!confirmedDepositFromAddress">
+									Make sure to send only DFI and only from the address you have set:
+								</p>
+								<p v-show="confirmedDepositFromAddress" class="text-h6">
+									Send DFI from:
+								</p>
+								<p class="text-caption">
+									<span v-if="!privacy">{{ depositFromAddress }}</span>
+									<span v-else>🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦</span>
+								</p>
+								<q-checkbox
+									v-show="!confirmedDepositFromAddress"
+									v-model="confirmedDepositFromAddress"
+									label="OK, got it!"
+								/>
+
+							</q-card-section>
+						</q-card>
+
+						<div class="full-width text-center" v-show="confirmedDepositFromAddress">
+							<q-icon name="fa-light fa-arrow-down" size="xl"></q-icon>
+						</div>
+
+						<q-card flat v-show="confirmedDepositFromAddress" class="bg-accent text-center text-caption">
+							<q-card-section class="q-pb-sm">
+								<span class="text-h6">Send DFI to:</span>
+							</q-card-section>
+							<q-card-section class="q-pt-none">
+								{{ fundsDepositAddress }}
+								<q-btn
+									rounded
+									bordered
+									outline
+									dense
+									class="full-width q-mt-md"
+									color="white"
+									icon="fal fa-clipboard-check"
+									@click="toClipboard(fundsDepositAddress)"
+									label="Copy address to Clipboard"
+								/>
+							</q-card-section>
+						</q-card>
+						<p v-show="confirmedDepositFromAddress">
+							Please send ONLY DFI! Processing the transaction may take some time. Please give it some minutes :)
 						</p>
-						<p>
-							Please transfer some DFI to this address: <br /><br />{{ fundsDepositAddress }}
-						</p>
-						<p>
-							<q-btn
-								rounded
-								bordered
-								outline
-								dense
-								class="text-center q-px-md full-width"
-								color="primary"
-								icon="fal fa-clipboard-check"
-								@click="toClipboard(fundsDepositAddress)"
-								label="Copy address to Clipboard"
-							/>
-						</p>
-						<p class="bg-white text-center q-py-lg">
+
+						<p class="bg-white text-center q-py-lg" v-show="showDepositAddressQr">
 							<qrcode-vue :value="fundsDepositAddress" :size="250" level="M" />
 						</p>
 					</div>
@@ -133,9 +162,14 @@ export default {
 	},
 	data() {
 		return {
-			showDepositInfo: true,
 			userDeFiChainAddress: '',
 			loading: false,
+
+			showDepositInfo: false,
+			showDepositAddressQr: false,
+			confirmedDepositFromAddress: false,
+
+			animationStep: 0,
 		}
 	},
 	methods: {

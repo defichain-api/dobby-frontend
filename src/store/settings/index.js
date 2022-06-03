@@ -22,7 +22,7 @@ export default {
 			triggerMultipleInfo: 1.5,
 			triggerMultipleWarning: 1.25,
 
-			depositAddress: null,
+			depositFromAddress: null,
 			depositInfoMail: null,
 		},
 		enabledBetaFeatures: [],
