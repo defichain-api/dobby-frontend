@@ -39,7 +39,7 @@
 				You should consider transferring some DFI to keep Dobby able to call you.
 			</div>
 			<div v-if="balanceTooLow" class="col-12 q-mt-md" >
-				Please transfer some DFI to your Dobby account. Dobby will not call you when your collateral is too low!
+				Please transfer some DFI to Dobby's DeFiChain account. Dobby will not call you when your collateral is too low!
 			</div>
 		</q-card-section>
 		<q-card-section>
@@ -56,17 +56,65 @@
 			<q-slide-transition>
 				<div v-show="showDepositInfo" class="q-mt-md">
 
-					<p>
-						Please transfer some DFI to this address: <br /><br />{{ fundsDepositAddress }}
-					</p>
+					<div v-if="!depositFromAddress">
+						<p>
+							Please send ONLY DFI and only send from this address:
+							{{ depositFromAddress }}
+						</p>
+						<p>
+							Please transfer some DFI to this address: <br /><br />{{ fundsDepositAddress }}
+						</p>
+						<p>
+							<q-btn
+								rounded
+								bordered
+								outline
+								dense
+								class="text-center q-px-md full-width"
+								color="primary"
+								icon="fal fa-clipboard-check"
+								@click="toClipboard(fundsDepositAddress)"
+								label="Copy address to Clipboard"
+							/>
+						</p>
+						<p class="bg-white text-center q-py-lg">
+							<qrcode-vue :value="fundsDepositAddress" :size="250" level="M" />
+						</p>
+					</div>
 
-					<p class="bg-white text-center q-py-lg">
-						<qrcode-vue :value="fundsDepositAddress" :size="250" level="M" />
-					</p>
+					<div v-else>
+						<p>
+							Please tell Dobby from which DFI address you'll send your funds. That's
+							neccessary because otherwise Dobby can't know which payment is yours.
+						</p>
+						<p>
+							Please double-check this address! You won't be able to change it afterwards.
+							Later, you'll be able to define multiple addresses.
+						</p>
+						<p>
+							<q-input
+								type="text"
+								outlined
+								label="DeFiChain depostit address"
+								hint="The DFI address from which you'll send your DFI to Dobby's account"
+								v-model="userDeFiChainAddress"
+							/>
+						</p>
+						<p>
+							<q-btn
+								unelevated
+								rounded
+								class="full-width"
+								icon="fa-light fa-house-flag"
+								label="set address"
+								color="primary"
+								@click="setDepositFromAddress()"
+								:loading="loading"
+								:disable="!stringIsDfiAddress(userDeFiChainAddress)"
+							/>
+						</p>
+					</div>
 
-					<p>
-						{{ depositFromAddress }}
-					</p>
 				</div>
 			</q-slide-transition>
 		</q-card-section>
@@ -76,6 +124,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import QrcodeVue from 'qrcode.vue'
+import { copyToClipboard } from 'quasar'
 
 export default {
 	name: 'ManagePhoneCalls',
@@ -85,7 +134,43 @@ export default {
 	data() {
 		return {
 			showDepositInfo: true,
+			userDeFiChainAddress: '',
+			loading: false,
 		}
+	},
+	methods: {
+		/**
+		 * Copies a string to the clipboard
+		 */
+		toClipboard: function (text) {
+			copyToClipboard(text)
+				.then(() => {
+						this.$q.notify({
+							type: 'positive',
+							message: 'Deposit address has been copied to your clipboard',
+						})
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+		},
+
+		setDepositFromAddress() {
+			this.loading = true
+			if (this.stringIsDfiAddress(this.userDeFiChainAddress)) {
+				this.depositFromAddress = this.userDeFiChainAddress
+			}
+		},
+
+		/**
+		 * Checks if string is most likely a DFI address
+		 */
+		stringIsDfiAddress(string) {
+			const isAlphaNumeric = str => /^[a-z0-9]+$/gi.test(str)
+
+			return isAlphaNumeric(string) && (string.length == 34 || string.length == 42)
+		},
+
 	},
 	computed: {
 		callPrice: function() {
@@ -98,11 +183,12 @@ export default {
 			return process.env.FUNDS_DEPOSIT_ADDRESS
 		},
 		depositFromAddress: {
+			cache: false,
 			get: function () {
 				return this.settingValue('depositFromAddress')
 			},
-			set: function (value) {
-				console.log(value)
+			set: function (address) {
+				this.$store.dispatch('settings/setToAccount', { key: 'depositFromAddress', value: address })
 			},
 		},
 		balanceWarning: function() {

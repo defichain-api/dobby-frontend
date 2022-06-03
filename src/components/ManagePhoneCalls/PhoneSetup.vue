@@ -61,15 +61,6 @@
 						</q-btn>
 					</template>
 				</q-input>
-				<!--
-				<q-input
-					type="text"
-					outlined
-					label="DeFiChain depostit address"
-					hint="The DFI address from where you'll send your DFI to dobby"
-					v-model="phoneNumber"
-				/>
-				-->
 			</p>
 
 			<q-slide-transition>

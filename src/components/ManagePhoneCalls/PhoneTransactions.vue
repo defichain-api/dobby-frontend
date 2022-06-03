@@ -11,7 +11,7 @@
 				<q-item v-for="payment in payments" :key="payment.booked_at">
 					<q-item-section avatar>
 						<q-item-label caption class="text-center">
-							<div class="text-h6">
+							<div class="text-body1 text-bold">
 								-{{ payment.amountDfi.toLocaleString(locale, numberFormats.twoDecimals) }}
 							</div>
 							<div>
@@ -38,10 +38,9 @@
 				<q-item v-for="deposit in deposits" :key="deposit.txid">
 					<q-item-section avatar>
 						<q-item-label caption class="text-center">
-							<div class="text-h6">
-								+
-								<span v-if="!privacy">{{ deposit.amountDfi.toLocaleString(locale, numberFormats.twoDecimals) }}</span>
-								<span v-else>🧦</span>
+							<div class="text-body1 text-bold">
+								<span v-if="!privacy">+{{ deposit.amountDfi.toLocaleString(locale, numberFormats.twoDecimals) }}</span>
+								<span v-else>+🧦</span>
 							</div>
 							<div>
 								DFI
