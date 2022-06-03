@@ -89,6 +89,9 @@
 							</q-card-section>
 							<q-card-section class="q-pt-none">
 								{{ fundsDepositAddress }}
+								<p class="bg-white text-center q-py-lg" v-show="showDepositAddressQr">
+									<qrcode-vue :value="fundsDepositAddress" :size="250" level="M" />
+								</p>
 								<q-btn
 									rounded
 									bordered
@@ -96,18 +99,25 @@
 									dense
 									class="full-width q-mt-md"
 									color="white"
-									icon="fal fa-clipboard-check"
+									icon="fa-light fa-clipboard-check"
 									@click="toClipboard(fundsDepositAddress)"
 									label="Copy address to Clipboard"
+								/>
+								<q-btn
+									rounded
+									bordered
+									outline
+									dense
+									class="full-width q-mt-md"
+									color="white"
+									icon="fa-light fa-qrcode"
+									@click="showDepositAddressQr = !showDepositAddressQr"
+									label="Show QR Code"
 								/>
 							</q-card-section>
 						</q-card>
 						<p v-show="confirmedDepositFromAddress">
 							Please send ONLY DFI! Processing the transaction may take some time. Please give it some minutes :)
-						</p>
-
-						<p class="bg-white text-center q-py-lg" v-show="showDepositAddressQr">
-							<qrcode-vue :value="fundsDepositAddress" :size="250" level="M" />
 						</p>
 					</div>
 
