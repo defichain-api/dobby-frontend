@@ -300,7 +300,7 @@ export default {
 			],
 			links2: [
 				{ icon: 'fa-light fa-bells', text: 'Manage Notifications', to: 'manage-notifications' },
-				{ icon: 'fa-light fa-bells', text: 'Manage Notifications 3.0', to: 'manage-notifications-new', beta: 'notifications-3' },
+				{ icon: 'fa-light fa-bells', text: 'Manage Notifications 3.0', to: 'manage-notifications-new', beta: 'notifications-setup' },
 				{ icon: 'fa-light fa-vault', text: 'Manage Vaults', to: 'manage-vaults' },
 				{ icon: 'fa-light fa-phone-rotary', text: 'Manage Phone Calls', to: 'manage-phone-calls', beta: 'phone' },
 			],

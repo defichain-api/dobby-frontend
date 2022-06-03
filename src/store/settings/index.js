@@ -24,9 +24,8 @@ export default {
 
 			depositAddress: null,
 			depositInfoMail: null,
-
-			enabledBetaFeatures: [],
 		},
+		enabledBetaFeatures: [],
 		numberFormats: {
 			currency: { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 },
 			currencyNoDecimals: { style: 'currency', currency: 'USD', maximumFractionDigits: 0 },
@@ -49,7 +48,7 @@ export default {
 			return state.savingSettingsToAccount
 		},
 		betaFeatureEnabled: (state) => (featureName) => {
-			return state.settings.enabledBetaFeatures.includes(featureName)
+			return state.enabledBetaFeatures.includes(featureName)
 		},
 		isDev: () => {
 			return process.env.DEV
@@ -76,6 +75,10 @@ export default {
 					.finally(() => commit('doneSavingSettingsToAccount'))
 			})
 		},
+
+		setEnabledBetaFeatures({ commit }, data) {
+			commit('setEnabledBetaFeatures', data)
+		}
 	},
 
 	// ----------------------------------------------------------------------------------
@@ -92,6 +95,9 @@ export default {
 		},
 		doneSavingSettingsToAccount(state) {
 			state.savingSettingsToAccount = false
+		},
+		setEnabledBetaFeatures(state, data) {
+			state.enabledBetaFeatures = data
 		}
 	},
 }
