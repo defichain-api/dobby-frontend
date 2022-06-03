@@ -53,24 +53,38 @@
 				icon="fa-light fa-coins"
 				:color="depositButtonColor"
 			/>
-		</q-card-section>
+			<q-slide-transition>
+				<div v-show="showDepositInfo" class="q-mt-md">
 
-		<q-slide-transition>
-			<q-card-section v-show="showDepositInfo">
-				Das ist ein test
-			</q-card-section>
-		</q-slide-transition>
+					<p>
+						Please transfer some DFI to this address: <br /><br />{{ fundsDepositAddress }}
+					</p>
+
+					<p class="bg-white text-center q-py-lg">
+						<qrcode-vue :value="fundsDepositAddress" :size="250" level="M" />
+					</p>
+
+					<p>
+						{{ depositFromAddress }}
+					</p>
+				</div>
+			</q-slide-transition>
+		</q-card-section>
 	</q-card>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import QrcodeVue from 'qrcode.vue'
 
 export default {
 	name: 'ManagePhoneCalls',
+	components: {
+		QrcodeVue,
+	},
 	data() {
 		return {
-			showDepositInfo: false,
+			showDepositInfo: true,
 		}
 	},
 	computed: {
@@ -79,6 +93,17 @@ export default {
 		},
 		callsLeftWarning: function() {
 			return process.env.BALANCE_WARNING_CALLS
+		},
+		fundsDepositAddress: function() {
+			return process.env.FUNDS_DEPOSIT_ADDRESS
+		},
+		depositFromAddress: {
+			get: function () {
+				return this.settingValue('depositFromAddress')
+			},
+			set: function (value) {
+				console.log(value)
+			},
 		},
 		balanceWarning: function() {
 			return Math.floor(this.balance / this.callPrice) <= this.callsLeftWarning

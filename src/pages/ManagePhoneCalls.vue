@@ -26,12 +26,11 @@ export default defineComponent({
 		PhoneBalances,
 		PhoneTransactions,
 	},
-	data () {
-		return {
-
-		}
-	},
 	created() {
+		if (!this.betaFeatureEnabled('phone') && !this.isDev) {
+			this.$router.push({name: 'dashboard'})
+		}
+
 		this.$store.dispatch('setHeadline', { text: 'Dobby can call you', icon: 'fa-light fa-phone-rotary'})
 		this.$store.dispatch('notifications/fetch')
 	},
@@ -41,6 +40,8 @@ export default defineComponent({
 		},
 		...mapGetters({
 			hasGatewayType: 'notifications/hasGatewayType',
+			betaFeatureEnabled: 'settings/betaFeatureEnabled',
+			isDev: 'settings/isDev',
 		})
 	},
 })

@@ -132,7 +132,7 @@
 
 					<q-separator inset class="q-mt-ms q-mb-xs" />
 
-					<q-item v-for="link in links2" :key="link.text" v-ripple clickable :to="link.to">
+					<q-item v-for="link in filterBeta(links2)" :key="link.text" v-ripple clickable :to="link.to">
 						<q-item-section avatar>
 							<q-icon color="grey" :name="link.icon" />
 						</q-item-section>
@@ -211,6 +211,8 @@ export default {
 		const showRequestRunning = ref(false)
 		const savingSettingsToAccount = computed(() => store.getters["settings/savingSettingsToAccount"])
 		const showSavingSettingsToAccount = ref(false)
+		const betaFeatureEnabled = computed(() => store.getters["settings/betaFeatureEnabled"])
+		const isDev = computed(() => store.getters["settings/isDev"])
 
 
 		function toggleLeftDrawer () {
@@ -237,6 +239,11 @@ export default {
 					},
 				]
 			})
+		}
+
+		function filterBeta(links) {
+			if (store.getters["settings/isDev"]) return links
+			return links.filter(entry => ('beta' in entry) ? store.getters["settings/betaFeatureEnabled"](entry.beta) : true)
 		}
 
 		watch(uiTheme, (uiTheme) => {
@@ -284,6 +291,8 @@ export default {
 
 			toggleLeftDrawer,
 			logout,
+			betaFeatureEnabled,
+			filterBeta,
 
 			autoReload: true,
 			links1: [
@@ -291,9 +300,9 @@ export default {
 			],
 			links2: [
 				{ icon: 'fa-light fa-bells', text: 'Manage Notifications', to: 'manage-notifications' },
-				{ icon: 'fa-light fa-bells', text: 'Manage Notifications 3.0', to: 'manage-notifications-new' },
+				{ icon: 'fa-light fa-bells', text: 'Manage Notifications 3.0', to: 'manage-notifications-new', beta: 'notifications-3' },
 				{ icon: 'fa-light fa-vault', text: 'Manage Vaults', to: 'manage-vaults' },
-				{ icon: 'fa-light fa-phone-rotary', text: 'Manage Phone Calls', to: 'manage-phone-calls' },
+				{ icon: 'fa-light fa-phone-rotary', text: 'Manage Phone Calls', to: 'manage-phone-calls', beta: 'phone' },
 			],
 			links3: [
 				{ icon: 'fa-light fa-sliders', text: 'Settings', to: 'settings' },

@@ -24,6 +24,8 @@ export default {
 
 			depositAddress: null,
 			depositInfoMail: null,
+
+			enabledBetaFeatures: [],
 		},
 		numberFormats: {
 			currency: { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 },
@@ -45,6 +47,12 @@ export default {
 		},
 		savingSettingsToAccount: (state) => {
 			return state.savingSettingsToAccount
+		},
+		betaFeatureEnabled: (state) => (featureName) => {
+			return state.settings.enabledBetaFeatures.includes(featureName)
+		},
+		isDev: () => {
+			return process.env.DEV
 		}
 	},
 
