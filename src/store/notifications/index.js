@@ -34,12 +34,12 @@ export default {
 		},
 
 		/**
-		 * Returns true if a specific gateway has been set
+		 * Returns true if a specific notifictaion gateway is available
 		 */
 		hasGatewayType: (state) => (gatewayType) => {
-			return state.gateways.some(function(gateway) {
-				return gateway.type == gatewayType;
-			});
+			return state.gateways.some(function (gateway) {
+				return gateway.type == gatewayType
+			})
 		},
 
 		/**

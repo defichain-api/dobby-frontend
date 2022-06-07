@@ -197,6 +197,7 @@ export default defineComponent({
 			this.$store.dispatch('chain/fetch')
 		}, 60 * 1000)
 		this.moment = moment
+		console.log(this.hasGatewayType('phone'))
 	},
 	unmounted() {
 		clearInterval(this.autoReload)
@@ -209,9 +210,6 @@ export default defineComponent({
 				done()
 			}, 1000)
 		},
-		...mapGetters({
-			hasGatewayType: 'notifications/hasGatewayType',
-		}),
 	},
 	computed: {
 		showVaultsAsCarousel() {
@@ -252,6 +250,7 @@ export default defineComponent({
 			requestRunning: 'requestRunning',
 			nextTick: 'chain/nextTick',
 			canReceiveCall: 'notifications/phoneCanReceiveCall',
+			hasGatewayType: 'notifications/hasGatewayType',
 		}),
 	}
 })
