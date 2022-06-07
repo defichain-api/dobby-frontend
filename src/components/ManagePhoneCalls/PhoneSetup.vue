@@ -185,7 +185,7 @@ export default {
 					setTimeout(() => {
 						this.loading = false
 						this.done = true
-						this.phoneNumber = null
+						this.phoneNumber = ''
 						if (process.env.DEV) { console.log("[DEBUG] created new phone gateway: " + this.phoneNumber) }
 					}, 500)
 					this.fetchGateways()
@@ -226,7 +226,7 @@ export default {
 		descriptionVisible: {
 			get: function () {
 				if (this.showDescription) return true
-				return (this.phoneNumber == false)
+				return (this.phoneNumber == '')
 			},
 			set: function () {
 
@@ -240,7 +240,7 @@ export default {
 			get: function () {
 				if (this.newPhoneNumber != null) return this.newPhoneNumber
 
-				return this.gatewayType('phone')?.value ?? false
+				return this.gatewayType('phone')?.value ?? ''
 			},
 			set(newVal) {
 				this.newPhoneNumber = newVal
