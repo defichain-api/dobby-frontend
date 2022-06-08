@@ -1,6 +1,7 @@
 <template>
   <div class="q-pa-md q-gutter-md">
 		<NotificationChannels />
+		<Notifications />
 	</div>
 </template>
 
@@ -8,11 +9,13 @@
 import { mapGetters } from 'vuex'
 
 import NotificationChannels from 'components/ManageNotificationsNew/NotificationChannels.vue'
+import Notifications from 'components/ManageNotificationsNew/Notifications.vue'
 
 export default {
   name: 'ManageNotifications',
   components: {
     NotificationChannels,
+		Notifications,
   },
 	data() {
 		return {

@@ -1,5 +1,5 @@
 <template>
-	<q-btn flat dense rounded icon="fa-light fa-circle-ellipsis-vertical" class="q-pt-none">
+	<q-btn flat dense round icon="fa-light fa-circle-ellipsis-vertical" class="q-pt-none">
 		<q-menu
 			auto-close
 			transition-show="jump-down"
@@ -10,9 +10,12 @@
 		>
 			<div class="row no-wrap">
 				<div class="column flex flex-center">
-					<q-icon size="35px" class="q-pr-none">
-						<q-icon :name="icon" :color="iconColor" />
-					</q-icon>
+					<q-avatar
+						:icon="icon"
+						:color="iconColor"
+						size="xl"
+						text-color="white"
+					/>
 				</div>
 				<q-separator vertical class="q-mx-md" />
 				<div class="column flex flex-center q-gutter-sm">

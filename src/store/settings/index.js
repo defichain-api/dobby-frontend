@@ -52,6 +52,9 @@ export default {
 		},
 		isDev: () => {
 			return process.env.DEV
+		},
+		privacy: (state) => {
+			return state.settings.uiPrivacyEnabled
 		}
 	},
 

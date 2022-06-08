@@ -197,7 +197,6 @@ export default defineComponent({
 			this.$store.dispatch('chain/fetch')
 		}, 60 * 1000)
 		this.moment = moment
-		console.log(this.hasGatewayType('phone'))
 	},
 	unmounted() {
 		clearInterval(this.autoReload)

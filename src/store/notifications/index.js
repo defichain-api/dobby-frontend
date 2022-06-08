@@ -211,7 +211,7 @@ export default {
 				combinedTriggerData.gateways = gatewayIds
 			}
 
-			api.put("/user/notification", combinedTriggerData)
+			return api.put("/user/notification", combinedTriggerData)
 				.then(() => {
 					dispatch('fetchTriggers')
 				})

@@ -1,7 +1,12 @@
 <template>
 	<q-item>
 		<q-item-section avatar top>
-			<q-icon name="fa-brands fa-telegram" color="telegram" />
+			<q-avatar
+				icon="fa-brands fa-telegram"
+				color="telegram"
+				size="lg"
+				text-color="white"
+			/>
 		</q-item-section>
 
 		<q-item-section>
@@ -24,7 +29,7 @@
 		</q-item-section>
 
 		<q-item-section side top>
-			<q-btn v-if="!channelActive" @click="showTelegramChannelSetup = true" flat dense rounded icon="fa-light fa-circle-plus" class="q-pt-none" />
+			<q-btn v-if="!channelActive" @click="showTelegramChannelSetup = true" flat dense round icon="fa-light fa-circle-plus" class="q-pt-none" />
 			<ChannelOptionsMenu v-else icon="fa-brands fa-telegram" icon-color="telegram">
 				<TestChannel
 					v-if="hasGatewayType('telegram')"

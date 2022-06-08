@@ -1,7 +1,12 @@
 <template>
 	<q-item>
 		<q-item-section avatar top>
-			<q-icon name="fa-light fa-envelope" color="primary" />
+			<q-avatar
+				icon="fa-light fa-envelope"
+				color="primary"
+				size="lg"
+				text-color="white"
+			/>
 		</q-item-section>
 
 		<q-item-section>
@@ -24,7 +29,7 @@
 		</q-item-section>
 
 		<q-item-section side top>
-			<q-btn v-if="!channelActive" @click="showEmailChannelSetup = true" flat dense rounded icon="fa-light fa-circle-plus" class="q-pt-none" />
+			<q-btn v-if="!channelActive" @click="showEmailChannelSetup = true" flat dense round icon="fa-light fa-circle-plus" class="q-pt-none" />
 			<ChannelOptionsMenu v-else icon="fa-light fa-envelope" icon-color="primary">
 				<TestChannel
 					:label="$t('Send Test Message')"

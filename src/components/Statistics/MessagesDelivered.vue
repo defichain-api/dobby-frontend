@@ -1,5 +1,5 @@
 <template>
-	<q-card flat :bordered="$q.dark.isActive">
+	<q-card flat >
 		<q-card-section class="q-pb-none">
 			<div class="text-h6">Daily Messages Delivered (yesterday)</div>
 		</q-card-section>

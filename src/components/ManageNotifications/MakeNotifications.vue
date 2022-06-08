@@ -16,7 +16,7 @@
 				appear
 				enter-active-class="animated pulse"
 			>
-				<q-card flat :bordered="$q.dark.isActive" v-for="vault in missingTiggers" :key="vault.vaultId" class="vault">
+				<q-card flat  v-for="vault in missingTiggers" :key="vault.vaultId" class="vault">
 					<q-card-section class="container">
 						<div class="row">
 							<div class="col-2 text-center q-pt-sm">
@@ -64,7 +64,7 @@
 				appear
 				enter-active-class="animated pulse"
 			>
-				<q-card flat :bordered="$q.dark.isActive" v-for="vault in vaultsWithoutTriggers" :key="vault.vaultId" class="vault">
+				<q-card flat  v-for="vault in vaultsWithoutTriggers" :key="vault.vaultId" class="vault">
 					<q-card-section class="container">
 						<div class="row">
 							<div class="col-2 text-center q-pt-sm">
