@@ -6,18 +6,22 @@
 		transition-hide="slide-down"
 	>
 		<q-card :class="{ 'bg-dark text-white': darkMode }">
-			<q-bar>
+			<q-bar class="bg-primary-dark">
 				<q-space />
 
-				<q-btn dense flat icon="close" v-close-popup>
-					<q-tooltip class="bg-white text-primary">Close</q-tooltip>
+				<q-btn dense flat icon="close" color="white" v-close-popup>
+					<q-tooltip class="bg-primary text-white">Close</q-tooltip>
 				</q-btn>
 			</q-bar>
 			<div class="q-pa-md">
-				<div class="text-h5 q-mb-md">
-					Get notified via Email <q-icon :name="emailIcon" color="primary" />
+				<div class="text-center">
+					<q-avatar :icon="emailIcon" color="primary" text-color="white" size="xl" />
 				</div>
-				<p class="text-body1">
+				<div class="text-h5 q-my-md text-center">
+					Get notified via Email
+				</div>
+				<q-separator />
+				<p class="text-body1 q-mt-md">
 					Dobby remembers the old days when email was the hot thing in the brand-new Internet.
 					If you've been born after the year 2000, you might not have such an emotional connection to this ancient stuff.
 					But hey, it's better than carrier pigeons. (But way less cooler than owls!)

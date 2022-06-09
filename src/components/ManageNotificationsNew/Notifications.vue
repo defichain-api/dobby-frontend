@@ -1,5 +1,40 @@
 <template>
-	<q-card flat v-for="(triggerList, vaultId) in triggersByVault" :key="vaultId">
+	<q-card flat v-if="!hasGateways">
+		<q-card-section>
+			Please set up at least one notification channel to manage your notification triggers.
+		</q-card-section>
+	</q-card>
+
+
+	<q-card flat v-if="vaultsWithoutTriggers.length > 0 && hasGateways" class="bg-warning text-white">
+		<q-card-section>
+			There are some vaults which do not have notification triggers set. Please add some.
+		</q-card-section>
+		<q-card-section>
+
+			<div v-for="vault in vaultsWithoutTriggers" :key="vault.vaultId" class="col" @click="scrollToVault(vault.vaultId)">
+				<div class="row items-center no-wrap">
+					<div class="col text-h6 ellipsis">
+						<q-icon name="fa-light fa-box-usd" size="sm" class="q-mr-sm" />
+						<span v-if="!privacy">
+							<span v-if="vault.name.length > 0">{{ vault.name }}</span>
+							<span v-else>{{ vault.vaultId }}</span>
+						</span>
+						<span v-else class="text-body1">
+							🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦
+						</span>
+					</div>
+
+					<div class="col-auto">
+						<q-btn outline rounded @click="scrollToVault(vault.vaultId)" icon="fa-light fa-arrow-right" size="sm" />
+					</div>
+				</div>
+			</div>
+
+		</q-card-section>
+	</q-card>
+
+	<q-card flat v-for="(triggerList, vaultId) in triggersByVault" :key="vaultId" :ref="vaultId">
 
 		<q-card-section v-if="vault(vaultId)">
 			<div class="row items-center no-wrap">
@@ -12,33 +47,25 @@
 					</span>
 				</div>
 
-				<div class="col-auto">
+				<div class="col-auto" v-if="hasGateways">
 					<q-btn
 						label="trigger"
-						color="grey-7"
+						:color="(triggerList.length == 0) ? 'warning' : 'grey-7'"
 						flat
 						dense
 						rounded
 						icon="fa-light fa-circle-plus"
+						@click="showCreateNewTriggerDialog[vaultId] = true"
 					/>
 				</div>
 			</div>
 		</q-card-section>
 
-		<q-card-section v-if="triggerList.length == 0">
-			No Triggers --> make some
+		<q-card-section v-if="triggerList.length == 0 && hasGateways" class="bg-warning text-right text-white text-body1 q-pr-lg">
+			No triggers set. Add some <q-icon name="fa-light fa-arrow-up" size="lg" />
 		</q-card-section>
-		<q-card-section v-if="triggerList.length > 0" class="q-px-none q-pt-none">
+		<q-card-section v-else class="q-px-none q-pt-none">
 			<q-list>
-				<!--
-
-					[
-						{ "triggerId": 4, "ratio": 152, "type": "info", "vaultId": "33619a6f9ede32d007cbcd1732fef80595df2a5d563a9558f00cfa08648b7708", "gateways": [ { "gatewayId": 2, "type": "telegram", "value": "710979903" } ] },
-						{ "triggerId": 3, "ratio": 151, "type": "warning", "vaultId": "33619a6f9ede32d007cbcd1732fef80595df2a5d563a9558f00cfa08648b7708", "gateways": [ { "gatewayId": 2, "type": "telegram", "value": "710979903" } ] }
-					]
-
-				-->
-
 				<q-expansion-item
 					v-for="trigger in triggerList"
 					:key="trigger.triggerId"
@@ -102,29 +129,46 @@
 						</q-item-section>
 					</template>
 
-					<NotificationTriggerDetail :trigger="trigger" />
+					<NotificationTriggerDetails :trigger="trigger" />
 
 					<q-separator inset />
-
 				</q-expansion-item>
 
 			</q-list>
 		</q-card-section>
+		<q-dialog
+			v-model="showCreateNewTriggerDialog[vaultId]"
+			persistent
+			maximized
+			transition-show="slide-up"
+			transition-hide="slide-down"
+		>
+			<q-card :class="{ 'bg-dark text-white': darkMode }">
+				<q-bar class="bg-primary-dark">
+					<q-space />
+
+					<q-btn dense flat icon="close" color="white" v-close-popup>
+						<q-tooltip class="bg-primary text-whitee">Close</q-tooltip>
+					</q-btn>
+				</q-bar>
+				<NotificationTriggerDetails :trigger="{ratio: 200, gateways: []}" createNewTrigger :vaultId="vaultId" />
+			</q-card>
+		</q-dialog>
 	</q-card>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 
-import NotificationTriggerDetail from 'src/components/ManageNotificationsNew/NotificationTriggers/NotificationTriggerDetails.vue'
+import NotificationTriggerDetails from 'src/components/ManageNotificationsNew/NotificationTriggers/NotificationTriggerDetails.vue'
 
 export default {
 	components: {
-		NotificationTriggerDetail,
+		NotificationTriggerDetails,
 	},
 	data() {
 		return {
-
+			showCreateNewTriggerDialog: [],
 		}
 	},
 	methods: {
@@ -135,17 +179,10 @@ export default {
 			return this.vaults.find(vault => vault.vaultId == vaultId) || false
 		},
 
-		markerLabel: (val) => {
-			if (val%50 == 0) {
-				console.log(val + ' %')
-				return val + ' %'
-			}
-			return ''
-		},
-
-		markerLabelList: (min, max) => {
-
+		scrollToVault: function(vaultId) {
+			this.$refs[vaultId][0].$el.scrollIntoView({behavior: "smooth"})
 		}
+
 	},
 	computed: {
 		/**
@@ -153,10 +190,14 @@ export default {
 		 */
 		triggersByVault: function() {
 			let vaultTriggers = {}
+
+			// make a list of available vaults
+			this.vaults.map(vault => vault.vaultId).forEach((vaultId) => {
+				vaultTriggers[vaultId] = []
+			})
+
+			// fill available triggers into vault list
 			this.triggers.forEach(function (trigger) {
-				if (typeof vaultTriggers[trigger.vaultId] == 'undefined') {
-					vaultTriggers[trigger.vaultId] = []
-				}
 				vaultTriggers[trigger.vaultId].push(trigger)
 				vaultTriggers[trigger.vaultId].sort(( a, b ) => {
 					if ( a.ratio < b.ratio ){return 1}
@@ -166,9 +207,19 @@ export default {
 			})
 			return vaultTriggers
 		},
+		vaultsWithoutTriggers: function () {
+			if (Object.keys(this.triggersByVault).length < 1) return []
+			return this.vaults.filter((vault) => {
+				return (vault.vaultId in this.triggersByVault && this.triggersByVault[vault.vaultId].length < 1)
+			})
+		},
+		darkMode: function () {
+			return this.$q.dark.isActive
+		},
 		...mapGetters({
 			vaults: 'account/vaults',
 			triggers: 'notifications/triggers',
+			hasGateways: 'notifications/hasGateways',
 			gateways: 'notifications/gateways',
 			privacy: 'settings/privacy',
 		}),

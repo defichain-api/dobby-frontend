@@ -1,5 +1,5 @@
 <template>
-	<q-item>
+	<q-item clickable @click="$refs['options'].$el.click()">
 		<q-item-section avatar top>
 			<q-avatar
 				icon="fa-light fa-phone-rotary"
@@ -28,7 +28,7 @@
 			<q-item-label caption></q-item-label>
 		</q-item-section>
 		<q-item-section side top>
-			<q-btn v-if="!channelActive" to="manage-phone-calls" flat dense round icon="fa-light fa-circle-plus" class="q-pt-none" />
+			<q-btn ref="options" v-if="!channelActive" to="manage-phone-calls" flat dense round icon="fa-light fa-circle-plus" class="q-pt-none" />
 			<ChannelOptionsMenu v-else icon="fa-light fa-phone-rotary" icon-color="primary">
 				<q-btn
 					to="manage-phone-calls"

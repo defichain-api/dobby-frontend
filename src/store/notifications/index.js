@@ -139,7 +139,7 @@ export default {
 		},
 
 		/**
-		 * Call Dobby API für a list of user's gateways
+		 * Call Dobby API for a list of user's gateways
 		 */
 		fetchGateways({ commit }) {
 			return api.get("/user/gateways")
@@ -149,7 +149,7 @@ export default {
 		},
 
 		/**
-		 * Call Dobby API für a list of user's notifictaion triggers
+		 * Call Dobby API for a list of user's notifictaion triggers
 		 */
 		fetchTriggers({ commit }) {
 			return api.get("/user/notification")
@@ -159,7 +159,7 @@ export default {
 		},
 
 		/**
-		 * Call Dobby API für a list of user's phone status
+		 * Call Dobby API for a list of user's phone status
 		 */
 		fetchPhoneData({
 			commit
@@ -171,7 +171,7 @@ export default {
 		},
 
 		/**
-		 * Call Dobby API für a list of user's phone status
+		 * Call Dobby API for a list of user's phone status
 		 */
 		fetchPaymentTransactions({
 			commit
@@ -185,8 +185,7 @@ export default {
 		/**
 		 * Add a new notification trigger and reload
 		 */
-		addTrigger({ dispatch }, data) {
-			/*
+		createTrigger({ dispatch }, triggerConfig) {
 			api.post("/user/notification", triggerConfig)
 				.then((result) => {
 					dispatch('fetchTriggers')
@@ -194,7 +193,6 @@ export default {
 				.catch((error) => {
 					console.log(error)
 				})
-			*/
 		},
 
 		/**
@@ -223,16 +221,14 @@ export default {
 		/**
 		 * Remove a trigger
 		 */
-		deleteTrigger({ dispatch }, triggerId) {
-			const payload = { "triggerId": triggerId }
-			api.delete("/user/notification", { data: payload })
+		removeTrigger({ dispatch }, triggerId) {
+			api.delete("/user/notification", { data: { "triggerId": triggerId } })
 				.then(() => {
 					dispatch('fetchTriggers')
 				})
 				.catch((error) => {
 					console.log(error)
 				})
-
 		}
 	},
 

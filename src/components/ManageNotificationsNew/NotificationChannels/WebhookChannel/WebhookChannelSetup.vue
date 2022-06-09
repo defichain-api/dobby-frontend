@@ -6,24 +6,28 @@
 		transition-hide="slide-down"
 	>
 		<q-card :class="{ 'bg-dark text-white': darkMode }">
-			<q-bar>
+			<q-bar class="bg-primary-dark">
 				<q-space />
 
-				<q-btn dense flat icon="close" v-close-popup>
-					<q-tooltip class="bg-white text-primary">Close</q-tooltip>
+				<q-btn dense flat icon="close" color="white" v-close-popup>
+					<q-tooltip class="bg-primary text-whitee">Close</q-tooltip>
 				</q-btn>
 			</q-bar>
 			<div class="q-pa-md">
-				<div class="text-h5 q-mb-md">
-					Get notified via Webhook <q-icon :name="webhookIcon" color="primary" />
+				<div class="text-center">
+					<q-avatar :icon="webhookIcon" color="primary" text-color="white" size="xl" />
 				</div>
-				<p class="text-body1">
+				<div class="text-h5 q-my-md text-center">
+					Get notified via Webhook
+				</div>
+				<q-separator />
+				<p class="text-body1 q-mt-md">
 					Dobby is able to push notifications to any URL you provide. These messages contain a JSON object and all neccessary data.
 					If you have no clue what this means, you won't need a webhook notification and can ignore this notification channel.
 				</p>
 
 				<p>
-					See the official Dobby Repo for a documentation of what Dobby will send you to your webhook URL: <a href="https://github.com/defichain-api/dobby">https://github.com/defichain-api/dobby</a>
+					See the official Dobby Repo for a documentation of what Dobby will send you to your webhook URL: <a class="text-primary" style="cursor: pointer;" @click="openUrl('https://github.com/defichain-api/dobby')">https://github.com/defichain-api/dobby <q-icon name="fa-light fa-arrow-up-right-from-square" /></a>
 				</p>
 
 				<p v-if="hasGatewayType('webhook')">
@@ -43,11 +47,11 @@
 					/>
 				</p>
 
-				<p>
+				<p class="text-center">
 					<q-btn
 						unelevated
 						rounded
-						class="full-width"
+						class="full-width q-mb-sm"
 						:icon="webhookIcon"
 						label="Set webhook URL"
 						color="primary"
@@ -55,6 +59,7 @@
 						:loading="loading"
 						:disable="webhookUrl == null"
 					/>
+					(Dobby will send a test message immediatly)
 				</p>
 
 				<p v-if="done">
@@ -118,6 +123,7 @@ export default {
 					setTimeout(() => {
 						this.loading = false
 						this.done = true
+						setTimeout(() => this.done = false, 5000)
 						this.testWebhookChannel()
 						this.webhookUrl = null
 						this.webhookUrlRepeat = null
@@ -146,8 +152,8 @@ export default {
 				})
 		},
 
-		toTelegramGroup() {
-			openURL(process.env.TELEGRAM_GROUP_LINK)
+		openUrl(url) {
+			openURL(url)
 		},
 
 		...mapActions({

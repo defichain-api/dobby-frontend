@@ -6,7 +6,7 @@
 			<q-item-section>
 				<q-item-label header class="q-pl-none">Notification Channels</q-item-label>
 				<q-slide-transition>
-					<q-item-label caption v-show="showHelp">
+					<q-item-label caption v-show="showHelp || !hasGateways">
 						These are the services, Dobby is able to send you messages with.
 						Please set them up by tapping on the <q-icon size="xs" name="fa-light fa-circle-plus" class="q-pt-none" /> icon on the right hand side of the channel you'd like to use.
 						After a channel's initial setup, you can attach it to the notification triggers you like.
@@ -28,7 +28,9 @@
 </template>
 
 <script>
-import { ref, } from 'vue'
+import { ref } from 'vue'
+import { computed }  from 'vue'
+import { useStore } from 'vuex'
 
 import TelegramChannel from "components/ManageNotificationsNew/NotificationChannels/TelegramChannel/TelegramChannel.vue"
 import PhoneChannel from "components/ManageNotificationsNew/NotificationChannels/PhoneChannel/PhoneChannel.vue"
@@ -44,10 +46,12 @@ export default {
 		WebhookChannel,
   },
 	setup() {
+		const store = useStore()
 		const showHelp = ref(false)
 
 		return {
 			showHelp: showHelp,
+			hasGateways: computed(() => store.getters['notifications/hasGateways']),
 		}
 	},
 }

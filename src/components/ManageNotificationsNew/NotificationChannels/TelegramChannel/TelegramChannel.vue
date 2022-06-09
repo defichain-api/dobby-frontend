@@ -1,5 +1,5 @@
 <template>
-	<q-item>
+	<q-item clickable @click="$refs['options'].$el.click()">
 		<q-item-section avatar top>
 			<q-avatar
 				icon="fa-brands fa-telegram"
@@ -29,7 +29,7 @@
 		</q-item-section>
 
 		<q-item-section side top>
-			<q-btn v-if="!channelActive" @click="showTelegramChannelSetup = true" flat dense round icon="fa-light fa-circle-plus" class="q-pt-none" />
+			<q-btn ref="options" v-if="!channelActive" @click="showTelegramChannelSetup = true" flat dense round icon="fa-light fa-circle-plus" class="q-pt-none" />
 			<ChannelOptionsMenu v-else icon="fa-brands fa-telegram" icon-color="telegram">
 				<TestChannel
 					v-if="hasGatewayType('telegram')"

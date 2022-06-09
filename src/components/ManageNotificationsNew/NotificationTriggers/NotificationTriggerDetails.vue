@@ -68,10 +68,29 @@
 			</q-list>
 		</q-card-section>
 		<q-card-actions class="row q-mb-md" align="center">
-			<q-btn class="col-2" rounded outline icon="fa-light fa-trash" size="md" color="negative" />
-			<q-btn class="col-9" rounded outline color="primary" @click="save()" :loading="saving">
+			<q-btn
+				v-if="!createNewTrigger"
+				class="col-2"
+				rounded
+				outline
+				icon="fa-light fa-trash"
+				size="md"
+				color="negative"
+				@click="remove()"
+			/>
+			<q-btn
+				class="col-9"
+				rounded
+				outline
+				color="primary"
+				@click="(createNewTrigger) ? create() : update()"
+				:loading="saving"
+				:disable="activeGatewayIds.length == 0 || savingComplete"
+			>
 				<span v-if="!savingComplete">
-					<q-icon name="fa-light fa-floppy-disk" /><span class="q-ml-sm">Save</span>
+					<q-icon name="fa-light fa-floppy-disk" />
+					<span v-if="createNewTrigger" class="q-ml-sm">Create trigger</span>
+					<span v-else class="q-ml-sm">Save</span>
 				</span>
 				<span v-if="savingComplete">
 					<q-icon name="fa-light fa-check" />
@@ -90,11 +109,20 @@ export default {
 			required: true,
 			type: Object,
 		},
+		createNewTrigger: {
+			required: false,
+			type: Boolean,
+		},
+		vaultId: {
+			required: false,
+			type: String,
+		}
 	},
 	data() {
 		return {
 			saving: false,
 			savingComplete: false,
+			creatingComplete: false,
 
 			triggerRatio: this.trigger.ratio,
 			gatewayTypes2GatewayData: {
@@ -131,7 +159,21 @@ export default {
 		gatewayTypeActive(gatewayType) {
 			return this.trigger.gateways.filter(val => val.type == gatewayType).length > 0
 		},
-		save() {
+		create() {
+			this.saving = true
+			this.createTrigger({
+				vaultId: this.vaultId,
+				ratio: this.triggerRatio,
+				gateways: this.activeGatewayIds,
+				type: 'info',
+			}).then(() => {
+				setTimeout(() => {
+					this.saving = false
+					this.savingComplete = true
+				}, 500)
+			})
+		},
+		update() {
 			this.saving = true
 			this.updateTrigger({
 				triggerId: this.trigger.triggerId,
@@ -145,8 +187,13 @@ export default {
 				}, 500)
 			})
 		},
+		remove() {
+			this.removeTrigger(this.trigger.triggerId)
+		},
 		...mapActions({
+			createTrigger: 'notifications/createTrigger',
 			updateTrigger: 'notifications/updateTrigger',
+			removeTrigger: 'notifications/removeTrigger',
 		})
 	},
 	computed: {

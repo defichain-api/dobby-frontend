@@ -1,5 +1,5 @@
 <template>
-	<q-item>
+	<q-item clickable @click="$refs['options'].$el.click()">
 		<q-item-section avatar top>
 			<q-avatar
 				icon="fa-light fa-envelope"
@@ -29,7 +29,7 @@
 		</q-item-section>
 
 		<q-item-section side top>
-			<q-btn v-if="!channelActive" @click="showEmailChannelSetup = true" flat dense round icon="fa-light fa-circle-plus" class="q-pt-none" />
+			<q-btn ref="options" v-if="!channelActive" @click="showEmailChannelSetup = true" flat dense round icon="fa-light fa-circle-plus" class="q-pt-none" />
 			<ChannelOptionsMenu v-else icon="fa-light fa-envelope" icon-color="primary">
 				<TestChannel
 					:label="$t('Send Test Message')"

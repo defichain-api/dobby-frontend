@@ -6,26 +6,29 @@
 		transition-hide="slide-down"
 	>
 		<q-card :class="{ 'bg-dark text-white': darkMode }">
-			<q-bar>
+			<q-bar class="bg-primary-dark">
 				<q-space />
 
-				<q-btn dense flat icon="close" v-close-popup>
-					<q-tooltip class="bg-white text-primary">Close</q-tooltip>
+				<q-btn dense flat icon="close" color="white" v-close-popup>
+					<q-tooltip class="bg-primary text-whitee">Close</q-tooltip>
 				</q-btn>
 			</q-bar>
 			<div class="q-pa-md">
-				<div class="text-h5 q-mb-md">
+				<div class="text-center">
+					<q-avatar icon="fab fa-telegram" color="telegram" text-color="white" size="xl" />
+				</div>
+				<div class="text-h5 q-my-md text-center">
 					<span v-if="!connectedTelegramGateway">Get notified via Telegram</span>
 					<span v-else>Connected to Telegram</span>
-					&nbsp;<q-icon name="fab fa-telegram" color="telegram" />
 				</div>
-				<p class="text-body1" v-if="!connectedTelegramGateway">
+				<q-separator />
+				<p class="text-body1 q-mt-md" v-if="!connectedTelegramGateway">
 					Dobby kindly asks you to connect him to your Telegram account, so that he'll be able to send you
 					messages.
 				</p>
 				<p class="caption text-weight-light" v-if="!connectedTelegramGateway">
 					This is how it works:
-					<ol>
+					<ol class="q-pl-md">
 						<li>Tap on the button below to open Telegram</li>
 						<li>Once in Telegram, tap on the 'start' button to connect Dobby's Telegram bot with your Telegram account</li>
 						<li>Wait for the message that your account has been connected</li>
