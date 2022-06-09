@@ -129,7 +129,7 @@
 						</q-item-section>
 					</template>
 
-					<NotificationTriggerDetails :trigger="trigger" />
+					<NotificationTriggerDetails :trigger="trigger" :vaultId="vaultId" />
 
 					<q-separator inset />
 				</q-expansion-item>
@@ -151,7 +151,7 @@
 						<q-tooltip class="bg-primary text-whitee">Close</q-tooltip>
 					</q-btn>
 				</q-bar>
-				<NotificationTriggerDetails :trigger="{ratio: 200, gateways: []}" createNewTrigger :vaultId="vaultId" />
+				<NotificationTriggerDetails :trigger="{ratio: Math.floor(vault(vaultId).loanScheme.minCollateral * 1.5), gateways: []}" createNewTrigger :vaultId="vaultId" />
 			</q-card>
 		</q-dialog>
 	</q-card>
@@ -172,13 +172,6 @@ export default {
 		}
 	},
 	methods: {
-		/**
-		 * returns a specific vault, found by it's id
-		 */
-		vault: function(vaultId) {
-			return this.vaults.find(vault => vault.vaultId == vaultId) || false
-		},
-
 		scrollToVault: function(vaultId) {
 			this.$refs[vaultId][0].$el.scrollIntoView({behavior: "smooth"})
 		}
@@ -218,6 +211,7 @@ export default {
 		},
 		...mapGetters({
 			vaults: 'account/vaults',
+			vault: 'account/vault',
 			triggers: 'notifications/triggers',
 			hasGateways: 'notifications/hasGateways',
 			gateways: 'notifications/gateways',

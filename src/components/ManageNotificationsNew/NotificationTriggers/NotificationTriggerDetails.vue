@@ -23,8 +23,8 @@
 					switch-label-side
 					v-model="triggerRatio"
 					:label-value="triggerRatio + '%'"
-					:min="151"
-					:max="350"
+					:min="vault(vaultId).loanScheme.minCollateral +1"
+					:max="vault(vaultId).loanScheme.minCollateral * 3"
 				/>
 			</div>
 		</q-card-section>
@@ -114,7 +114,7 @@ export default {
 			type: Boolean,
 		},
 		vaultId: {
-			required: false,
+			required: true,
 			type: String,
 		}
 	},
@@ -205,6 +205,7 @@ export default {
 		...mapGetters({
 			gateways: 'notifications/gateways',
 			privacy: 'settings/privacy',
+			vault: 'account/vault',
 		}),
 	},
 }
