@@ -50,7 +50,7 @@
 					type="email"
 					outlined
 					label="email address"
-					hint="dobby@defichain-dobby.com"
+					:hint="(!isEmailAddress(depositInfoMail)) ? 'something like dobby@defichain-dobby.com' : ''"
 					v-model="depositInfoMail"
 					class="q-mt-md"
 					debounce="500"
@@ -212,6 +212,17 @@ export default {
 			}, 500))
 		},
 
+		/**
+		 * Checks if this.depositInfoMail could be an email address
+		 */
+		isEmailAddress(string) {
+			return String(this.depositInfoMail)
+				.toLowerCase()
+				.match(
+					/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+				)
+		},
+
 		...mapActions({
 			fetchGateways: 'notifications/fetchGateways',
 		})
@@ -269,16 +280,7 @@ export default {
 				.match(/^\+(?:[0-9] ?){6,14}[0-9]$/)
 		},
 
-		/**
-		 * Checks if this.depositInfoMail could be an email address
-		 */
-		isEmailAddress(string) {
-			return String(this.depositInfoMail)
-				.toLowerCase()
-				.match(
-					/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-				)
-		},
+
 
 		/**
 		 * Is dark mode active?

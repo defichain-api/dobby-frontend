@@ -47,46 +47,54 @@
 				/>
 			</div>
 			<q-separator vertical class="q-mx-md " />
+
 			<div class="column flex flex-left text-body1">
-				<p v-if="!testCallRunning">
+
+				<p>
+					Test if Dobby can call you.
+				</p>
+
+				<p v-if="!testCallRunning && freeCallAvailable">
 					You are eligible to receive a single free test call.
 				</p>
-				<p v-else>
+
+				<p v-if="!testCallRunning && !freeCallAvailable">
+					This test call will cost <b class="text-primary">{{ testCallPrice }} DFI</b>
+					<q-item tag="label">
+						<q-item-section avatar top>
+							<q-checkbox v-model="consent" color="accent" />
+						</q-item-section>
+						<q-item-section>
+							<q-item-label caption>I understand and want to pay <b class="text-primary">{{ testCallPrice }}</b> DFI for this test call</q-item-label>
+						</q-item-section>
+					</q-item>
+
+				</p>
+				<p v-if="testCallRunning">
 					Ring, ring... <q-spinner />
 				</p>
 
 				<TestChannel
-					label="Call me now for free"
+					:label="(freeCallAvailable) ? 'Call me now for free' : 'Receive test call now'"
+					@click="testCallRunning = true"
+					v-show="!testCallRunning && !testCallDone"
+					:disable="!freeCallAvailable && !consent"
 					channel="phone"
 					color="primary"
 					unelevated
 					rounded
 					outline
-					@click="testCallRunning = true"
-					style="display: none;"
 					class="full-width"
-					loading
-				/>
-
-				<q-btn
-					unelevated
-					rounded
-					outline
-					color="primary"
-					class="full-width"
-					label="Call me now for free"
-					@click="testCallRunning = true"
-					v-show="!testCallRunning"
 				/>
 
 				<q-btn
 					v-if="testCallRunning"
+					label="I received a call"
 					unelevated
 					rounded
 					outline
 					color="primary"
 					class="full-width"
-					label="I received a call"
 					@click="testCallRunning = false; testCallDone = true;"
 				/>
 
@@ -98,13 +106,13 @@
 
 		<q-card-section>
 			<q-btn
+				label="Change phone number"
+				@click="showSetup = !showSetup"
 				unelevated
 				rounded
 				outline
 				class="full-width"
 				icon="fa-light fa-pen-to-square"
-				label="Change number"
-				@click="showSetup = !showSetup"
 			/>
 			<q-dialog
 				persistent
@@ -137,9 +145,13 @@ export default {
 			showSetup: false,
 			testCallRunning: false,
 			testCallDone: false,
+			consent: false,
 		}
 	},
 	computed: {
+		testCallPrice: function() {
+			return process.env.TEST_CALL_PRICE
+		},
 		privacy() {
 			return this.settingValue('uiPrivacyEnabled')
 		},
@@ -147,7 +159,7 @@ export default {
 			settingValue: 'settings/value',
 			phoneNumber: 'notifications/phoneNumber',
 			canReceiveCall: 'notifications/phoneCanReceiveCall',
-			freeCallAvailable: 'notifications/phonePhoneFreeCallAvailable',
+			freeCallAvailable: 'notifications/phoneFreeCallAvailable',
 			canReceiveTestCall: 'notifications/phoneCanReceiveTestCall',
 			phoneBalance: 'notifications/phoneBalance',
 		}),

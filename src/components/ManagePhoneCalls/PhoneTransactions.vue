@@ -8,7 +8,12 @@
 		<q-card-section>
 			Payments
 			<q-list bordered separator>
-				<q-item v-for="payment in payments" :key="payment.booked_at">
+				<q-item v-if="payments.length == 0">
+					<q-item-section>
+						You didn't receive any chargeable calls yet.
+					</q-item-section>
+				</q-item>
+				<q-item v-for="payment in payments.slice().reverse()" :key="payment.booked_at">
 					<q-item-section avatar>
 						<q-item-label caption class="text-center">
 							<div class="text-body1 text-bold">
@@ -35,7 +40,12 @@
 		<q-card-section>
 			Deposits
 			<q-list bordered separator>
-				<q-item v-for="deposit in deposits" :key="deposit.txid">
+				<q-item v-if="deposits.length == 0">
+					<q-item-section>
+						You did not deposit any DFI yet.
+					</q-item-section>
+				</q-item>
+				<q-item v-for="deposit in deposits.slice().reverse()" :key="deposit.txid">
 					<q-item-section avatar>
 						<q-item-label caption class="text-center">
 							<div class="text-body1 text-bold">
@@ -51,7 +61,7 @@
 						<q-item-label caption>
 							{{ moment(deposit.received_at).format('MMMM Do YYYY, h:mm:ss a') }}
 						</q-item-label>
-						<q-item-label caption v-if="!privacy">From: {{ deposit.senderAddress }}</q-item-label>
+						<q-item-label class="ellipsis" caption v-if="!privacy">From: {{ deposit.senderAddress }}</q-item-label>
 						<q-item-label caption v-else>From: 🧦🧦🧦</q-item-label>
 						<q-item-label caption>TX: <a @click="openUrl('https://defiscan.live/transactions/' + deposit.txid)" class="text-primary">view on DeFiScan</a></q-item-label>
 					</q-item-section>
