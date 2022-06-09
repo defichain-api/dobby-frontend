@@ -211,8 +211,11 @@ export default {
 		const showRequestRunning = ref(false)
 		const savingSettingsToAccount = computed(() => store.getters["settings/savingSettingsToAccount"])
 		const showSavingSettingsToAccount = ref(false)
-		const betaFeatureEnabled = computed(() => store.getters["settings/betaFeatureEnabled"])
 		const isDev = computed(() => store.getters["settings/isDev"])
+
+		function betaFeatureEnabled(featureName) {
+			return store.getters["settings/betaFeatureEnabled"](featureName)
+		}
 
 
 		function toggleLeftDrawer () {
@@ -243,7 +246,7 @@ export default {
 
 		function filterBeta(links) {
 			if (store.getters["settings/isDev"]) return links
-			return links.filter(entry => ('beta' in entry) ? store.getters["settings/betaFeatureEnabled"](entry.beta) : true)
+			return links.filter(entry => ('beta' in entry) ? betaFeatureEnabled(entry.beta) : true)
 		}
 
 		watch(uiTheme, (uiTheme) => {
@@ -298,12 +301,18 @@ export default {
 			links1: [
 				{ icon: 'fa-brands fa-fort-awesome', text: 'Dashboard', to: "dashboard" },
 			],
-			links2: [
-				{ icon: 'fa-light fa-bells', text: 'Manage Notifications', to: 'manage-notifications' },
-				{ icon: 'fa-light fa-bells', text: 'Manage Notifications 3.0', to: 'manage-notifications-new', beta: 'notifications-setup' },
-				{ icon: 'fa-light fa-vault', text: 'Manage Vaults', to: 'manage-vaults' },
-				{ icon: 'fa-light fa-phone-rotary', text: 'Manage Phone Calls', to: 'manage-phone-calls', beta: 'phone' },
-			],
+			links2: computed(() => {
+				let links = []
+				if (!betaFeatureEnabled('notifications-setup')) {
+					links.push({ icon: 'fa-light fa-bells', text: 'Manage Notifications', to: 'manage-notifications' })
+				}
+				return [
+					...links,
+					{ icon: 'fa-light fa-bells', text: 'Manage Notifications BETA', to: 'manage-notifications-new', beta: 'notifications-setup' },
+					{ icon: 'fa-light fa-vault', text: 'Manage Vaults', to: 'manage-vaults' },
+					{ icon: 'fa-light fa-phone-rotary', text: 'Manage Phone Calls BETA', to: 'manage-phone-calls', beta: 'phone' },
+				]
+			}),
 			links3: [
 				{ icon: 'fa-light fa-sliders', text: 'Settings', to: 'settings' },
 				{ icon: 'fa-light fa-comments-question-check', text: 'WTF?!', to: 'wtf' },
