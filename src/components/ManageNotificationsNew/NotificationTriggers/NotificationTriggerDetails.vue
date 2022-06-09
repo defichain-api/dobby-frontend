@@ -5,17 +5,6 @@
 				When collateral ratio turns near to...
 			</p>
 			<div class="row">
-				<!--
-				<q-input
-					dense
-					debounce="250"
-					outlined
-					type="text"
-					class="col-2"
-					v-model="triggerRatio"
-				/>
-				<div class="col-1" />
-				-->
 				<q-slider
 					class="q-mx-sm"
 					label
@@ -79,7 +68,7 @@
 				@click="remove()"
 			/>
 			<q-btn
-				class="col-9"
+				class="col-9 q-mb-sm"
 				rounded
 				outline
 				color="primary"
@@ -96,6 +85,7 @@
 					<q-icon name="fa-light fa-check" />
 				</span>
 			</q-btn>
+			<span v-if="createNewTrigger" class="text-center">You can add multiple trigger by simply changing the values and save again</span>
 		</q-card-actions>
 	</q-card>
 </template>
@@ -170,6 +160,7 @@ export default {
 				setTimeout(() => {
 					this.saving = false
 					this.savingComplete = true
+					setTimeout(() => this.savingComplete = false, 1500)
 				}, 500)
 			})
 		},
