@@ -1,5 +1,5 @@
 <template>
-	<q-item clickable @click="$refs['options'].$el.click()">
+	<q-item :clickable="!channelActive" @click="$refs['options'].$el.click()">
 		<q-item-section avatar top>
 			<q-avatar
 				icon="fa-light fa-phone-rotary"
@@ -32,10 +32,11 @@
 			<ChannelOptionsMenu v-else icon="fa-light fa-phone-rotary" icon-color="primary">
 				<q-btn
 					to="manage-phone-calls"
-					label="Go to manage phone calls"
+					label="manage phone calls"
 					rounded
 					outline
 					class="full-width"
+					:color="(darkMode) ? 'white' : 'primary'"
 				/>
 			</ChannelOptionsMenu>
 		</q-item-section>
@@ -52,12 +53,15 @@ export default {
 		ChannelOptionsMenu,
   },
 	computed: {
+		darkMode: function () {
+			return this.$q.dark.isActive
+		},
 		channelActive: function() {
 			return this.hasGatewayType('phone')
 		},
-			...mapGetters({
-				hasGatewayType: 'notifications/hasGatewayType',
-			}),
+		...mapGetters({
+			hasGatewayType: 'notifications/hasGatewayType',
+		}),
 	}
 }
 </script>

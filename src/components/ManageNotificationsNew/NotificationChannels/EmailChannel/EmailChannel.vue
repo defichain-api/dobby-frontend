@@ -1,5 +1,5 @@
 <template>
-	<q-item clickable @click="$refs['options'].$el.click()">
+	<q-item :clickable="!channelActive" @click="$refs['options'].$el.click()">
 		<q-item-section avatar top>
 			<q-avatar
 				icon="fa-light fa-envelope"
@@ -35,7 +35,7 @@
 					:label="$t('Send Test Message')"
 					channel="mail"
 					icon="fa-light fa-mailbox"
-					:color="($q.dark.channelActive) ? 'primary' : 'accent'"
+					:color="(darkMode) ? 'white' : 'primary'"
 					rounded
 					outline
 					class="full-width"
@@ -46,7 +46,7 @@
 					outline
 					icon="fa-light fa-pen-to-square"
 					class="full-width"
-					:color="($q.dark.channelActive) ? 'primary' : 'accent'"
+					:color="(darkMode) ? 'white' : 'primary'"
 					@click="showEmailChannelSetup = true"
 				/>
 				<RemoveChannel
@@ -88,6 +88,9 @@ export default {
 		}
 	},
 	computed: {
+		darkMode: function () {
+			return this.$q.dark.isActive
+		},
 		channelActive: function() {
 			return this.hasGatewayType('mail')
 		},

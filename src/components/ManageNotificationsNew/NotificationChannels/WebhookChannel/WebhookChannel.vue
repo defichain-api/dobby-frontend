@@ -1,5 +1,5 @@
 <template>
-	<q-item clickable @click="$refs['options'].$el.click()">
+	<q-item :clickable="!channelActive" @click="$refs['options'].$el.click()">
 		<q-item-section avatar top>
 			<q-avatar
 				icon="fa-light fa-cloud"
@@ -34,7 +34,7 @@
 				<TestChannel
 					:label="$t('Send Test Message')"
 					channel="webhook"
-					:color="($q.dark.channelActive) ? 'primary' : 'accent'"
+					:color="(darkMode) ? 'white' : 'primary'"
 					rounded
 					outline
 					icon="fa-light fa-cloud-rainbow"
@@ -46,7 +46,7 @@
 					outline
 					icon="fa-light fa-pen-to-square"
 					class="full-width"
-					:color="($q.dark.channelActive) ? 'primary' : 'accent'"
+					:color="(darkMode) ? 'white' : 'primary'"
 					@click="showWebhookChannelSetup = true"
 				/>
 				<RemoveChannel
@@ -88,6 +88,9 @@ export default {
 		}
 	},
 	computed: {
+		darkMode: function () {
+			return this.$q.dark.isActive
+		},
 		channelActive: function() {
 			return this.hasGatewayType('webhook')
 		},

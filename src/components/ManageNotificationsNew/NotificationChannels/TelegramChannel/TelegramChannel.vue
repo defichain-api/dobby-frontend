@@ -1,5 +1,5 @@
 <template>
-	<q-item clickable @click="$refs['options'].$el.click()">
+	<q-item :clickable="!channelActive" @click="$refs['options'].$el.click()">
 		<q-item-section avatar top>
 			<q-avatar
 				icon="fa-brands fa-telegram"
@@ -35,7 +35,7 @@
 					v-if="hasGatewayType('telegram')"
 					:label="$t('Send Test Message')"
 					channel="telegram"
-					:color="($q.dark.channelActive) ? 'primary' : 'accent'"
+					:color="(darkMode) ? 'white' : 'primary'"
 					icon="fa-light fa-paper-plane"
 					rounded
 					outline
@@ -80,6 +80,9 @@ export default {
 		}
 	},
 	computed: {
+		darkMode: function () {
+			return this.$q.dark.isActive
+		},
 		channelActive: function() {
 			return this.hasGatewayType('telegram')
 		},
