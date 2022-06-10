@@ -137,7 +137,6 @@ export default {
 			done: false,
 			showDescription: false,
 			showWhyEmail: false,
-			callPrice: process.env.CALL_PRICE,
 		}
 	},
 	methods: {
@@ -296,6 +295,7 @@ export default {
 			gatewayType: 'notifications/gatewayType',
 			settingValue: 'settings/value',
 			configuredPhoneNumber: 'notifications/phoneNumber',
+			callPrice: 'notifications/phoneCostCall',
 		}),
 	}
 }

@@ -217,9 +217,6 @@ export default {
 
 	},
 	computed: {
-		callPrice: function() {
-			return process.env.CALL_PRICE
-		},
 		callsLeftWarning: function() {
 			return process.env.BALANCE_WARNING_CALLS
 		},
@@ -262,6 +259,7 @@ export default {
 			settingValue: 'settings/value',
 			numberFormats: 'settings/numberFormats',
 			balance: 'notifications/phoneBalance',
+			callPrice: 'notifications/phoneCostCall',
 		}),
 	}
 }

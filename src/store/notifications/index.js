@@ -14,6 +14,10 @@ export default {
 				freeCallAvailable: null,
 				canReceiveTestCall: null,
 			},
+			cost: {
+				call: 0,
+				testCall: 0,
+			}
 		},
 		paymentTransactions: null,
 	},
@@ -125,6 +129,15 @@ export default {
 		phonePayments: (state) => {
 			return (state.paymentTransactions == null) ? [] : state.paymentTransactions.payments
 		},
+
+		phoneCostCall: (state) => {
+			return state.phone.cost.call
+		},
+
+		phoneCostTestCall: (state) => {
+			return state.phone.cost.testCall
+		}
+
 	},
 
 	actions: {

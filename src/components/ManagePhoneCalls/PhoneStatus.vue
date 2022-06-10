@@ -149,9 +149,6 @@ export default {
 		}
 	},
 	computed: {
-		testCallPrice: function() {
-			return process.env.TEST_CALL_PRICE
-		},
 		privacy() {
 			return this.settingValue('uiPrivacyEnabled')
 		},
@@ -162,6 +159,7 @@ export default {
 			freeCallAvailable: 'notifications/phoneFreeCallAvailable',
 			canReceiveTestCall: 'notifications/phoneCanReceiveTestCall',
 			phoneBalance: 'notifications/phoneBalance',
+			testCallPrice: 'notifications/phoneCostTestCall',
 		}),
 	}
 }
