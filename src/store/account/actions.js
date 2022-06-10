@@ -66,6 +66,7 @@ export function loadUserData({ commit, dispatch }) {
 				}
 				dispatch('settings/set', {key: key, value: value}, { root: true })
 			}
+			dispatch('settings/setEnabledBetaFeatures', response?.data?.enabledBetaFeatures, { root: true })
 		})
 }
 

@@ -21,7 +21,11 @@ export default {
 
 			triggerMultipleInfo: 1.5,
 			triggerMultipleWarning: 1.25,
+
+			depositFromAddress: null,
+			depositInfoMail: null,
 		},
+		enabledBetaFeatures: [],
 		numberFormats: {
 			currency: { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 },
 			currencyNoDecimals: { style: 'currency', currency: 'USD', maximumFractionDigits: 0 },
@@ -42,6 +46,15 @@ export default {
 		},
 		savingSettingsToAccount: (state) => {
 			return state.savingSettingsToAccount
+		},
+		betaFeatureEnabled: (state) => (featureName) => {
+			return state.enabledBetaFeatures.includes(featureName)
+		},
+		isDev: () => {
+			return process.env.DEV
+		},
+		privacy: (state) => {
+			return state.settings.uiPrivacyEnabled
 		}
 	},
 
@@ -65,6 +78,10 @@ export default {
 					.finally(() => commit('doneSavingSettingsToAccount'))
 			})
 		},
+
+		setEnabledBetaFeatures({ commit }, data) {
+			commit('setEnabledBetaFeatures', data)
+		}
 	},
 
 	// ----------------------------------------------------------------------------------
@@ -81,6 +98,9 @@ export default {
 		},
 		doneSavingSettingsToAccount(state) {
 			state.savingSettingsToAccount = false
+		},
+		setEnabledBetaFeatures(state, data) {
+			state.enabledBetaFeatures = data
 		}
 	},
 }

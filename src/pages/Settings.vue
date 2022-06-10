@@ -39,7 +39,7 @@ export default defineComponent({
 		Privacy,
 	},
 	created() {
-		this.$store.dispatch('setHeadline', {text: 'Dobby Settings', icon: 'fal fa-sliders-h'})
+		this.$store.dispatch('setHeadline', {text: 'Dobby Settings', icon: 'fa-light fa-sliders'})
 	},
 })
 </script>

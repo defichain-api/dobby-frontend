@@ -1,6 +1,6 @@
 <template>
 	<div class="q-pa-md row items-start q-gutter-md">
-		<q-card flat :bordered="$q.dark.isActive">
+		<q-card flat >
 			<q-card-section>
 				<div class="text-h4 q-mb-lg">Hello, friend <q-icon name="fas fa-hat-wizard" /></div>
 				<div class="q-mt-lg">
@@ -33,7 +33,7 @@
 			</q-card-section>
 		</q-card>
 
-		<q-card flat :bordered="$q.dark.isActive">
+		<q-card flat >
 			<q-card-section>
 				<div class="text-h6 q-mb-lg">Meet my developers <q-icon name="fal fa-flask-potion" /></div>
 				<p>
@@ -71,7 +71,7 @@
 			</q-card-section>
 		</q-card>
 
-		<q-card flat :bordered="$q.dark.isActive">
+		<q-card flat >
 			<q-card-section class="q-pb-none">
 				<div class="text-h6 q-mb-lg">Buy us a coffee <q-icon name="fal fa-mug-hot" /></div>
 				<p>
@@ -96,7 +96,7 @@
 			</q-card-section>
 		</q-card>
 
-		<q-card flat :bordered="$q.dark.isActive">
+		<q-card flat >
 			<q-card-section>
 				<div class="text-h6 q-mb-lg">Funded by the community <q-icon name="fal fa-coins" /></div>
 				<p>
@@ -171,7 +171,7 @@ export default {
 		}
 	},
 	created() {
-		this.$store.dispatch('setHeadline', {text: 'About Dobby', icon: 'fal fa-question-circle'})
+		this.$store.dispatch('setHeadline', {text: 'About Dobby', icon: 'fa-light fa-comments-question-check'})
 	},
 	methods: {
 		toTwitter() {

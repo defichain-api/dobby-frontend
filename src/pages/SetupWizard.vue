@@ -35,7 +35,7 @@
 						</div>
 					</div>
 				</transition>
-				<q-card flat :bordered="!this.$q.dark.isActive" class="q-mt-xl text-center">
+				<q-card flat class="q-mt-xl text-center">
 					<q-card-section>
 						<!-- <q-icon name="fas fa-socks" size="xl" /> -->
 						<q-img

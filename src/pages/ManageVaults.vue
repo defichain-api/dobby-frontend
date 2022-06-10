@@ -117,7 +117,7 @@ export default defineComponent({
 		}
 	},
 	created() {
-		this.$store.dispatch('setHeadline', {text: 'Your Vaults', icon: 'fal fa-archive'})
+		this.$store.dispatch('setHeadline', {text: 'Your Vaults', icon: 'fa-light fa-vault'})
 		this.vaults.forEach((vault) => {
 			this.vaultNames[vault.vaultId] = vault.name
 		})

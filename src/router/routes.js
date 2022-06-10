@@ -42,6 +42,18 @@ const routes = [
 		}],
 	},
 	{
+		path: "/manage-notifications-new",
+		component: () => import("layouts/MainLayout.vue"),
+		children: [{
+			name: "manage-notifications-new",
+			path: "",
+			component: () => import("src/pages/ManageNotificationsNew.vue"),
+			meta: {
+				requiresAuth: true
+			},
+		}],
+	},
+	{
 		path: "/manage-vaults",
 		component: () => import("layouts/MainLayout.vue"),
 		children: [{
@@ -51,6 +63,18 @@ const routes = [
 			meta: { requiresAuth: true },
 		}],
 	},
+		{
+			path: "/manage-phone-calls",
+			component: () => import("layouts/MainLayout.vue"),
+			children: [{
+				name: "manage-phone-calls",
+				path: "",
+				component: () => import("pages/ManagePhoneCalls.vue"),
+				meta: {
+					requiresAuth: true
+				},
+			}],
+		},
 	{
 		path: "/settings",
 		component: () => import("layouts/MainLayout.vue"),

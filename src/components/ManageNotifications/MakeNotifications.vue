@@ -16,7 +16,7 @@
 				appear
 				enter-active-class="animated pulse"
 			>
-				<q-card flat :bordered="$q.dark.isActive" v-for="vault in missingTiggers" :key="vault.vaultId" class="vault">
+				<q-card flat  v-for="vault in missingTiggers" :key="vault.vaultId" class="vault">
 					<q-card-section class="container">
 						<div class="row">
 							<div class="col-2 text-center q-pt-sm">
@@ -64,7 +64,7 @@
 				appear
 				enter-active-class="animated pulse"
 			>
-				<q-card flat :bordered="$q.dark.isActive" v-for="vault in vaultsWithoutTriggers" :key="vault.vaultId" class="vault">
+				<q-card flat  v-for="vault in vaultsWithoutTriggers" :key="vault.vaultId" class="vault">
 					<q-card-section class="container">
 						<div class="row">
 							<div class="col-2 text-center q-pt-sm">
@@ -141,7 +141,7 @@
 					<q-separator />
 
 					<q-card-actions>
-						<q-btn rounded outline color="primary" icon="fal fa-bells" label="add notifications" class="full-width" @click="addNotifications(vault)"></q-btn>
+						<q-btn rounded outline color="primary" icon="fa-light fa-bells" label="add notifications" class="full-width" @click="addNotifications(vault)"></q-btn>
 					</q-card-actions>
 				</q-card>
 			</transition-group>
@@ -295,11 +295,6 @@ export default {
 			return this.$root.$i18n.locale
 		},
 
-		// returns all configured number formats
-		numberFormats: function () {
-			return this.settingValue('numberFormats')
-		},
-
 		// how much % away from minimal collateral should an "information" message be triggered?
 		triggerMultipleInfo: function() {
 			return this.settingValue('triggerMultipleInfo')
@@ -319,6 +314,7 @@ export default {
 			hasGateways: 'notifications/hasGateways',
 			gatewayType: 'notifications/gatewayType',
 			settingValue: 'settings/value',
+			numberFormats: 'settings/numberFormats',
 		})
 	}
 }
