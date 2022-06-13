@@ -68,7 +68,7 @@
 				@click="remove()"
 			/>
 			<q-btn
-				class="col-9 q-mb-sm"
+				class="col-9"
 				rounded
 				outline
 				color="primary"
