@@ -18,6 +18,11 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default defineComponent({
 	name: 'App',
+	data() {
+		return {
+			autoReload: null,
+		}
+	},
 	created() {
 		// FIRST THING TO DO ============================================================
 		// Read settings from local storage and write it to the vuex store
@@ -54,6 +59,13 @@ export default defineComponent({
 
 			// Fetch latest Chain Data
 			this.fetchChainData
+
+			// Fetch system messages / broadcasts
+			this.$store.dispatch('systemMessages/fetch')
+			this.autoReload = setInterval(() => {
+				if (process.env.DEV) { console.log("[DEBUG] Fetching broadcast messages from API") }
+				this.$store.dispatch('systemMessages/fetch')
+			}, 60 * 1000)
 		}
 	},
 	methods: {
