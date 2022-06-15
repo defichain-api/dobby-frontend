@@ -148,7 +148,7 @@
 					<q-space />
 
 					<q-btn dense flat icon="close" color="white" v-close-popup>
-						<q-tooltip class="bg-primary text-whitee">Close</q-tooltip>
+						<q-tooltip class="bg-primary text-white">Close</q-tooltip>
 					</q-btn>
 				</q-bar>
 				<NotificationTriggerDetails :trigger="{ratio: Math.floor(vault(vaultId).loanScheme.minCollateral * 1.5), gateways: []}" createNewTrigger :vaultId="vaultId" />

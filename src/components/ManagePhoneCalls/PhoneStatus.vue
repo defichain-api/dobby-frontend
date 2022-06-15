@@ -102,7 +102,7 @@
 
 		</q-card-section>
 
-		<q-separator inset />
+		<!-- <q-separator inset /> -->
 
 		<q-card-section>
 			<q-btn
