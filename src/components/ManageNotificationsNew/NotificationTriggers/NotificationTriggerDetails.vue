@@ -20,7 +20,7 @@
 						thumb-size="30px"
 						v-model="triggerRatio"
 						:label-value="triggerRatio + '%'"
-						:min="vault(vaultId).loanScheme.minCollateral +1"
+						:min="vault(vaultId).loanScheme.minCollateral + 1"
 						:max="vault(vaultId).loanScheme.minCollateral * 3"
 					/>
 				</div>
