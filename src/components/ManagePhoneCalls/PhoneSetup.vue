@@ -32,7 +32,7 @@
 			<q-slide-transition>
 				<div v-show="descriptionVisible">
 					<p class="text-body1">
-						Dobby can call you. That's very useful during the night when most iOS smart phones don't show notifictaions - But they'll let calls go through.
+						Dobby can call you. That's very useful during the night when most iOS smart phones don't show notifictaions - But they'll let calls push through.
 					</p>
 
 					<p>
