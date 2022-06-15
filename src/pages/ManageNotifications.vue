@@ -1,8 +1,7 @@
 <template>
-	<div class="q-pa-md q-gutter-md">
+  <div class="q-pa-md q-gutter-md">
 		<NotificationChannels />
-		<MakeNotifications />
-		<ManageTriggers />
+		<Notifications />
 	</div>
 </template>
 
@@ -10,25 +9,28 @@
 import { mapGetters } from 'vuex'
 
 import NotificationChannels from 'components/ManageNotifications/NotificationChannels.vue'
-import MakeNotifications from 'src/components/ManageNotifications/MakeNotifications.vue'
-import ManageTriggers from 'src/components/ManageNotifications/ManageTriggers.vue'
+import Notifications from 'components/ManageNotifications/Notifications.vue'
 
 export default {
-	name: 'ManageNotifications',
-	components: {
-		NotificationChannels,
-		MakeNotifications,
-		ManageTriggers,
+  name: 'ManageNotifications',
+  components: {
+    NotificationChannels,
+		Notifications,
+  },
+	data() {
+		return {
+			showHelp: false,
+		}
 	},
-	created() {
-		this.$store.dispatch('setHeadline', { text: 'Dobby likes to talk', icon: 'fa-light fa-bells'})
-		this.$store.dispatch('notifications/fetch')
-	},
-	computed: {
-		...mapGetters({
-			gateways: 'notifications/gateways',
-		}),
-	}
+  created() {
+    this.$store.dispatch('setHeadline', { text: 'Dobby likes to talk', icon: 'fa-light fa-bells'})
+    this.$store.dispatch('notifications/fetch')
+  },
+  computed: {
+    ...mapGetters({
+      gateways: 'notifications/gateways',
+    }),
+  }
 }
 </script>
 

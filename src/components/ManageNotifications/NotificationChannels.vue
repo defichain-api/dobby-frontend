@@ -32,10 +32,10 @@ import { ref } from 'vue'
 import { computed }  from 'vue'
 import { useStore } from 'vuex'
 
-import TelegramChannel from "components/ManageNotificationsNew/NotificationChannels/TelegramChannel/TelegramChannel.vue"
-import PhoneChannel from "components/ManageNotificationsNew/NotificationChannels/PhoneChannel/PhoneChannel.vue"
-import EmailChannel from "components/ManageNotificationsNew/NotificationChannels/EmailChannel/EmailChannel.vue"
-import WebhookChannel from "components/ManageNotificationsNew/NotificationChannels/WebhookChannel/WebhookChannel.vue"
+import TelegramChannel from "components/ManageNotifications/NotificationChannels/TelegramChannel/TelegramChannel.vue"
+import PhoneChannel from "components/ManageNotifications/NotificationChannels/PhoneChannel/PhoneChannel.vue"
+import EmailChannel from "components/ManageNotifications/NotificationChannels/EmailChannel/EmailChannel.vue"
+import WebhookChannel from "components/ManageNotifications/NotificationChannels/WebhookChannel/WebhookChannel.vue"
 
 export default {
 	name: 'NotificationChannels',
