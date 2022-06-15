@@ -100,7 +100,6 @@
 		-->
 		<q-drawer
 			v-model="leftDrawerOpen"
-
 			behavior="mobile"
 			:width="250"
 		>

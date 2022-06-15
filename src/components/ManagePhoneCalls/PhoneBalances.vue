@@ -58,7 +58,7 @@
 
 					<div v-if="depositFromAddress" class="q-mt-md q-gutter-md">
 
-						<q-card flat class="text-center" :class="{'bg-warning': !confirmedDepositFromAddress, 'bg-accent': confirmedDepositFromAddress}">
+						<q-card flat class="text-center text-white" :class="{'bg-warning': !confirmedDepositFromAddress, 'bg-accent': confirmedDepositFromAddress}">
 							<q-card-section>
 								<p v-show="!confirmedDepositFromAddress">
 									Make sure to send only DFI and only from the address you have set:
@@ -71,6 +71,7 @@
 									<span v-else>🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦🧦</span>
 								</p>
 								<q-checkbox
+									color="white"
 									v-show="!confirmedDepositFromAddress"
 									v-model="confirmedDepositFromAddress"
 									label="OK, got it!"
@@ -83,7 +84,7 @@
 							<q-icon name="fa-light fa-arrow-down" size="xl"></q-icon>
 						</div>
 
-						<q-card flat v-show="confirmedDepositFromAddress" class="bg-accent text-center text-caption">
+						<q-card flat v-show="confirmedDepositFromAddress" class="bg-accent text-center text-caption text-white">
 							<q-card-section class="q-pb-sm">
 								<span class="text-h6">Send DFI to:</span>
 							</q-card-section>
@@ -116,9 +117,18 @@
 								/>
 							</q-card-section>
 						</q-card>
-						<p v-show="confirmedDepositFromAddress">
-							Please send ONLY DFI! Processing the transaction may take some time. Please give it some minutes :)
-						</p>
+
+						<q-list v-show="confirmedDepositFromAddress">
+							<q-item>
+								<q-item-section avatar top>
+									<q-avatar icon="fa-light fa-circle-exclamation" color="negative" text-color="white" size="lg" />
+								</q-item-section>
+								<q-item-section>
+									Please send ONLY DFI!<br />Processing the transaction may take some time. Please give it some minutes :)
+								</q-item-section>
+							</q-item>
+						</q-list>
+
 					</div>
 
 					<div v-else>

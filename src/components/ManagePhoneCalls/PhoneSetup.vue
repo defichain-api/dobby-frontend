@@ -8,25 +8,38 @@
 			</q-btn>
 		</q-bar>
 		<q-item>
-				<q-item-section>
-					<q-item-label header class="text-h6 q-pl-none q-py-none" :class="{'text-black': !darkMode, 'text-white': darkMode}">Set Up Phone Calls <q-icon :name="icon" color="primary" /></q-item-label>
-				</q-item-section>
-				<q-item-section side top v-if="this.phoneNumber">
-					<q-btn @click="showDescription = !showDescription" flat dense rounded icon="fa-light fa-circle-question" />
-				</q-item-section>
-			</q-item>
+			<q-item-section>
+				<div class="text-center" :class="{'q-ml-xl': configuredPhoneNumber != 'not set' }">
+					<q-avatar :icon="icon" color="primary" text-color="white" size="xl" />
+				</div>
+			</q-item-section>
+			<q-item-section side top v-if="configuredPhoneNumber != 'not set'">
+				<q-btn @click="showDescription = !showDescription" flat dense rounded icon="fa-light fa-circle-question" />
+			</q-item-section>
+		</q-item>
+
+		<q-item class="q-pt-none">
+			<q-item-section>
+				<div class="text-h5 q-mb-md q-mt-sm text-center">
+					Get called by Dobby
+				</div>
+				<q-separator />
+			</q-item-section>
+		</q-item>
 
 		<q-card-section>
 
 			<q-slide-transition>
 				<div v-show="descriptionVisible">
 					<p class="text-body1">
-						Dobby can call you. That's very useful during the night when most iOS smart phones don't show notifictaions - But they'll let calls go through.
+						Dobby can call you. That's very useful during the night when most iOS smart phones don't show notifictaions - But they'll let calls push through.
 					</p>
 
 					<p>
 						Dobby Call is a premium service because Dobby has to pay a fee to his phone provider to make calls. To make things easy, Dobby accepts DFI as a pre-paid payment. Thankfully, DeFiChains master node community accepted Dobby's Community Fund Proposal which helps bringing the <b>fees to a lower level</b> and make <b>a free test call</b> to ensure everything is working properly. You can fund your account with some DFI after setting up Dobby Call.
 					</p>
+
+					<q-separator class="q-my-md"/>
 				</div>
 			</q-slide-transition>
 
@@ -35,15 +48,18 @@
 			</p>
 
 			<p v-if="hasGatewayType('phone')">
-				You can change that number to another one:
+				You can change that number to another one, as well as your email address.
+			</p>
+			<p v-if="hasGatewayType('phone') && !freeCallAvailable">
+				Please note: <i class="text-primary">Changing your phone number will not qualify for another free test call.</i>
 			</p>
 
-			<p>
+			<p class="q-mb-none">
 				<q-input
 					type="tel"
 					outlined
 					label="your phone number incl. county code"
-					hint="+4913371337 or +1420691337"
+					:hint="(phoneNumber.length == 0) ? 'something like +4913371337 or +1420691337' : ''"
 					v-model="phoneNumber"
 				/>
 				<q-input
@@ -52,26 +68,27 @@
 					label="email address"
 					:hint="(!isEmailAddress(depositInfoMail)) ? 'something like dobby@defichain-dobby.com' : ''"
 					v-model="depositInfoMail"
-					class="q-mt-md"
+					class="q-mt-md q-pb-none"
 					debounce="500"
 				>
 					<template v-slot:append>
 						<q-btn class="text-caption" no-caps dense flat @click="showWhyEmail = !showWhyEmail">
-							why?
+							why email?
 						</q-btn>
 					</template>
 				</q-input>
 			</p>
 
 			<q-slide-transition>
-				<q-item-label v-if="showWhyEmail">
+				<q-item-label v-if="showWhyEmail" class="q-mt-md">
 						<div class="text-h6">
 							Why do I have to provide an Email address?
 						</div>
-						<p>
+						<p class="q-mt-sm">
 							Because Dobby may have to reach out to you for some important reason.
-							Especially when your funds are getting too low. We just don't want to rely
-							on Telegram for such an important topic.
+							Especially when your funds are getting too low. We just don't want to
+							rely on Telegram for such an important topic. You'll also receive an
+							email when new funds have been transferred to your call balance.
 						</p>
 				</q-item-label>
 			</q-slide-transition>
@@ -90,6 +107,7 @@
         </q-item-section>
       </q-item>
 		</q-card-section>
+
 		<q-card-section>
 			<p>
 				<q-btn
@@ -137,6 +155,7 @@ export default {
 			done: false,
 			showDescription: false,
 			showWhyEmail: false,
+
 		}
 	},
 	methods: {
@@ -153,22 +172,32 @@ export default {
 
 			// check if phone number is already set and has to be changed
 			if (typeof this.gatewayType('phone') == 'object' && 'gatewayId' in this.gatewayType('phone')) {
+
+				let message = `You are about to change your existing phone number from ${this.configuredPhoneNumber} to ${this.phoneNumber}.`
+				message = (this.freeCallAvailable) ? message : message + ' Since you already recieved a free test call, this will not qualify for new one. Do you want to proceed?'
+
 				if (process.env.DEV) { console.log("[DEBUG] there's already an active phone gateway: ID#" + this.gatewayType('phone').gatewayId) }
+
 				this.$q.notify({
 					group: 'userQuestion',
 					type: 'warning',
-					message: 'You are about to change you existing phone number. This will not qualify for another free test call. Do you want to proceed?',
+					message: message,
 					timeout: 50000,
 					actions: [
 						{
 							label: 'Yes, change phone number',
 							color: 'white',
 							icon: 'fa-light fa-circle-check',
-							handler: () => this.savePhoneNumber(),
+							handler: () => {
+								this.$api.delete('user/gateways', { data: { 'gateway_id': this.gatewayType('phone').gatewayId } })
+								this.savePhoneNumber()
+							},
 						},
-					]
+					],
+					onDismiss: () => {
+						this.loading = false
+					}
 				})
-				this.$api.delete('user/gateways', { data: { 'gateway_id': this.gatewayType('phone').gatewayId } })
 			} else {
 				this.savePhoneNumber()
 			}
@@ -184,10 +213,11 @@ export default {
 					setTimeout(() => {
 						this.loading = false
 						this.done = true
-						this.phoneNumber = ''
+						//this.phoneNumber = ''
 						if (process.env.DEV) { console.log("[DEBUG] created new phone gateway: " + this.phoneNumber) }
 					}, 500)
 					this.fetchGateways()
+					this.fetchPhoneData()
 				})
 				.catch((error) => {
 					this.$q.notify({
@@ -224,6 +254,7 @@ export default {
 
 		...mapActions({
 			fetchGateways: 'notifications/fetchGateways',
+			fetchPhoneData: 'notifications/fetchPhoneData',
 		})
 	},
 	computed: {
@@ -236,7 +267,8 @@ export default {
 		descriptionVisible: {
 			get: function () {
 				if (this.showDescription) return true
-				return (this.phoneNumber == '')
+				console.log(this.configuredPhoneNumber)
+				return (this.configuredPhoneNumber == 'not set')
 			},
 			set: function () {
 
@@ -296,6 +328,7 @@ export default {
 			settingValue: 'settings/value',
 			configuredPhoneNumber: 'notifications/phoneNumber',
 			callPrice: 'notifications/phoneCostCall',
+			freeCallAvailable: 'notifications/phoneFreeCallAvailable',
 		}),
 	}
 }

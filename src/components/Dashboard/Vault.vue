@@ -58,6 +58,8 @@
 				{{ vault.collateralRatio.toLocaleString(locale) }} %
 			</div>
 			-->
+
+			<!--
 			<div class="row q-mt-sm" v-if="hasTriggers">
 				<div class="col-2">
 					<q-linear-progress v-if="vault.state != 'in_liquidation'" size="lg" :value="awayFromLiquidationState" color="negative" track-color="negative">
@@ -75,6 +77,22 @@
 					<div class="col-2 text-left text-negative">{{ vault.loanScheme.minCollateral }} %</div>
 					<div class="col-3 text-left text-warning" style="margin-left: -12px">{{ this.triggers['warning']?.ratio.toLocaleString(locale) }} %</div>
 					<div class="col-5 text-left text-positive">{{ this.triggers['info']?.ratio.toLocaleString(locale) }} %</div>
+					<div class="col-2 text-right text-positive" style="margin-left: 12px">{{ vault.loanScheme.minCollateral * overCollateralizationFactor}} %</div>
+				</div>
+			</div>
+			-->
+			<div class="row q-mt-sm" v-if="hasTriggers">
+				<div class="col-3">
+					<q-linear-progress v-if="vault.state != 'in_liquidation'" size="lg" :value="awayFromLiquidationState" color="warning" track-color="warning">
+					</q-linear-progress>
+				</div>
+				<div class="col-9">
+					<q-linear-progress v-if="vault.state != 'in_liquidation'" size="lg" :value="awayFromWarningState" color="positive" track-color="positive">
+					</q-linear-progress>
+				</div>
+				<div class="row full-width">
+					<div class="col-3 text-left text-warning">{{ vault.loanScheme.minCollateral }} %</div>
+					<div class="col-7 text-left text-positive" style="margin-left: -12px">{{ this.triggers['info']?.ratio.toLocaleString(locale) }} %</div>
 					<div class="col-2 text-right text-positive" style="margin-left: 12px">{{ vault.loanScheme.minCollateral * overCollateralizationFactor}} %</div>
 				</div>
 			</div>
@@ -244,7 +262,7 @@ export default {
 			return vault.collateralValue - this.minCollateralAmount(vault)
 		},
 		awayFromLiqudationRelative(vault) {
-			return (this.awayFromLiqudation(vault) + vault.loanScheme.minCollateral) / (this.overCollateralizationFactor * vault.loanScheme.minCollateral)
+			return (this.awayFromLiqudation(vault)) / (this.overCollateralizationFactor * vault.loanScheme.minCollateral)
 		},
 		minCollateralAmount(vault) {
 			return vault.loanValue * (vault.loanScheme.minCollateral / 100)
@@ -274,6 +292,7 @@ export default {
 		maximumDisplayedOvercollateralisationRatio() {
 			return this.overCollateralizationFactor * this.vault.loanScheme.minCollateral
 		},
+		/*
 		awayFromInfoState() {
 			const infoStateRatio = this.triggers['info']?.ratio || 0
 			const vaultCollateralRatio = this.vault.collateralRatio
@@ -285,7 +304,9 @@ export default {
 			}
 			return aboveInfoStateRatio / aboveInfoStateSpectrum
 		},
+		*/
 		awayFromWarningState() {
+			/*
 			const infoStateRatio = this.triggers['info']?.ratio || 0
 			const warningStateRatio = this.triggers['warning']?.ratio || 0
 			const vaultCollateralRatio = this.vault.collateralRatio
@@ -297,9 +318,20 @@ export default {
 			}
 
 			return aboveWarningStateRatio / aboveWarningStateSpectrum
+			*/
+			const infoStateRatio = this.triggers['info']?.ratio || 0
+			const vaultCollateralRatio = this.vault.collateralRatio
+			const aboveInfoStateSpectrum = this.maximumDisplayedOvercollateralisationRatio - infoStateRatio
+			const aboveInfoStateRatio = vaultCollateralRatio - infoStateRatio
+
+			if ((aboveInfoStateRatio) < 0) {
+				return 0
+			}
+			return aboveInfoStateRatio / aboveInfoStateSpectrum
 		},
 		awayFromLiquidationState() {
-			const warningStateRatio = this.triggers['warning']?.ratio || 0
+			//const warningStateRatio = this.triggers['warning']?.ratio || 0
+			const warningStateRatio = this.triggers['info']?.ratio || 0
 			const liquidationStateRatio = this.vault.loanScheme.minCollateral
 			const vaultCollateralRatio = this.vault.collateralRatio
 			const aboveLiquidationStateSpectrum = warningStateRatio - liquidationStateRatio
@@ -312,7 +344,6 @@ export default {
 		},
 		collateralState() {
 			if (this.awayFromLiquidationState < 1) return 'warning'
-			if (this.awayFromWarningState < 1) return 'info'
 			return 'healthy'
 		},
 		isFrozen() {
