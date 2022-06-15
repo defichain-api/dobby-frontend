@@ -38,6 +38,8 @@
 					<p>
 						Dobby Call is a premium service because Dobby has to pay a fee to his phone provider to make calls. To make things easy, Dobby accepts DFI as a pre-paid payment. Thankfully, DeFiChains master node community accepted Dobby's Community Fund Proposal which helps bringing the <b>fees to a lower level</b> and make <b>a free test call</b> to ensure everything is working properly. You can fund your account with some DFI after setting up Dobby Call.
 					</p>
+
+					<q-separator class="q-my-md"/>
 				</div>
 			</q-slide-transition>
 
@@ -57,7 +59,7 @@
 					type="tel"
 					outlined
 					label="your phone number incl. county code"
-					hint="+4913371337 or +1420691337"
+					:hint="(phoneNumber.length == 0) ? 'something like +4913371337 or +1420691337' : ''"
 					v-model="phoneNumber"
 				/>
 				<q-input
