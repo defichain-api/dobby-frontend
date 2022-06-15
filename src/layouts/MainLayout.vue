@@ -307,9 +307,9 @@ export default {
 				}
 				return [
 					...links,
-					{ icon: 'fa-light fa-bells', text: 'Manage Notifications BETA', to: 'manage-notifications-new', beta: 'notifications-setup' },
+					{ icon: 'fa-light fa-bells', text: 'Manage Notifications', to: 'manage-notifications' },
 					{ icon: 'fa-light fa-vault', text: 'Manage Vaults', to: 'manage-vaults' },
-					{ icon: 'fa-light fa-phone-rotary', text: 'Manage Phone Calls BETA', to: 'manage-phone-calls', beta: 'phone' },
+					{ icon: 'fa-light fa-phone-rotary', text: 'Manage Phone Calls', to: 'manage-phone-calls' },
 				]
 			}),
 			links3: [
