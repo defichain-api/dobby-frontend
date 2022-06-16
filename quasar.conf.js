@@ -63,8 +63,8 @@ module.exports = configure(function (ctx) {
 
 				"FUNDS_DEPOSIT_ADDRESS": "df1qkdlejzz8qv8w76lp5w39k96dfnszekwawjpp9s",
 
-				"CALL_PRICE": 0.5, // DFI
-				"TEST_CALL_PRICE": 0.25, // DFI
+				"CALL_PRICE": 2.0, // DFI
+				"TEST_CALL_PRICE": 0.5, // DFI
 				"BALANCE_WARNING_CALLS": 4, // When balance will only support this or less calls
 
 				...(require('dotenv').config().parsed),
