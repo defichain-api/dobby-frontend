@@ -131,11 +131,13 @@ export default {
 		},
 
 		phoneCostCall: (state) => {
-			return state.phone.cost.call
+			return 2.0
+			//return state.phone.cost.call
 		},
 
 		phoneCostTestCall: (state) => {
-			return state.phone.cost.testCall
+			return 0.5
+			//return state.phone.cost.testCall
 		}
 
 	},
