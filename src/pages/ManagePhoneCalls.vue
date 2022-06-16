@@ -27,10 +27,6 @@ export default defineComponent({
 		PhoneTransactions,
 	},
 	created() {
-		if (!this.betaFeatureEnabled('phone') && !this.isDev) {
-			this.$router.push({name: 'dashboard'})
-		}
-
 		this.$store.dispatch('setHeadline', { text: 'Dobby can call you', icon: 'fa-light fa-phone-rotary'})
 		this.$store.dispatch('notifications/fetch')
 	},
