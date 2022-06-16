@@ -160,7 +160,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import NotificationTriggerDetails from 'src/components/ManageNotificationsNew/NotificationTriggers/NotificationTriggerDetails.vue'
+import NotificationTriggerDetails from 'src/components/ManageNotifications/NotificationTriggers/NotificationTriggerDetails.vue'
 
 export default {
 	components: {

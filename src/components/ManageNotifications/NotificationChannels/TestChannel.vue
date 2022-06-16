@@ -24,7 +24,7 @@ export default {
 			required: true,
 		},
 		icon: {
-			required: true,
+			required: false,
 		},
 		rounded: {
 			default: false

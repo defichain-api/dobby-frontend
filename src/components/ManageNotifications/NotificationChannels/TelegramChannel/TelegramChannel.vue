@@ -61,10 +61,10 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import TelegramChannelSetup from 'components/ManageNotificationsNew/NotificationChannels/TelegramChannel/TelegramChannelSetup.vue'
-import ChannelOptionsMenu from 'components/ManageNotificationsNew/NotificationChannels/ChannelOptionsMenu.vue'
-import TestChannel from 'components/ManageNotificationsNew/NotificationChannels/TestChannel.vue'
-import RemoveChannel from 'components/ManageNotificationsNew/NotificationChannels/RemoveChannel.vue'
+import TelegramChannelSetup from 'components/ManageNotifications/NotificationChannels/TelegramChannel/TelegramChannelSetup.vue'
+import ChannelOptionsMenu from 'components/ManageNotifications/NotificationChannels/ChannelOptionsMenu.vue'
+import TestChannel from 'components/ManageNotifications/NotificationChannels/TestChannel.vue'
+import RemoveChannel from 'components/ManageNotifications/NotificationChannels/RemoveChannel.vue'
 
 export default {
 	name: 'TelegramChannel',
