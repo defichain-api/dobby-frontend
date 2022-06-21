@@ -302,9 +302,11 @@ export default {
 			],
 			links2: computed(() => {
 				let links = []
+				/*
 				if (!betaFeatureEnabled('notifications-setup')) {
 					links.push({ icon: 'fa-light fa-bells', text: 'Manage Notifications', to: 'manage-notifications' })
 				}
+				*/
 				return [
 					...links,
 					{ icon: 'fa-light fa-bells', text: 'Manage Notifications', to: 'manage-notifications' },
