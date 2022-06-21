@@ -3,7 +3,7 @@
 		<q-item-section avatar top>
 			<q-avatar
 				icon="fa-light fa-envelope"
-				color="primary"
+				color="green"
 				size="lg"
 				text-color="white"
 			/>
@@ -30,7 +30,7 @@
 
 		<q-item-section side top>
 			<q-btn ref="options" v-if="!channelActive" @click="showEmailChannelSetup = true" flat dense round icon="fa-light fa-circle-plus" class="q-pt-none" />
-			<ChannelOptionsMenu v-else icon="fa-light fa-envelope" icon-color="primary">
+			<ChannelOptionsMenu v-else icon="fa-light fa-envelope" icon-color="green">
 				<TestChannel
 					:label="$t('Send Test Message')"
 					channel="mail"

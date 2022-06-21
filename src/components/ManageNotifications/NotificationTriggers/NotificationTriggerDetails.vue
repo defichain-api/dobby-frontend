@@ -138,12 +138,12 @@ export default {
 				mail: {
 					name: 'Email',
 					icon: 'fa-light fa-envelope',
-					color: 'primary',
+					color: 'green',
 				},
 				webhook: {
 					name: 'Webhook',
 					icon: 'fa-light fa-cloud',
-					color: 'primary',
+					color: 'accent',
 				},
 			},
 			gatewayStates: {

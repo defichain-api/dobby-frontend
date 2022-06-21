@@ -13,9 +13,9 @@
 					<q-tooltip class="bg-primary text-white">Close</q-tooltip>
 				</q-btn>
 			</q-bar>
-			<div class="q-pa-md">
+			<div class="q-pa-md" style="max-width: 400px; margin: 0 auto;">
 				<div class="text-center">
-					<q-avatar :icon="webhookIcon" color="primary" text-color="white" size="xl" />
+					<q-avatar :icon="webhookIcon" color="accent" text-color="white" size="xl" />
 				</div>
 				<div class="text-h5 q-my-md text-center">
 					Get notified via Webhook
