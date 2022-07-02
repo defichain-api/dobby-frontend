@@ -10,22 +10,15 @@
       <q-chat-message
 				v-for="message in messages"
 				:key="message.startTime"
-        :name="message.type"
+        :name="message.type.toUpperCase() + ':'"
         avatar="/img/dobby-logo-white-border.png"
 				text-html
-        :text="[message.message, moment(message.startTime).format('MMMM Do YYYY, h:mm:ss a') + ' - ' + moment(message.endTime).format('MMMM Do YYYY, h:mm:ss a')]"
+        :text="getText(message)"
         sent
-        stamp="7 minutes ago"
+        :stamp="moment(message.startTime).fromNow()"
 				:bg-color="bgColor(message.type)"
+				text-color="white"
       />
-			<!--
-      <q-chat-message
-        name="Jane"
-        avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-        :text="['doing fine, how r you?']"
-        stamp="4 minutes ago"
-      />
-			-->
     </div>
   </div>
 </template>
@@ -42,11 +35,21 @@ export default {
 		this.$store.dispatch('notifications/fetch')
 	},
 	methods: {
+		getText(message) {
+			let text= []
+			text.push(message.message)
+			if (message.endTime) {
+				text.push(moment(message.startTime).format('MMMM Do YYYY, hh:mm:ss a') + ' - ' + moment(message.endTime).format('MMMM Do YYYY, hh:mm:ss a'))
+			} else {
+				text.push(moment(message.startTime).format('MMMM Do YYYY, hh:mm:ss a'))
+			}
+			return text
+		},
 		bgColor(messageType) {
 			if (messageType == 'error') return 'negative'
 			if (messageType == 'warning') return 'warning'
 			if (messageType == 'info') return 'info'
-			if (messageType == 'default') return ''
+			if (messageType == 'default') return 'dark'
 		},
 	},
 	computed: {
