@@ -44,7 +44,7 @@ export default {
 			}
 		},
 		latestMessage() {
-			return this.messages[3]
+			return this.messages[0]
 		},
 		bgColor() {
 			const messageType = this.latestMessage?.type
