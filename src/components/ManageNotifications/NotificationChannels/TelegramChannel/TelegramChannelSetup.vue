@@ -10,10 +10,10 @@
 				<q-space />
 
 				<q-btn dense flat icon="close" color="white" v-close-popup>
-					<q-tooltip class="bg-primary text-whitee">Close</q-tooltip>
+					<q-tooltip class="bg-primary text-white">Close</q-tooltip>
 				</q-btn>
 			</q-bar>
-			<div class="q-pa-md">
+			<div class="q-pa-md" style="max-width: 400px; margin: 0 auto;">
 				<div class="text-center">
 					<q-avatar icon="fab fa-telegram" color="telegram" text-color="white" size="xl" />
 				</div>

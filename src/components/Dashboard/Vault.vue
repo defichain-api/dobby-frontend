@@ -32,7 +32,7 @@
 			</div>
 		</q-card-section>
 
-		<q-card-section v-if="!hasTriggers && vault.state != 'in_liquidation'" class="text-white bg-warning">
+		<q-card-section v-if="!hasTrigger && vault.state != 'in_liquidation'" class="text-white bg-warning">
 			<q-icon name="fal fa-exclamation-triangle"></q-icon>
 			Please head over to <q-btn dense flat type="href" to="manage-notifications">Manage Notifications</q-btn> to set up notifications for this vault.
 		</q-card-section>
@@ -53,28 +53,18 @@
 					<div class="caption" v-if="vault.nextCollateralRatio">Next: <span class="text-primary">{{ vault.nextCollateralRatio.toLocaleString(locale) }} %</span></div>
 				</div>
 			</div>
-			<!--
-			<div class="col-12 text-center q-mt-md" :class="{'text-negative': collateralState == 'warning', 'text-warning': collateralState == 'info', 'text-positive': collateralState == 'healthy'}">
-				{{ vault.collateralRatio.toLocaleString(locale) }} %
-			</div>
-			-->
-			<div class="row q-mt-sm" v-if="hasTriggers">
-				<div class="col-2">
-					<q-linear-progress v-if="vault.state != 'in_liquidation'" size="lg" :value="awayFromLiquidationState" color="negative" track-color="negative">
-					</q-linear-progress>
-				</div>
+			<div class="row q-mt-sm" v-if="hasTrigger">
 				<div class="col-3">
-					<q-linear-progress v-if="vault.state != 'in_liquidation'" size="lg" :value="awayFromWarningState" color="warning" track-color="warning" label="test">
+					<q-linear-progress v-if="vault.state != 'in_liquidation'" size="lg" :value="awayFromLiquidationState" color="warning" track-color="warning">
 					</q-linear-progress>
 				</div>
-				<div class="col-7">
-					<q-linear-progress v-if="vault.state != 'in_liquidation'" size="lg" :value="awayFromInfoState" color="positive" track-color="positive">
+				<div class="col-9">
+					<q-linear-progress v-if="vault.state != 'in_liquidation'" size="lg" :value="awayFromWarningState" color="positive" track-color="positive">
 					</q-linear-progress>
 				</div>
 				<div class="row full-width">
-					<div class="col-2 text-left text-negative">{{ vault.loanScheme.minCollateral }} %</div>
-					<div class="col-3 text-left text-warning" style="margin-left: -12px">{{ this.triggers['warning']?.ratio.toLocaleString(locale) }} %</div>
-					<div class="col-5 text-left text-positive">{{ this.triggers['info']?.ratio.toLocaleString(locale) }} %</div>
+					<div class="col-3 text-left text-warning">{{ vault.loanScheme.minCollateral }} %</div>
+					<div class="col-7 text-left text-positive" style="margin-left: -12px">{{ this.trigger.ratio.toLocaleString(locale) }} %</div>
 					<div class="col-2 text-right text-positive" style="margin-left: 12px">{{ vault.loanScheme.minCollateral * overCollateralizationFactor}} %</div>
 				</div>
 			</div>
@@ -244,7 +234,7 @@ export default {
 			return vault.collateralValue - this.minCollateralAmount(vault)
 		},
 		awayFromLiqudationRelative(vault) {
-			return (this.awayFromLiqudation(vault) + vault.loanScheme.minCollateral) / (this.overCollateralizationFactor * vault.loanScheme.minCollateral)
+			return (this.awayFromLiqudation(vault)) / (this.overCollateralizationFactor * vault.loanScheme.minCollateral)
 		},
 		minCollateralAmount(vault) {
 			return vault.loanValue * (vault.loanScheme.minCollateral / 100)
@@ -260,46 +250,27 @@ export default {
 		privacy() {
 			return this.settingValue('uiPrivacyEnabled')
 		},
-		triggers() {
-			let vaultTriggers = this.vaultTriggers(this.vault.vaultId)
-			let triggerTypes = {}
-
-			if (Object.keys(vaultTriggers).length == 0) { return triggerTypes }
-
-			vaultTriggers.forEach((trigger) => {
-				triggerTypes[trigger.type] = trigger
-			})
-			return triggerTypes
+		trigger() {
+			return (this.vaultTriggers(this.vault.vaultId).length == undefined || this.vaultTriggers(this.vault.vaultId).length == 0) ? false : this.vaultTriggers(this.vault.vaultId).reverse()[0]
 		},
+
 		maximumDisplayedOvercollateralisationRatio() {
 			return this.overCollateralizationFactor * this.vault.loanScheme.minCollateral
 		},
-		awayFromInfoState() {
-			const infoStateRatio = this.triggers['info']?.ratio || 0
-			const vaultCollateralRatio = this.vault.collateralRatio
-			const aboveInfoStateSpectrum = this.maximumDisplayedOvercollateralisationRatio - infoStateRatio
-			const aboveInfoStateRatio = vaultCollateralRatio - infoStateRatio
 
-			if ((aboveInfoStateRatio) < 0) {
-				return 0
-			}
-			return aboveInfoStateRatio / aboveInfoStateSpectrum
-		},
 		awayFromWarningState() {
-			const infoStateRatio = this.triggers['info']?.ratio || 0
-			const warningStateRatio = this.triggers['warning']?.ratio || 0
+			const warningStateRatio = this.trigger.ratio || 0
 			const vaultCollateralRatio = this.vault.collateralRatio
-			const aboveWarningStateSpectrum = infoStateRatio - warningStateRatio
-			const aboveWarningStateRatio = vaultCollateralRatio - warningStateRatio
+			const aboveWarningStateSpectrum = this.maximumDisplayedOvercollateralisationRatio - warningStateRatio
+			const abovewarningStateRatio = vaultCollateralRatio - warningStateRatio
 
-			if ((aboveWarningStateRatio) < 0) {
+			if ((abovewarningStateRatio) < 0) {
 				return 0
 			}
-
-			return aboveWarningStateRatio / aboveWarningStateSpectrum
+			return abovewarningStateRatio / aboveWarningStateSpectrum
 		},
 		awayFromLiquidationState() {
-			const warningStateRatio = this.triggers['warning']?.ratio || 0
+			const warningStateRatio = this.trigger.ratio || 0
 			const liquidationStateRatio = this.vault.loanScheme.minCollateral
 			const vaultCollateralRatio = this.vault.collateralRatio
 			const aboveLiquidationStateSpectrum = warningStateRatio - liquidationStateRatio
@@ -312,14 +283,14 @@ export default {
 		},
 		collateralState() {
 			if (this.awayFromLiquidationState < 1) return 'warning'
-			if (this.awayFromWarningState < 1) return 'info'
 			return 'healthy'
 		},
 		isFrozen() {
 			return this.vault.state == 'frozen'
 		},
-		hasTriggers() {
-			return Object.keys(this.triggers).length > 0
+		hasTrigger() {
+			if (this.vaultTriggers(this.vault.vaultId).length == undefined) return false
+			return(this.vaultTriggers(this.vault.vaultId).length > 0)
 		},
 		...mapGetters({
 			settingValue: 'settings/value',

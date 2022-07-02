@@ -1,11 +1,11 @@
 <template>
 	<div class="q-pa-md row items-start q-gutter-md" v-if="statistics.length > 0">
 		<div class="text-h5 col-12">Until yesterday</div>
+		<MessagesDelivered :statistics="statistics" />
 		<UserCount :statistics="statistics" />
 		<VaultCount :statistics="statistics" />
 		<Collateral :statistics="statistics" />
 		<Loans :statistics="statistics" />
-		<MessagesDelivered :statistics="statistics" />
 	</div>
 </template>
 

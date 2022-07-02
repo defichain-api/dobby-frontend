@@ -5,16 +5,25 @@
 				When collateral ratio turns near to...
 			</p>
 			<div class="row">
-				<q-slider
-					class="q-mx-sm"
-					label
-					label-always
-					switch-label-side
-					v-model="triggerRatio"
-					:label-value="triggerRatio + '%'"
-					:min="vault(vaultId).loanScheme.minCollateral +1"
-					:max="vault(vaultId).loanScheme.minCollateral * 3"
-				/>
+				<div class="col-2">
+					<q-input
+						:type="($q.platform.is.mobile) ? 'number' : ''"
+						v-model="triggerRatio"
+						dense
+						outlined
+						debounce="1500"
+					/>
+				</div>
+				<div class="col-10" style="padding-top: 5px;">
+					<q-slider
+						class="q-pl-md"
+						thumb-size="30px"
+						v-model="triggerRatio"
+						:label-value="triggerRatio + '%'"
+						:min="vault(vaultId).loanScheme.minCollateral + 1"
+						:max="vault(vaultId).loanScheme.minCollateral * 3"
+					/>
+				</div>
 			</div>
 		</q-card-section>
 		<div class="full-width text-center">
@@ -68,7 +77,7 @@
 				@click="remove()"
 			/>
 			<q-btn
-				class="col-9 q-mb-sm"
+				class="col-9"
 				rounded
 				outline
 				color="primary"
@@ -129,12 +138,12 @@ export default {
 				mail: {
 					name: 'Email',
 					icon: 'fa-light fa-envelope',
-					color: 'primary',
+					color: 'green',
 				},
 				webhook: {
 					name: 'Webhook',
 					icon: 'fa-light fa-cloud',
-					color: 'primary',
+					color: 'accent',
 				},
 			},
 			gatewayStates: {
@@ -143,6 +152,16 @@ export default {
 				'mail': this.gatewayTypeActive('mail'),
 				'webhook': this.gatewayTypeActive('webhook'),
 			},
+		}
+	},
+	watch: {
+		triggerRatio(newVal) {
+			const vault = this.vault(this.vaultId)
+
+			if (newVal < vault.loanScheme.minCollateral +1) {
+				this.triggerRatio =vault.loanScheme.minCollateral +1
+			}
+
 		}
 	},
 	methods: {

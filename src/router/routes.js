@@ -54,18 +54,6 @@ const routes = [
 		}],
 	},
 	{
-		path: "/manage-notifications-new",
-		component: () => import("layouts/MainLayout.vue"),
-		children: [{
-			name: "manage-notifications-new",
-			path: "",
-			component: () => import("src/pages/ManageNotificationsNew.vue"),
-			meta: {
-				requiresAuth: true
-			},
-		}],
-	},
-	{
 		path: "/manage-vaults",
 		component: () => import("layouts/MainLayout.vue"),
 		children: [{

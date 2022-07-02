@@ -113,14 +113,10 @@ export default defineComponent({
 	data () {
 		return {
 			addressToAdd: '',
-			vaultNames: {},
 		}
 	},
 	created() {
 		this.$store.dispatch('setHeadline', {text: 'Your Vaults', icon: 'fa-light fa-vault'})
-		this.vaults.forEach((vault) => {
-			this.vaultNames[vault.vaultId] = vault.name
-		})
 	},
 	methods: {
 		addVault(address) {
@@ -186,6 +182,14 @@ export default defineComponent({
 		})
 	},
 	computed: {
+		vaultNames: function() {
+			let vaultNames = []
+			this.vaults.forEach((vault) => {
+				vaultNames[vault.vaultId] = vault.name
+			})
+
+			return vaultNames
+		},
 		locale: function() {
 			return this.$root.$i18n.locale
 		},
@@ -198,13 +202,6 @@ export default defineComponent({
 			settingValue: 'settings/value',
 		}),
 	},
-	// watch: {
-	//	 vaults: function (newVaults) {
-	//		 newVaults.forEach((vault) => {
-	//			 this.vaultNames[vault.vaultId] = vault.name
-	//		 })
-	//	 }
-	// }
 })
 </script>
 

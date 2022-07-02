@@ -102,7 +102,7 @@
 
 		</q-card-section>
 
-		<q-separator inset />
+		<!-- <q-separator inset /> -->
 
 		<q-card-section>
 			<q-btn
@@ -132,7 +132,7 @@
 import { mapGetters } from 'vuex'
 
 import PhoneSetup from "components/ManagePhoneCalls/PhoneSetup.vue"
-import TestChannel from 'components/ManageNotificationsNew/NotificationChannels/TestChannel.vue'
+import TestChannel from 'components/ManageNotifications/NotificationChannels/TestChannel.vue'
 
 export default {
 	name: 'PhoneStatus',

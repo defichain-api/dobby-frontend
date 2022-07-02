@@ -45,7 +45,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import ChannelOptionsMenu from 'components/ManageNotificationsNew/NotificationChannels/ChannelOptionsMenu.vue'
+import ChannelOptionsMenu from 'components/ManageNotifications/NotificationChannels/ChannelOptionsMenu.vue'
 
 export default {
 	name: 'PhoneChannel',
