@@ -100,6 +100,7 @@
 				</q-card-actions>
 			</q-card>
 
+			<LatestSystemMessage />
 
 			<NextPriceTicker />
 
@@ -167,6 +168,7 @@
 import NoNotificationGateways from 'src/components/Dashboard/NoNotificationGateways.vue'
 import Vault from 'src/components/Dashboard/Vault.vue'
 import NextPriceTicker from 'src/components/Dashboard/NextPriceTicker.vue'
+import LatestSystemMessage from 'src/components/Dashboard/LatestSystemMessage.vue'
 
 import { defineComponent } from 'vue'
 import { mapGetters } from 'vuex'
@@ -179,6 +181,7 @@ export default defineComponent({
 		NoNotificationGateways,
 		Vault,
 		NextPriceTicker,
+		LatestSystemMessage,
 	},
 	data () {
 		return {

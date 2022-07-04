@@ -316,6 +316,7 @@ export default {
 			}),
 			links3: [
 				{ icon: 'fa-light fa-sliders', text: 'Settings', to: 'settings' },
+				{ icon: 'fa-light fa-message-lines', text: 'System Messages', to: "system-messages", beta: 'notifications-setup' },
 				{ icon: 'fa-light fa-comments-question-check', text: 'WTF?!', to: 'wtf' },
 				{ icon: 'fa-light fa-chart-mixed', text: 'Statistics', to: 'statistics' },
 			],

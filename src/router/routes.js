@@ -20,6 +20,18 @@ const routes = [
 		}],
 	},
 	{
+		path: "/system-messages",
+		component: () => import("layouts/MainLayout.vue"),
+		children: [{
+			name: "system-messages",
+			path: "",
+			component: () => import("src/pages/SystemMessages.vue"),
+			meta: {
+				requiresAuth: true
+			},
+		}],
+	},
+	{
 		path: "/setup",
 		component: () => import("layouts/SetupWizardLayout.vue"),
 		children: [

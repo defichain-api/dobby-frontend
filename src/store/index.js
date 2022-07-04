@@ -5,6 +5,7 @@ import account from './account'
 import settings from './settings'
 import notifications from './notifications'
 import chain from './chain'
+import systemMessages from './system-messages'
 
 /*
  * If not building with SSR mode, you can
@@ -22,6 +23,7 @@ export default store(function (/* { ssrContext } */) {
 			settings,
 			notifications,
 			chain,
+			systemMessages,
 		},
 		state: {
 			headline: {
