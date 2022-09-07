@@ -171,6 +171,11 @@
 				</q-card>
 			</div>
 		</div>
+		<div class="row items-start">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 q-pl-md q-mb-md">
+				<InterestRateWarning />
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -178,10 +183,12 @@
 import { mapGetters } from 'vuex'
 
 import NotificationTriggerDetails from 'src/components/ManageNotifications/NotificationTriggers/NotificationTriggerDetails.vue'
+import InterestRateWarning from 'src/components/ManageNotifications/InterestRateWarning.vue'
 
 export default {
 	components: {
 		NotificationTriggerDetails,
+		InterestRateWarning,
 	},
 	data() {
 		return {

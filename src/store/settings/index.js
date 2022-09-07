@@ -24,6 +24,8 @@ export default {
 
 			depositFromAddress: null,
 			depositInfoMail: null,
+
+			informDusdInterestRate: 999,
 		},
 		enabledBetaFeatures: [],
 		numberFormats: {
