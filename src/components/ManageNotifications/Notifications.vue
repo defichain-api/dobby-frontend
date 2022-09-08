@@ -161,7 +161,7 @@
 								</q-btn>
 							</q-bar>
 							<NotificationTriggerDetails
-							 	style="max-width: 400px; margin: 0 auto;"
+								style="max-width: 400px; margin: 0 auto;"
 								:trigger="{ratio: Math.floor(vault(vaultId).loanScheme.minCollateral * 1.5), gateways: []}"
 								createNewTrigger
 								:vaultId="vaultId"
