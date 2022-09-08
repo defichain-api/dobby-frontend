@@ -176,6 +176,15 @@
 				<InterestRateWarning />
 			</div>
 		</div>
+		<div class="row items-start">
+			<div class="col-12 q-ml-md q-mb-md text-h6">Settings</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 q-pl-md q-mb-md">
+				<TimeZone />
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 q-pl-md q-mb-md">
+				<SummaryInterval />
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -184,11 +193,15 @@ import { mapGetters } from 'vuex'
 
 import NotificationTriggerDetails from 'src/components/ManageNotifications/NotificationTriggers/NotificationTriggerDetails.vue'
 import InterestRateWarning from 'src/components/ManageNotifications/InterestRateWarning.vue'
+import TimeZone from 'components/Settings/TimeZone.vue'
+import SummaryInterval from 'components/Settings/SummaryInterval.vue'
 
 export default {
 	components: {
 		NotificationTriggerDetails,
 		InterestRateWarning,
+		TimeZone,
+		SummaryInterval,
 	},
 	data() {
 		return {
