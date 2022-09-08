@@ -38,6 +38,17 @@
 					class="full-width"
 					:color="(darkMode) ? 'white' : 'primary'"
 				/>
+				<RemoveChannel
+					:label="$t('Remove Channel')"
+					:channelId="gatewayType('phone').gatewayId"
+					color="warning"
+					flat
+					rounded
+					outline
+					icon="fa-light fa-circle-trash"
+					class="full-width q-mt-md"
+					size="sm"
+				/>
 			</ChannelOptionsMenu>
 		</q-item-section>
 	</q-item>
@@ -46,11 +57,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import ChannelOptionsMenu from 'components/ManageNotifications/NotificationChannels/ChannelOptionsMenu.vue'
+import RemoveChannel from 'components/ManageNotifications/NotificationChannels/RemoveChannel.vue'
 
 export default {
 	name: 'PhoneChannel',
 	components: {
 		ChannelOptionsMenu,
+		RemoveChannel,
   },
 	computed: {
 		darkMode: function () {
@@ -60,6 +73,7 @@ export default {
 			return this.hasGatewayType('phone')
 		},
 		...mapGetters({
+			gatewayType: 'notifications/gatewayType',
 			hasGatewayType: 'notifications/hasGatewayType',
 		}),
 	}
