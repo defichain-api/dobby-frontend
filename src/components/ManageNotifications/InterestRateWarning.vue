@@ -50,7 +50,7 @@
 		</q-card-section>
 		<q-card-actions align="right">
 			<q-btn
-				v-if="newTriggerRatioValue > 0 && newTriggerRatioValue < appearDisabledSetting"
+				v-if="newTriggerRatioValue >= minSetting && newTriggerRatioValue <= maxSetting"
 				@click="save()"
 				:disabled="saving"
 				outline
@@ -75,9 +75,9 @@ export default {
 			newTriggerRatioValue: null,
 			saving: false,
 			savingDone: false,
-			coldSetting: 20,
-			minSetting: 1,
-			maxSetting: 100,
+			coldSetting: -20,
+			minSetting: -100,
+			maxSetting: 15,
 		}
 	},
 	methods: {
@@ -113,7 +113,7 @@ export default {
 		},
 		triggerRatio: {
 			get: function() {
-				if (this.newTriggerRatioValue > 0) {
+				if (this.newTriggerRatioValue != null) {
 					return this.newTriggerRatioValue
 				}
 				return this.$store.getters['settings/value'](this.settingName) || this.appearDisabledSetting
