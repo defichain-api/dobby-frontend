@@ -47,7 +47,7 @@ module.exports = configure(function (ctx) {
 
 			// Enable .env file for configuration
 			env: {
-				"VERSION": '6',
+				"VERSION": '7',
 				"CURRENT_RELEASE": '1337',
 				"RELEASE_DATE": '4/20/69',
 
