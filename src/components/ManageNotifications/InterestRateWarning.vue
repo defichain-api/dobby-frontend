@@ -45,7 +45,7 @@
 							type="number"
 							v-model="aboveMessageSetting"
 							dense
-							style="width: 5em;"
+							style="width: 5.5em;"
 							class="q-mt-lg"
 							suffix="%"
 						/>
@@ -75,7 +75,7 @@
 							type="number"
 							v-model="belowMessageSetting"
 							dense
-							style="width: 5em;"
+							style="width: 5.5em;"
 							class="q-mt-lg"
 							suffix="%"
 						/>
