@@ -4,128 +4,134 @@
 			<div class="row items-center no-wrap">
 				<div class="col text-h6 ellipsis">
 					<q-icon name="fa-light fa-percent" size="sm" class="q-mr-sm" />
-					DUSD Interest rates
+					DUSD Interest Rates
 				</div>
+			</div>
+		</q-card-section>
 
-				<div class="col-auto">
-					<q-toggle
-						class="col-3 text-center"
-						v-model="enabled"
-						size="xl"
-						checked-icon="fa-light fa-check"
-						unchecked-icon="fa-light fa-xmark"
-						color="primary"
-						keep-color
-					/>
-				</div>
-			</div>
+		<q-card-section class="q-pt-none q-px-none">
+			<q-list separator>
+				<!-- Daily Message -->
+				<q-item tag="label" v-ripple>
+					<q-item-section>
+						<q-item-label>Daily Message</q-item-label>
+						<q-item-label caption>Receive the height of DUSD interest rate in a daily Telegram message</q-item-label>
+					</q-item-section>
+					<q-item-section side top>
+						<q-toggle color="primary" v-model="dailyMessageSetting" />
+					</q-item-section>
+				</q-item>
+
+				<!-- Above Message -->
+				<q-item manual-focus>
+					<q-item-section>
+						<q-item-label>Message When Above</q-item-label>
+						<q-item-label caption>Receive a Telegram message when combined DUSD interest rate rises above...</q-item-label>
+						<q-slider
+							v-if="aboveEnabled"
+							class="q-my-md"
+							thumb-size="30px"
+							v-model="aboveMessageSetting"
+							:min="-80"
+							:max="5"
+							@change="store.dispatch('settings/setToAccount', { key: 'informDusdInterestRateAbove', value: aboveMessageSetting})"
+						/>
+					</q-item-section>
+					<q-item-section side top>
+						<q-toggle color="primary" v-model="aboveEnabled" />
+						<q-input
+							v-if="aboveEnabled"
+							outlined
+							type="number"
+							v-model="aboveMessageSetting"
+							dense
+							style="width: 5em;"
+							class="q-mt-lg"
+							suffix="%"
+						/>
+					</q-item-section>
+				</q-item>
+
+			<!-- Below Message -->
+				<q-item manual-focus>
+					<q-item-section >
+						<q-item-label>Message When Below</q-item-label>
+						<q-item-label caption>Receive a Telegram message when combined DUSD interest rate falls below...</q-item-label>
+						<q-slider
+							v-if="belowEnabled"
+							class="q-my-md"
+							thumb-size="30px"
+							v-model="belowMessageSetting"
+							:min="-80"
+							:max="5"
+							@change="store.dispatch('settings/setToAccount', { key: 'informDusdInterestRateBelow', value: belowMessageSetting})"
+						/>
+					</q-item-section>
+					<q-item-section side top>
+						<q-toggle color="primary" v-model="belowEnabled" />
+						<q-input
+							v-if="belowEnabled"
+							outlined
+							type="number"
+							v-model="belowMessageSetting"
+							dense
+							style="width: 5em;"
+							class="q-mt-lg"
+							suffix="%"
+						/>
+					</q-item-section>
+				</q-item>
+			</q-list>
 		</q-card-section>
-		<q-card-section class="q-pt-none">
-			<p class="text-left">
-				Receive a Telegram message when DUSD interest rate rises<span v-if="enabled"> above...</span>
-			</p>
-		</q-card-section>
-		<q-card-section class="q-pt-none" v-if="enabled">
-			<div class="row">
-				<div class="col-3">
-					<q-input
-						:type="($q.platform.is.mobile) ? 'number' : ''"
-						v-model="triggerRatio"
-						dense
-						outlined
-						debounce="1000"
-						suffix="%"
-					/>
-				</div>
-				<div class="col-8" style="padding-top: 5px;">
-					<q-slider
-						class="q-pl-md"
-						thumb-size="30px"
-						v-model="triggerRatio"
-						:min="minSetting"
-						:max="maxSetting"
-					/>
-				</div>
-			</div>
-		</q-card-section>
-		<q-card-actions align="right">
-			<q-btn
-				v-if="newTriggerRatioValue >= minSetting && newTriggerRatioValue <= maxSetting"
-				@click="save()"
-				:disabled="saving"
-				outline
-				rounded
-				class="full-width"
-			>
-				<q-icon v-if="!savingDone" left name="fa-light fa-save" />
-				<div v-if="!savingDone">save</div>
-				<q-icon v-if="savingDone" left name="fa-light fa-check" />
-			</q-btn>
-		</q-card-actions>
 	</q-card>
 </template>
 
 <script>
-export default {
-	name: "InterestRateWarning",
-	data() {
+import { defineComponent, computed } from "vue";
+import { useStore } from 'vuex';
+
+export default defineComponent({
+	name: "InterestRateWarnings",
+
+	setup() {
+
+		const store = useStore()
+
+		const dailyMessageSetting = computed({
+			get: () => store.getters['settings/value']('informDusdInterestRate'),
+			set(newValue) { store.dispatch('settings/setToAccount', { key: 'informDusdInterestRate', value: newValue})}
+		});
+
+		const aboveMessageSetting = computed({
+			get: () => store.getters['settings/value']('informDusdInterestRateAbove'),
+			set: (newValue) => store.dispatch('settings/set', { key: 'informDusdInterestRateAbove', value: newValue})
+		});
+
+		const belowMessageSetting = computed({
+			get: () => store.getters['settings/value']('informDusdInterestRateBelow'),
+			set: (newValue) => store.dispatch('settings/set', { key: 'informDusdInterestRateBelow', value: newValue})
+		});
+
+		const aboveEnabled = computed({
+			get: () => aboveMessageSetting.value != null,
+			set: (newValue) => aboveMessageSetting.value = (newValue === true) ? -10 : null
+		})
+
+		const belowEnabled = computed({
+			get: () => belowMessageSetting.value != null,
+			set: (newValue) => belowMessageSetting.value = (newValue === true) ? -10 : null
+		})
+
 		return {
-			settingName: "informDusdInterestRate",
-			appearDisabledSetting: 999,
-			newTriggerRatioValue: null,
-			saving: false,
-			savingDone: false,
-			coldSetting: -20,
-			minSetting: -100,
-			maxSetting: 15,
+			store,
+			dailyMessageSetting,
+			aboveMessageSetting,
+			belowMessageSetting,
+			aboveEnabled,
+			belowEnabled,
 		}
 	},
-	methods: {
-		save() {
-			this.$store
-				.dispatch('settings/setToAccount', { key: this.settingName, value: this.newTriggerRatioValue })
-				.then(() => {
-					this.savingDone = true
-					setTimeout(() => {
-						this.newTriggerRatioValue = null
-						this.savingDone = false
-					}, 1000)
-				})
-		},
-		saveDirectly() {
-			this.$store.dispatch('settings/setToAccount', { key: this.settingName, value: this.triggerRatio })
-		}
-	},
-	computed: {
-		enabled: {
-			get: function () {
-				return this.triggerRatio < this.appearDisabledSetting
-			},
-			set: function (newSetting) {
-				if (newSetting === true && this.triggerRatio == this.appearDisabledSetting) {
-					this.triggerRatio = this.coldSetting
-				}
-				if (newSetting === false) {
-					this.triggerRatio = this.appearDisabledSetting
-				}
-				this.saveDirectly()
-			},
-		},
-		triggerRatio: {
-			get: function() {
-				if (this.newTriggerRatioValue != null) {
-					return this.newTriggerRatioValue
-				}
-				return this.$store.getters['settings/value'](this.settingName) || this.appearDisabledSetting
-			},
-			set: function(newSetting) {
-				if ((newSetting >= this.minSetting && newSetting <= this.maxSetting) || this.appearDisabledSetting ) {
-					this.newTriggerRatioValue = newSetting
-				} else {}
-			}
-		},
-	},
-}
+});
 </script>
 
 <style>

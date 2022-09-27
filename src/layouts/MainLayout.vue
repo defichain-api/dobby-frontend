@@ -70,6 +70,8 @@
 										checked-icon="fas fa-socks"
 										unchecked-icon="fas fa-eye"
 									/>
+									<q-separator />
+									<q-item-label header class="q-pb-sm">Dashboard Settings</q-item-label>
 									<q-toggle
 										v-model="uiDashboardCardsAsCarousel"
 										label="Vaults as carousel"
