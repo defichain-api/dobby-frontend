@@ -52,7 +52,8 @@ export default {
 			this.$q.notify({
 				group: 'gatewayRemove',
 				type: 'warning',
-				message: 'Channel has been removed. You no longer receive messages there.',
+				message: 'Do you really want to remove this channel?',
+				timeout: 5000,
 				actions: [
 					{
 						label: 'yes, remove',

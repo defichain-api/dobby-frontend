@@ -46,8 +46,8 @@ export default {
 			return text
 		},
 		bgColor(messageType) {
-			if (messageType == 'error') return 'negative'
-			if (messageType == 'warning') return 'warning'
+			if (messageType == 'error' || messageType == 'err') return 'negative'
+			if (messageType == 'warning' || messageType == 'warn') return 'warning'
 			if (messageType == 'info') return 'info'
 			if (messageType == 'default') return 'dark'
 		},

@@ -5,6 +5,7 @@
 			<div class="text-primary text-h6">{{ $t('Color Theme') }}</div>
 		</q-card-section>
 
+		<!--
 		<q-card-section class="q-pa-none text-center row">
 			<div class="col-6 bg-white text-black q-pa-md">
 				<p>
@@ -19,6 +20,7 @@
 			</div>
 			<div class="col-6 bg-black">DARK</div>
 		</q-card-section>
+		-->
 
 		<q-card-section class="q-pt-none text-center row">
 			<div class="col-4 text-right q-mt-md" :class="{'text-grey-6': mode != false}">
@@ -32,7 +34,7 @@
 				size="xl"
 				icon="fa-regular fa-circle-half-stroke"
 				checked-icon="fa-light fa-moon-stars"
-				unchecked-icon="fa-llight fa-sun"
+				unchecked-icon="fa-light fa-sun"
 				color="primary"
 				keep-color
 			/>

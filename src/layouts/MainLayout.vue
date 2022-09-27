@@ -70,6 +70,33 @@
 										checked-icon="fas fa-socks"
 										unchecked-icon="fas fa-eye"
 									/>
+									<q-separator />
+									<q-item-label header class="q-pb-sm">Dashboard Settings</q-item-label>
+									<q-toggle
+										v-model="uiDashboardCardsAsCarousel"
+										label="Vaults as carousel"
+										toggle-indeterminate
+										false-value="card"
+										true-value="carousel"
+										indeterminate-value="auto"
+										checked-icon="fal fa-album-collection"
+										unchecked-icon="fal fa-list-ol"
+									/>
+									<q-toggle
+										v-model="uiDashboardHealthSummaryEnabled"
+										label="Show health summary"
+										icon="fal fa-heartbeat"
+									/>
+									<q-toggle
+										v-model="uiDashboardCollateralInfoEnabled"
+										label="Show collateral info"
+										icon="fas fa-cauldron"
+									/>
+									<q-toggle
+										v-model="uiDashboardCollateralWaypointsEnabled"
+										label="Show collateral waypoints"
+										icon="fas fa-telescope"
+									/>
 									<q-btn class="q-mt-sm" to="settings" dense rounded outline icon="fa-light fa-sliders" :label="$t('All Settings')" v-close-popup />
 								</div>
 
@@ -199,10 +226,28 @@ export default {
 		const bar = ref(null)
 		const uiTheme = ref($q.dark.isActive)
 		const store = useStore()
+
 		const privacy = computed({
 			get: () => store.getters['settings/value']('uiPrivacyEnabled'),
-			set: (privacyActive) => store.dispatch('settings/setToAccount', { key: 'uiPrivacyEnabled', value: privacyActive })
+			set: (newValue) => store.dispatch('settings/setToAccount', { key: 'uiPrivacyEnabled', value: newValue })
 		})
+		const uiDashboardHealthSummaryEnabled = computed({
+			get: () => store.getters['settings/value']('uiDashboardHealthSummaryEnabled'),
+			set: (newValue) => store.dispatch('settings/setToAccount', { key: 'uiDashboardHealthSummaryEnabled', value: newValue })
+		})
+		const uiDashboardCollateralInfoEnabled = computed({
+			get: () => store.getters['settings/value']('uiDashboardCollateralInfoEnabled'),
+			set: (newValue) => store.dispatch('settings/setToAccount', { key: 'uiDashboardCollateralInfoEnabled', value: newValue })
+		})
+		const uiDashboardCollateralWaypointsEnabled = computed({
+			get: () => store.getters['settings/value']('uiDashboardCollateralWaypointsEnabled'),
+			set: (newValue) => store.dispatch('settings/setToAccount', { key: 'uiDashboardCollateralWaypointsEnabled', value: newValue })
+		})
+		const uiDashboardCardsAsCarousel = computed({
+			get: () => store.getters['settings/value']('uiDashboardCardsAsCarousel'),
+			set: (newValue) => store.dispatch('settings/setToAccount', { key: 'uiDashboardCardsAsCarousel', value: newValue })
+		})
+
 		const version = process.env.VERSION
 		const release = process.env.CURRENT_RELEASE
 		const releaseDate = process.env.RELEASE_DATE
@@ -283,6 +328,10 @@ export default {
 			bar,
 			uiTheme,
 			privacy,
+			uiDashboardHealthSummaryEnabled,
+			uiDashboardCollateralInfoEnabled,
+			uiDashboardCollateralWaypointsEnabled,
+			uiDashboardCardsAsCarousel,
 			version,
 			release,
 			releaseDate,

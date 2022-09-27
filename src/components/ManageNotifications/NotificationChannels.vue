@@ -13,7 +13,7 @@
 								Notification Channels
 							</q-item-section>
 							<q-item-section side>
-								<q-chip dense color="accent" size="sm">
+								<q-chip dense color="accent" size="sm" class="text-white">
 									<q-avatar color="positive" text-color="white" size="xs">{{gateways.length}}</q-avatar>
 									active
 								</q-chip>
