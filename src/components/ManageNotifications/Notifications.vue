@@ -228,6 +228,7 @@ export default {
 
 			// fill available triggers into vault list
 			this.triggers.forEach(function (trigger) {
+				if ( !(trigger.vaultId in vaultTriggers)) return
 				vaultTriggers[trigger.vaultId].push(trigger)
 				vaultTriggers[trigger.vaultId].sort(( a, b ) => {
 					if ( a.ratio < b.ratio ){return 1}

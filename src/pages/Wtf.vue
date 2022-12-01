@@ -25,7 +25,7 @@
 								This is achieved by a combination of this app and - what we call -
 								notification channels.
 								<br />
-								You can choose from receiving messages via Telegram, Webhook and Email for now.
+								You can choose from receiving messages via Telegram, Email, Webhook and you can even receive phone calls
 							</div>
 						</div>
 					</div>
